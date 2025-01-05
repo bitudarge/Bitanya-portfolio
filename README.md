@@ -1,8 +1,20 @@
-# React + Vite
+# Personal Portfolio Website  
+This project is a responsive and visually engaging portfolio website designed to showcase my skills, projects, and experience as a Data Science and Neuroscience major.  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features  
+- **Dynamic Design**: Built with modern React components and styled using modular CSS for a clean and customizable look.  
+- **Optimized Assets**: Utility functions for efficient asset handling, ensuring fast load times and smooth performance.  
+- **Typography**: Integrated fonts for enhanced readability and aesthetic appeal.  
 
-Currently, two official plugins are available:
+## Project Structure  
+- **App.module.css**: Defines the core styling of the application, using variables for consistency and easy theme customization.  
+- **main.jsx**: Entry point for rendering the React application.  
+- **utils.js**: Utility functions, such as `getImageUrl`, for managing assets efficiently.  
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used  
+- **Frontend**: React, CSS Modules  
+- **Fonts**: Outfit, Roboto  
+- **Hosting**: [Insert your hosting platform, e.g., GitHub Pages or Netlify]  
+
+
+
