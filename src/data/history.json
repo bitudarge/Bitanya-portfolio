@@ -1,0 +1,29 @@
+[
+    {
+      "role": "Product Manager",
+      "organisation": "Tech for Good",
+      "startDate": "Feb, 2024",
+      "endDate": "May, 2024",
+      "experiences": ["Designed app for 50+ users.", "Prioritized features via 25+ feedbacks."],
+      "imageSrc": "history/techForGood.png"
+    },
+    {
+      "role": "Software Engineer",
+      "organisation": "EDGE",
+      "startDate": "Feb, 2024",
+      "endDate": "May, 2024",
+      "experiences": ["Built 5+ sites; increased engagement.", "Enhanced functionality via stakeholder feedback."],
+      "imageSrc": "history/edge.png"
+    },
+    {
+      "role": "Research Assistant",
+      "organisation": "Augustana College",
+      "startDate": "Oct, 2024",
+      "endDate": "Present",
+      "experiences": [
+        "Researched memory and Alzheimer’s trends.",
+        "Presented findings at conferences/events."
+      ],
+      "imageSrc": "history/augustanaCollege.png"
+    }
+  ]
