@@ -1,29 +1,29 @@
 [
     {
+      "role": "Technical Product Support",
+      "organisation": "John Deere",
+      "startDate": "Mar, 2025",
+      "endDate": "Present",
+      "experiences": ["Automated lookups, cut time 80%.", "Built dashboards for 10,000+ records."],
+      "imageSrc": "history/John_Deere_logo.png"
+    },
+    {
       "role": "Product Manager",
-      "organisation": "Tech for Good",
+      "organisation": "OSL",
       "startDate": "Feb, 2024",
       "endDate": "May, 2024",
-      "experiences": ["Designed app for 50+ users.", "Prioritized features via 25+ feedbacks."],
-      "imageSrc": "history/techForGood.png"
+      "experiences": ["Defined roadmap for 500+ users.", "Delivered MVP 30% faster release."],
+      "imageSrc": "history/osl.jpg"
     },
     {
-      "role": "Software Engineer",
+      "role": "UI/UX Designer",
       "organisation": "EDGE",
-      "startDate": "Feb, 2024",
-      "endDate": "May, 2024",
-      "experiences": ["Built 5+ sites; increased engagement.", "Enhanced functionality via stakeholder feedback."],
-      "imageSrc": "history/edge.png"
-    },
-    {
-      "role": "Research Assistant",
-      "organisation": "Augustana College",
       "startDate": "Oct, 2024",
       "endDate": "Present",
       "experiences": [
-        "Researched memory and Alzheimer’s trends.",
-        "Presented findings at conferences/events."
+        "Designed prototypes improving navigation scores.",
+        "Ran A/B tests, boosted retention 15%."
       ],
-      "imageSrc": "history/augustanaCollege.png"
+      "imageSrc": "history/edge.png"
     }
   ]

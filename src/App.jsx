@@ -5,6 +5,7 @@ import { About } from "./components/About/About";
 import { Experience } from "./components/Experience/Experience";
 import { Projects } from "./components/Projects/Projects";
 import { Contact } from "./components/Contact/Contact";
+// import { Involvement } from "./components/Involvement/Involvement";
 
 function App() {
   return (
@@ -13,9 +14,9 @@ function App() {
       <Hero />
       <About />
       <Experience />
+      {/* <Involvement /> */}
       <Projects />
       <Contact />
-     
     </div>
   );
 }
