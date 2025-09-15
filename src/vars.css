@@ -1,11 +1,19 @@
 :root {
-  /* Colours */
-  --color-text: #fff;
-  --color-primary: #1587e5;
-  --color-secondary: #19376d;
-  --color-dark: #0b2447;
-  --color-bg: #04152d;
+  /* Pink–purple dark palette */
+  --preppy-pink:   #6f0a60;   /* bright pink */
+  --preppy-rose:   #f8ade0;   /* rose */
+  --preppy-lilac:  #fffeff;   /* lilac */
+  --preppy-violet: #520f49;   /* deep violet */
+  --preppy-blue:   #f36ed6;
+  --preppy-purple: #fffbfe;
+  --preppy-accent: #f17ec5;
+
+  /* Theme tokens */
+  --color-text: #f6ecfb;      /* light text */
+  --color-primary: var(--preppy-pink);
+  --color-secondary: var(--preppy-violet);
+  --color-bg: #290b36;        /* global page bg */
 
   /* Fonts */
-  --font-roboto: "Roboto";
+  --font-roboto: "Roboto", system-ui, -apple-system, Segoe UI, Arial, sans-serif;
 }

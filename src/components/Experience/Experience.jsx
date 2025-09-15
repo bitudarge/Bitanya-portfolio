@@ -1,80 +1,92 @@
 import React from "react";
-import { motion } from "framer-motion";
 import styles from "./Experience.module.css";
-import skills from "../../data/skills.json";
-import history from "../../data/history.json";
-import { getImageUrl } from "../../utils";
+import history from "../../data/history.json"; // ← reads your data
+
+/**
+ * Expected history.json shape (array):
+ * [
+ *   {
+ *     "id": "meta-2024",
+ *     "role": "Product Design Intern",
+ *     "org": "Meta",
+ *     "location": "Menlo Park, CA",
+ *     "start": "2024-05",
+ *     "end": "2024-08",
+ *     "summary": "Worked on XYZ...",
+ *     "bullets": ["Did A", "Shipped B", "Improved C"],
+ *     "link": "https://example.com" // optional
+ *   },
+ *   ...
+ * ]
+ */
+
+function formatRange(start, end) {
+  const fmt = (s) => {
+    if (!s) return "";
+    const [y, m] = s.split("-");
+    const date = new Date(Number(y), Number(m ?? 1) - 1, 1);
+    return date.toLocaleString(undefined, { month: "short", year: "numeric" });
+  };
+  return `${fmt(start)} – ${end && end.toLowerCase() !== "present" ? fmt(end) : "Present"}`;
+}
 
 export const Experience = () => {
-  return (
-    <motion.section
-      className={styles.container}
-      id="experience"
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      <h2 className={styles.title}>Experience</h2>
-      <div className={styles.content}>
-        {/* Skills Section */}
-        <div className={styles.skills}>
-          {skills.map((skill, id) => (
-            <motion.div
-              key={id}
-              className={styles.skill}
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <div className={styles.skillImageContainer}>
-                <img src={getImageUrl(skill.imageSrc)} alt={skill.title} />
-              </div>
-              <p>{skill.title}</p>
-            </motion.div>
-          ))}
-        </div>
+  // Sort newest first by start date
+  const items = [...history].sort((a, b) => (b.start || "").localeCompare(a.start || ""));
 
-        {/* Job History Section */}
-        <motion.ul
-          className={styles.history}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.3, // Creates a wave-like effect
-              },
-            },
-          }}
-        >
-          {history.map((historyItem, id) => (
-            <motion.li
-              key={id}
-              className={styles.historyItem}
-              variants={{
-                hidden: { opacity: 0, rotate: -10, x: -30 },
-                visible: { opacity: 1, rotate: 0, x: 0 },
-              }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <img
-                src={getImageUrl(historyItem.imageSrc)}
-                alt={`${historyItem.organisation} Logo`}
-              />
-              <div className={styles.historyItemDetails}>
-                <h3>{`${historyItem.role}, ${historyItem.organisation}`}</h3>
-                <p>{`${historyItem.startDate} - ${historyItem.endDate}`}</p>
-                <ul>
-                  {historyItem.experiences.map((experience, id) => (
-                    <li key={id}>{experience}</li>
-                  ))}
-                </ul>
+  return (
+    <section className={styles.container} id="experience">
+      <h2 className={styles.title}>Experience</h2>
+
+      <div className={styles.timeline}>
+        {/* vertical rail */}
+        <div className={styles.rail} aria-hidden="true" />
+
+        <ul className={styles.list}>
+          {items.map((item, idx) => (
+            <li key={item.id ?? idx} className={styles.item}>
+              <div className={styles.dotWrap}>
+                <span className={styles.dot} />
               </div>
-            </motion.li>
+
+              <article className={styles.card}>
+                <header className={styles.header}>
+                  <div className={styles.roleOrgLine}>
+                    <h3 className={styles.role}>{item.role}</h3>
+                    <span className={styles.org}>{item.org}</span>
+                  </div>
+                  <div className={styles.meta}>
+                    <span className={styles.range}>{formatRange(item.start, item.end)}</span>
+                    {item.location && <span className={styles.location}>{item.location}</span>}
+                  </div>
+                </header>
+
+                {item.summary && <p className={styles.summary}>{item.summary}</p>}
+
+                {Array.isArray(item.bullets) && item.bullets.length > 0 && (
+                  <ul className={styles.bullets}>
+                    {item.bullets.map((b, i) => (
+                      <li key={i}>{b}</li>
+                    ))}
+                  </ul>
+                )}
+
+                {item.link && (
+                  <a
+                    href={item.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className={styles.link}
+                    aria-label={`Open details for ${item.role} at ${item.org}`}
+                  >
+                    Learn more →
+                  </a>
+                )}
+              </article>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
       </div>
-    </motion.section>
+    </section>
   );
 };

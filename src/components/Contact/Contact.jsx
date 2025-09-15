@@ -1,38 +1,63 @@
-import React from "react";
-import { Parallax } from "react-parallax";
+import React, { useState } from "react";
 import styles from "./Contact.module.css";
-import { getImageUrl } from "../../utils";
 
-export const Contact = () => {
+export function Contact() {
+  const [status, setStatus] = useState(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = new FormData(e.currentTarget);
+    const name = form.get("name");
+    const email = form.get("email");
+    const message = form.get("message");
+
+    // Formspree support (optional): set VITE_FORMSPREE_ID in your .env
+    const FORMSPREE_ID = import.meta.env.VITE_FORMSPREE_ID || "";
+    if (FORMSPREE_ID) {
+      try {
+        const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+          method: "POST",
+          headers: { "Accept": "application/json" },
+          body: form
+        });
+        if (res.ok) {
+          setStatus("Thanks, your message has been sent.");
+          e.currentTarget.reset();
+        } else {
+          setStatus("There was a problem sending your message.");
+        }
+      } catch {
+        setStatus("Network error. Please try again.");
+      }
+    } else {
+      // Mailto fallback
+      const subject = encodeURIComponent(`Portfolio message from ${name}`);
+      const body = encodeURIComponent(`${message}\n\nFrom: ${name} <${email}>`);
+      window.location.href = `mailto:bitanyagetahunn@gmail.com?subject=${subject}&body=${body}`;
+    }
+  };
+
   return (
-    <Parallax
-      bgImage={getImageUrl("contact/background.jpg")}
-      bgImageAlt="Contact Background"
-      strength={200}
-    >
-      <footer id="contact" className={styles.container}>
-        <div className={styles.text}>
-          <h2>Contact</h2>
-          <p>Feel free to reach out!</p>
+    <section className={styles.container}>
+      <h2 className={styles.title}>Contact</h2>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <label>
+          <span>Name</span>
+          <input name="name" type="text" required placeholder="Your name" />
+        </label>
+        <label>
+          <span>Email</span>
+          <input name="email" type="email" required placeholder="you@example.com" />
+        </label>
+        <label className={styles.full}>
+          <span>Message</span>
+          <textarea name="message" rows="6" required placeholder="Write your message..." />
+        </label>
+        <div className={styles.actions}>
+          <button type="submit" className={styles.submit}>Send</button>
         </div>
-        <ul className={styles.links}>
-          <li className={styles.link}>
-            <img src={getImageUrl("contact/emailIcon.png")} alt="Email icon" />
-            <a href="mailto:bitanyagetahunn@gmail.com">bitanyagetahunn@gmail.com</a>
-          </li>
-          <li className={styles.link}>
-            <img
-              src={getImageUrl("contact/linkedinIcon.png")}
-              alt="LinkedIn icon"
-            />
-            <a href="https://www.linkedin.com/in/bitanya-darge-8260b02b2/">linkedin.com/bitanyadarge</a>
-          </li>
-          <li className={styles.link}>
-            <img src={getImageUrl("contact/githubIcon.png")} alt="Github icon" />
-            <a href="https://www.github.com/bitudarge">github.com/bitudarge</a>
-          </li>
-        </ul>
-      </footer>
-    </Parallax>
+        {status && <p className={styles.status}>{status}</p>}
+      </form>
+    </section>
   );
-};
+}

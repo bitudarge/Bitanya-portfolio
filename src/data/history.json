@@ -1,29 +1,44 @@
 [
-    {
-      "role": "Technical Product Support",
-      "organisation": "John Deere",
-      "startDate": "Mar, 2025",
-      "endDate": "Present",
-      "experiences": ["Automated lookups, cut time 80%.", "Built dashboards for 10,000+ records."],
-      "imageSrc": "history/John_Deere_logo.png"
-    },
-    {
-      "role": "Product Manager",
-      "organisation": "OSL",
-      "startDate": "Feb, 2024",
-      "endDate": "May, 2024",
-      "experiences": ["Defined roadmap for 500+ users.", "Delivered MVP 30% faster release."],
-      "imageSrc": "history/osl.jpg"
-    },
-    {
-      "role": "UI/UX Designer",
-      "organisation": "EDGE",
-      "startDate": "Oct, 2024",
-      "endDate": "Present",
-      "experiences": [
-        "Designed prototypes improving navigation scores.",
-        "Ran A/B tests, boosted retention 15%."
-      ],
-      "imageSrc": "history/edge.png"
-    }
-  ]
+  {
+    "id": "john-deere-2025",
+    "role": "Technical Product Support",
+    "org": "John Deere",
+    "location": "",
+    "start": "2025-03",
+    "end": "Present",
+    "summary": "Automated lookups and built dashboards for support operations.",
+    "bullets": [
+      "Automated lookups, cut time 80%.",
+      "Built dashboards for 10,000+ records."
+    ],
+    "logo": "history/John_Deere_logo.png"
+  },
+  {
+    "id": "edge-2024",
+    "role": "UI/UX Designer",
+    "org": "EDGE",
+    "location": "",
+    "start": "2024-10",
+    "end": "Present",
+    "summary": "Prototyping and experimentation to improve navigation and retention.",
+    "bullets": [
+      "Designed prototypes improving navigation scores.",
+      "Ran A/B tests, boosted retention 15%."
+    ],
+    "logo": "history/edge.png"
+  },
+  {
+    "id": "osl-2024",
+    "role": "Product Manager & Analyst",
+    "org": "OSL",
+    "location": "",
+    "start": "2024-02",
+    "end": "2024-05",
+    "summary": "Roadmap definition and MVP delivery for a growing user base.",
+    "bullets": [
+      "Defined roadmap for 500+ users.",
+      "Delivered MVP 30% faster release."
+    ],
+    "logo": "history/osl.jpg"
+  }
+]

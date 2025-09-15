@@ -1,4 +1,15 @@
 [
+  {
+  "title": "SaaS Churn Prediction",
+  "imageSrc": "projects/saas.png",
+  "description": "Predicted SaaS customer churn using machine learning models",
+  "skills": [
+    "Python",
+    "Logistic Regression"
+  ],
+  "source": "https://github.com/bitudarge/SaaS-Retention-model?tab=readme-ov-file#saas-churn-prediction-project"
+
+},
     {
       "title": "Disease Insights",
       "imageSrc": "projects/diseaseinsight.png",
@@ -6,13 +17,7 @@
       "skills": ["Python","NumPy","Pandas","matplotlib"],
       "source": "https://github.com/bitudarge/Dissease-Insight"
     },
-    {
-      "title": "Shape Decomposer",
-      "imageSrc": "projects/shapedecomposer.png",
-      "description": "Visualizes and decomposes shapes into smaller components.",
-      "skills": ["Java", "DataStructres"],
-      "source": "https://github.com/bitudarge/Shape-Decomposer"
-    },
+ 
     {
       "title": "Market Trends Prediction",
       "imageSrc": "projects/retailanalytics.png",
@@ -20,5 +25,13 @@
       "skills": ["Tableau", "Data Analysis"],
       "source": "https://public.tableau.com/app/profile/bitanya.darge/viz/BitanyaDarge/SalesDetail"
      
+    },
+       {
+      "title": "Shape Decomposer",
+      "imageSrc": "projects/shapedecomposer.png",
+      "description": "Visualizes and decomposes shapes into smaller components.",
+      "skills": ["Java", "DataStructres"],
+      "source": "https://github.com/bitudarge/Shape-Decomposer"
     }
+     
   ]

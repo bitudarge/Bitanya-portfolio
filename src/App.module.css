@@ -1,8 +1,22 @@
 @import "./vars.css";
 
+/* Spotlight target (used by App.jsx) */
+:root { --mx: 50%; --my: 50%; }
+
 .App {
-  background-color: var(--color-bg);
+  position: relative;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: var(--color-bg);
+}
+
+/* Pink/purple gradient with subtle moving spotlight */
+.rootBg {
+  background:
+    radial-gradient(1200px 1200px at 50% 50%, rgba(255,255,255,0.05), rgba(255,255,255,0) 60%),
+    radial-gradient(320px 320px at var(--mx) var(--my), rgba(255, 182, 193, 0.22), rgba(0,0,0,0) 65%),
+    linear-gradient(160deg, var(--preppy-violet) 0%, var(--preppy-pink) 100%);
+  background-attachment: fixed;
+  color: var(--color-text);
 }

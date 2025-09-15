@@ -1,0 +1,55 @@
+[
+  {
+    "title": "Resident Advisor",
+    "role": "Office of Residential Life",
+    "org": "Augustana College",
+    "date": "Aug 2025–Present",
+    "description": "Responsible for 96 students accross apartments and houses, planning events, and building community",
+    "logo": "assets/involvement/aug.png",
+  
+    "link": ""
+  },
+  {
+    "title": "Founder & President",
+    "role": "Data Analytics Club",
+    "org": "Augustana College",
+    "date": "May 2025–Present",
+    "description": "Led workshops, speaker events, and member projects in data science and analytics.",
+    "highlights": ["Speaker series", "Student mentorship", "Hackathon lead"],
+    "logo": "assets/involvement/dac.png",
+
+    "link": "https://www.augustana.edu/student-life/groups/data-analytics-club"
+  },
+  {
+    "title": "Multi Cultural Programing Board Co-Chair",
+    "role": "Office of Student Life",
+    "org": "Augustana College",
+    "date": "Feb 2024– Present",
+    "description": "Organized campus events that have cultural significances on campus",
+    "highlights": ["Culture Fest", "Spooky Race", "Ethiopian Coffee Event", "Cook-off"],
+    "logo": "assets/involvement/mpb.png",
+  
+    "link": "https://www.augustana.edu/student-life/groups/multicultural-programming-board"
+  },
+  {
+    "title": "Marketing Chair",
+    "role": "Student Government Association",
+    "org": "Augustana College",
+    "date": "Oct 2024– May 2025",
+    "description": "led the Student Government social media accounts",
+    "highlights": ["Partnerships", "Design", "Promotions"],
+    "logo": "assets/involvement/sga.png",
+  
+    "link": ""
+  },
+   {
+    "title": "Research Assistant",
+    "role": "Neuroscience and Psychology Department",
+    "org": "Augustana College",
+    "date": "Oct 2024– Present",
+    "description": "Worked with Dr. Corts to research the impact of implicit memory in our day to day lives",
+    "logo": "assets/involvement/aug.png",
+  
+    "link": ""
+  }
+]

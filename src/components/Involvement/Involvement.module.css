@@ -1,127 +1,160 @@
 @import "../../vars.css";
 
+/* Section */
 .container {
-  position: relative;
+  margin: 80px 10%;
   color: var(--color-text);
-  margin-top: 100px;
-  margin-left: 10%;
-  margin-right: 10%;
-  z-index: 1;
 }
-
 .title {
-  color: var(--color-text);
-  font-size: 35px;
-  font-weight: 700;
-  letter-spacing: 1.75px;
-  text-transform: uppercase;
-  margin-bottom: 37px;
+  font-size: clamp(30px, 5vw, 50px);
+  font-weight: 900;
+  margin-bottom: 18px;
+  background: linear-gradient(90deg, var(--preppy-rose), var(--preppy-blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.content {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  gap: 50px;
-}
-
-.text {
-  flex: 1;
-}
-
-.text h2 {
-  font-size: 45px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  margin-bottom: 20px;
-  font-family: var(--font-roboto);
-}
-
-.text p {
-  font-size: 25px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  margin-bottom: 30px;
-  font-family: var(--font-roboto);
-}
-
-.links {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+/* List scaffold */
+.list {
   list-style: none;
-  gap: 26px;
-  flex: 1;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
 }
 
-.link {
-  display: flex;
-  align-items: center;
-  gap: 25px;
-  background: linear-gradient(90deg, rgba(95, 125, 207, 0.5) 0%, rgba(35, 4, 43, 0) 100%);
-  border-radius: 10px;
-  padding: 20px;
-  width: 100%;
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+.row {
+  position: relative;
+  isolation: isolate;
 }
 
-.link:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.3);
-}
-
-.link a {
-  color: var(--color-text);
-  text-decoration: none;
-  font-size: 25px;
-  font-weight: 500;
-  letter-spacing: 1px;
-  font-family: var(--font-roboto);
-}
-
-/* Add subtle hover effect for links */
-.link a:hover {
-  color: var(--color-primary);
-}
-
-/* Add background blur effect similar to Hero component */
-.backgroundBlur {
+/* Left accent rail with varied palette per row */
+.rail {
   position: absolute;
-  width: 50vw;
-  height: 50vw;
-  min-width: 350px;
-  top: -50px;
-  right: -25vw;
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.4);
-  filter: blur(100px);
-  z-index: -1;
+  left: -10px;
+  top: 12px;
+  bottom: 12px;
+  width: 6px;
+  border-radius: 999px;
+  opacity: 0.9;
+  filter: saturate(1.05);
+}
+.v1 { background: linear-gradient(180deg, var(--preppy-rose), var(--preppy-accent)); }
+.v2 { background: linear-gradient(180deg, var(--preppy-blue), var(--preppy-rose)); }
+.v3 { background: linear-gradient(180deg, #ffd3f0, var(--preppy-blue)); }
+.v4 { background: linear-gradient(180deg, #e6c7ff, var(--preppy-rose)); }
+.v5 { background: linear-gradient(180deg, #fbeab7, var(--preppy-accent)); }
+
+/* Card surface (glass ribbon) */
+.card {
+  position: relative;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.18);
+  backdrop-filter: blur(6px);
+  padding: 12px 14px;
+  transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, filter 140ms ease;
+}
+.card::before {
+  /* thin top ribbon to feel distinct from Experience */
+  content: "";
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  top: -1px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--preppy-rose), var(--preppy-blue));
+  opacity: 0.9;
+}
+.card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255,255,255,0.28);
+  box-shadow: 0 22px 46px rgba(0,0,0,0.24);
+  filter: saturate(1.02);
 }
 
-/* Responsive design for smaller screens */
-@media screen and (max-width: 830px) {
-  .container {
-    margin-top: 80px;
+/* Header layout */
+.header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Tiny round logo/initials */
+.logoWrap {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.12);
+}
+.logoWrap img {
+  max-width: 74%;
+  max-height: 74%;
+  object-fit: contain;
+}
+.initials {
+  font-weight: 900;
+  color: var(--preppy-accent);
+  font-size: 14px;
+}
+
+.headText { min-width: 0; }
+.cardTitle {
+  margin: 0;
+  font-weight: 900;
+  color: var(--preppy-lilac);
+  font-size: 18px;
+  letter-spacing: 0.2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metaLine {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  color: rgba(255,255,255,0.88);
+  font-size: 14px;
+}
+.role { font-weight: 700; }
+.sep { opacity: 0.7; }
+.org { opacity: 0.95; }
+
+.when {
+  color: rgba(255,255,255,0.85);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Optional blurb under header */
+.blurb {
+  margin: 8px 0 2px 54px; /* indented to align with text block after the avatar/logo */
+  color: rgba(255,255,255,0.95);
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+/* Responsive */
+@media (max-width: 760px) {
+  .header {
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "logo head"
+      "date date";
+    gap: 10px;
   }
-  
-  .content {
-    flex-direction: column;
-    gap: 40px;
-  }
-  
-  .text h2 {
-    font-size: 35px;
-  }
-  
-  .text p {
-    font-size: 20px;
-  }
-  
-  .link {
-    padding: 15px;
-  }
-  
-  .link a {
-    font-size: 20px;
-  }
+  .logoWrap { grid-area: logo; }
+  .headText { grid-area: head; }
+  .when { grid-area: date; justify-self: start; }
+  .blurb { margin-left: 0; }
 }

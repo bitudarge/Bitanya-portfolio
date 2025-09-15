@@ -1,111 +1,181 @@
 @import "../../vars.css";
 
+/* Cohesive hero (no card box) */
 .container {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 49px;
-  z-index: 1;
   margin-left: 10%;
   margin-right: 10%;
+  z-index: 1;
+  isolation: isolate;
+  overflow: visible;
+  background: transparent;
 }
 
+/* Full-viewport background for home route */
+.bgLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Sparkles across page */
+.sparklesFixed {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.star {
+  position: absolute;
+  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 70%);
+  border-radius: 50%;
+  opacity: 0.6;
+  animation: twinkle infinite ease-in-out;
+}
+@keyframes twinkle {
+  0%   { opacity: 0.15; transform: scale(1) }
+  50%  { opacity: 1;    transform: scale(1.6) }
+  100% { opacity: 0.15; transform: scale(1) }
+}
+
+/* Low-key scattered clouds */
+.cloudScatterLayer {
+  position: fixed;
+  inset: 0;
+  z-index: 1; /* above sparkles, below content */
+  pointer-events: none;
+}
+
+/* Each cloud uses two tiny animations: horizontal and vertical drift */
+.cloudSoft {
+  position: fixed;
+  will-change: transform, opacity;
+  height: 140px; /* overridden inline */
+  width: auto;
+  filter: drop-shadow(0 10px 22px rgba(14, 13, 13, 0.18));
+  user-select: none;
+  pointer-events: none;
+  animation:
+    driftX var(--durx, 24s) ease-in-out infinite alternate,
+    driftY var(--dury, 28s) ease-in-out infinite alternate;
+  /* start offset */
+  animation-delay: inherit, inherit;
+}
+
+@keyframes driftX {
+  from { transform: translateX(calc(var(--ampx, 8px) * -1)); }
+  to   { transform: translateX(var(--ampx, 8px)); }
+}
+@keyframes driftY {
+  from { transform: translateY(calc(var(--ampy, 8px) * -1)); }
+  to   { transform: translateY(var(--ampy, 8px)); }
+}
+
+/* Foreground content */
 .content {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   color: var(--color-text);
-  z-index: 1;
+  z-index: 2;
 }
 
 .title {
-  font-size: 72px;
+  font-size: clamp(36px, 6vw, 72px);
   font-weight: 900;
-  margin-bottom: 33px;
+  margin-bottom: 18px;
   font-family: var(--font-roboto);
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 1) 70%,
-    rgba(255, 255, 255, 0) 120%
-  );
+  line-height: 1.05;
+  background: linear-gradient(90deg, var(--preppy-purple) 0%, var(--preppy-rose) 60%, rgba(255,255,255,0) 120%);
   -webkit-text-fill-color: transparent;
   -webkit-background-clip: text;
 }
 
 .description {
-  font-size: 30px;
-  font-family: var(--font-roboto);
-  margin-bottom: 52px;
+  font-size: clamp(16px, 2.4vw, 22px);
+  margin-bottom: 28px;
+  opacity: 0.92;
+  max-width: 52ch;
 }
 
-.contactBtn {
+.ctaRow { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Unified cute buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 800;
   text-decoration: none;
-  background-color: var(--color-primary);
-  color: var(--color-text);
-  border-radius: 100px;
-  font-size: 30px;
-  font-weight: 600;
-  padding: 17px 26px;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  transition: transform 120ms ease, box-shadow 140ms ease, filter 140ms ease;
+  will-change: transform, filter;
 }
+.btn:active { transform: translateY(1px) scale(0.99); }
+.btnPrimary {
+  background: linear-gradient(135deg, var(--preppy-pink), var(--preppy-lilac));
+  color: #1b1030;
+  box-shadow: 0 8px 18px rgba(246, 133, 214, 0.35);
+}
+.btnPrimary:hover { filter: saturate(1.05) brightness(1.05); transform: translateY(-2px); }
 
+/* Portrait image motion */
 .heroImg {
-  width: 50%;
-  z-index: 1;
-
-  animation-name: floating;
-  animation-duration: 3s;
-  animation-iteration-count: infinite;
-  animation-timing-function: ease-in-out;
+  width: min(46%, 520px);
+  z-index: 2;
+  will-change: transform;
+  transition: transform 120ms ease-out;
+  animation: floating 3.4s ease-in-out infinite;
 }
-
 @keyframes floating {
-  0% {
-    transform: translate(0, 0px);
-  }
-  50% {
-    transform: translate(0, 10px);
-  }
-  100% {
-    transform: translate(0, -0px);
-  }
+  0%   { transform: translate3d(0,0,0) }
+  50%  { transform: translate3d(0,8px,0) }
+  100% { transform: translate3d(0,0,0) }
 }
 
-.topBlur {
+/* Soft glow blobs */
+.topBlur, .bottomBlur {
   position: absolute;
-  width: 50vw;
-  height: 50vw;
-  min-width: 350px;
-  min-width: 350px;
+  border-radius: 764px;
+  filter: blur(100px);
+  z-index: 0;
+  opacity: 0.35;
+}
+.topBlur {
+  width: 46vw;
+  height: 46vw;
   top: -128px;
   left: -10vw;
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
-  z-index: 0;
+  background: rgba(250, 162, 204, 0.35);
 }
-
 .bottomBlur {
-  position: absolute;
-  width: 70vw;
-  height: 50vw;
-  min-width: 350px;
-  min-width: 250px;
-  top: 246px;
-  right: -25vw;
-  border-radius: 764px;
-  background: rgba(25, 55, 109, 0.7);
-  filter: blur(100px);
-  z-index: 0;
+  width: 60vw;
+  height: 46vw;
+  bottom: -10vh;
+  right: -20vw;
+  background: rgba(48, 9, 76, 0.35);
 }
 
 @media screen and (max-width: 830px) {
-  .container {
-    flex-direction: column-reverse;
-  }
-
-  .content {
-    align-items: center;
-  }
+  .content { align-items: center; text-align: center; }
+  .heroImg { width: 86%; }
 }
+.subtitle {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  color: var(--color-text);
+}
+
+.highlight {
+  color: var(--preppy-pink); /* from your palette */
+  font-weight: bold;
+  transition: opacity 0.6s ease-in-out;
+}
+
