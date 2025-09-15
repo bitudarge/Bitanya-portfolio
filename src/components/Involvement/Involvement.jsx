@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./Involvement.module.css";
 import data from "../../data/involvement.json";
+import { getImageUrl } from "../../utils";
 
 
 export const Involvement = () => {
@@ -29,7 +30,7 @@ export const Involvement = () => {
                 <header className={styles.header}>
                   <span className={styles.logoWrap} aria-hidden={item.logo ? "false" : "true"}>
                     {item.logo ? (
-                      <img src={item.logo} alt="" />
+                      <img src={getImageUrl(item.logo)} alt="" />
                     ) : (
                       <span className={styles.initials}>{initials || "•"}</span>
                     )}
