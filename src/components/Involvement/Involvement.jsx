@@ -2,18 +2,6 @@ import React from "react";
 import styles from "./Involvement.module.css";
 import data from "../../data/involvement.json";
 
-/**
- * involvement.json item shape used here:
- * {
- *   "id": "jd",
- *   "title": "Technical Product Support",
- *   "role": "Technical Product Support",
- *   "org": "John Deere · Part-time",
- *   "date": "Mar 2025 – Present · 7 mos",
- *   "logo": "involvement/logos/john_deere.png",   // optional; if missing we render initials
- *   "description": "Short one-line description."   // optional; used as a brief blurb
- * }
- */
 
 export const Involvement = () => {
   // If you want newest first by inferred dates, sort here.

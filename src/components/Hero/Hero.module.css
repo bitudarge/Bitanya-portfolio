@@ -44,7 +44,7 @@
   100% { opacity: 0.15; transform: scale(1) }
 }
 
-/* Low-key scattered clouds */
+/* Low-key scattered clouds (kept for future use; currently not injected) */
 .cloudScatterLayer {
   position: fixed;
   inset: 0;
@@ -97,6 +97,44 @@
   -webkit-background-clip: text;
 }
 
+/* Rotating line under the title */
+/* Bigger, lighter subtitle for contrast on purple */
+.subtitle {
+  font-size: clamp(22px, 2.8vw, 34px);
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #fdf7ff; /* very light so it pops */
+  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+}
+
+/* Typewriter word + cursor */
+.type {
+  font-weight: 900;
+  color: var(--preppy-rose); /* lighter pink so it doesn't blend into purple */
+}
+
+/* Blinking cursor */
+.cursor {
+  display: inline-block;
+  margin-left: 2px;
+  width: 1ch;
+  color: #fdf7ff;                 /* cursor color */
+  animation: blink 1s steps(2, start) infinite;
+}
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Respect reduced motion: keep cursor visible, no blink */
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; opacity: 1; }
+}
+
+
+
+/* Optional supporting line (your original paragraph kept) */
 .description {
   font-size: clamp(16px, 2.4vw, 22px);
   margin-bottom: 28px;
@@ -104,6 +142,7 @@
   max-width: 52ch;
 }
 
+/* Buttons */
 .ctaRow { display: flex; gap: 12px; flex-wrap: wrap; }
 
 /* Unified cute buttons */
@@ -163,19 +202,14 @@
   background: rgba(48, 9, 76, 0.35);
 }
 
+/* Fade animation for rotating role */
+@keyframes roleFade {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
 @media screen and (max-width: 830px) {
   .content { align-items: center; text-align: center; }
   .heroImg { width: 86%; }
 }
-.subtitle {
-  font-size: 1.5rem;
-  margin-top: 1rem;
-  color: var(--color-text);
-}
-
-.highlight {
-  color: var(--preppy-pink); /* from your palette */
-  font-weight: bold;
-  transition: opacity 0.6s ease-in-out;
-}
-

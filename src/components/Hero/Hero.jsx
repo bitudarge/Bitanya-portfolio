@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import styles from "./Hero.module.css";
 import { Link } from "react-router-dom";
 import { getImageUrl } from "../../utils";
@@ -43,7 +43,7 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const imgRef = useRef(null);
 
-  // Subtle parallax for portrait only
+  // Subtle parallax for portrait (kept)
   useEffect(() => {
     const el = sectionRef.current;
     if (!el) return;
@@ -70,6 +70,73 @@ export const Hero = () => {
     };
   }, []);
 
+  /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
+  const roles = useMemo(
+    () => [
+      "Data Analyst",
+      "Product Manager",
+      "UI/UX Designer",
+      "Researcher",
+      "Leader",
+      "Strategist",
+      "Student",
+      "Creative Thinker",
+      "Problem Solver",
+    ],
+    []
+  );
+
+  const [roleIndex, setRoleIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [displayText, setDisplayText] = useState("");
+
+  useEffect(() => {
+    const current = roles[roleIndex];
+    const typingSpeed = 80;      // ms per character when typing
+    const deletingSpeed = 45;    // ms per character when deleting
+    const pauseAtFull = 1000;    // pause when full word shown
+    const pauseAtEmpty = 400;    // pause before typing next word
+
+    let timeout;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // Respect reduced motion: instantly swap roles every ~2s
+      timeout = setTimeout(() => {
+        setDisplayText(current);
+        setIsDeleting(false);
+        setCharIndex(current.length);
+        setRoleIndex((i) => (i + 1) % roles.length);
+      }, 2000);
+      return () => clearTimeout(timeout);
+    }
+
+    if (!isDeleting && charIndex < current.length) {
+      // typing forward
+      timeout = setTimeout(() => {
+        setDisplayText(current.slice(0, charIndex + 1));
+        setCharIndex((c) => c + 1);
+      }, typingSpeed);
+    } else if (!isDeleting && charIndex === current.length) {
+      // reached end, pause then start deleting
+      timeout = setTimeout(() => setIsDeleting(true), pauseAtFull);
+    } else if (isDeleting && charIndex > 0) {
+      // deleting backward
+      timeout = setTimeout(() => {
+        setDisplayText(current.slice(0, charIndex - 1));
+        setCharIndex((c) => c - 1);
+      }, deletingSpeed);
+    } else if (isDeleting && charIndex === 0) {
+      // finished deleting, go to next word
+      timeout = setTimeout(() => {
+        setIsDeleting(false);
+        setRoleIndex((i) => (i + 1) % roles.length);
+      }, pauseAtEmpty);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, roleIndex, roles]);
+
   return (
     <section ref={sectionRef} className={styles.container}>
       {/* Background: gradient + sparkles only */}
@@ -80,9 +147,22 @@ export const Hero = () => {
       {/* Foreground content */}
       <div className={styles.content}>
         <h1 className={styles.title}>Hi, I’m Bitanya</h1>
-        <p className={styles.description}>
-          I’m all about digging into data, creating cool projects, and bringing ideas to life. Come explore my portfolio — it’s a little mix of what I’ve been learning, building, and loving.”
+
+        {/* Typewriter line */}
+        <p className={styles.subtitle} aria-live="polite">
+          I’m a{" "}
+          <span className={styles.type}>
+            {displayText}
+            <span className={styles.cursor} aria-hidden="true">|</span>
+          </span>
         </p>
+
+        {/* Your original supporting line (kept) */}
+        {/* <p className={styles.description}>
+          I use data to find patterns and insights, apply product thinking to shape practical
+          solutions, and enjoy collaborating with others to make ideas come to life.
+        </p> */}
+
         <div className={styles.ctaRow}>
           <Link to="/projects" className={`${styles.btn} ${styles.btnPrimary}`}>
             View Projects
