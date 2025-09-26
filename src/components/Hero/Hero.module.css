@@ -58,6 +58,7 @@
 .title {
   font-size: clamp(48px, 7.5vw, 96px);
   font-weight: 900;
+  font-weight: 700;
   margin-bottom: 18px;
   font-family: var(--font-roboto);
   line-height: 1.05;
@@ -70,6 +71,7 @@
 /* Bigger, lighter subtitle for contrast on purple */
 .subtitle {
   font-size: clamp(26px, 3.2vw, 40px);
+  font-size: clamp(24px, 3.2vw, 40px);
   margin-bottom: 2rem;
   font-weight: 800;
   color: #fdf7ff; 
