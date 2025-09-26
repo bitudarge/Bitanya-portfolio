@@ -74,7 +74,6 @@ export const Hero = () => {
   const roles = useMemo(
     () => [
       "Student",
-      "Researcher Assistant",
       "Product Manager",
       "UI/UX Designer",
       
