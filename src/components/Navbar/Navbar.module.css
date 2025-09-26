@@ -24,7 +24,7 @@
 }
 
 .title {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: 800;
   text-decoration: none;
   background: linear-gradient(90deg, var(--preppy-blue), var(--preppy-lilac));
@@ -47,7 +47,7 @@
 }
 
 .menuItems a {
-  font-size: 18px;
+  font-size: 20px;
   color: var(--color-text);
   text-decoration: none;
   position: relative;

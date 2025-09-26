@@ -73,15 +73,11 @@ export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
   const roles = useMemo(
     () => [
-      "Data Analyst",
+      "Student",
+      "Researcher Assistant",
       "Product Manager",
       "UI/UX Designer",
-      "Researcher",
-      "Leader",
-      "Strategist",
-      "Student",
-      "Creative Thinker",
-      "Problem Solver",
+      
     ],
     []
   );
@@ -157,27 +153,16 @@ export const Hero = () => {
           </span>
         </p>
 
-        {/* Your original supporting line (kept) */}
-        {/* <p className={styles.description}>
-          I use data to find patterns and insights, apply product thinking to shape practical
-          solutions, and enjoy collaborating with others to make ideas come to life.
-        </p> */}
-
         <div className={styles.ctaRow}>
-          <Link to="/projects" className={`${styles.btn} ${styles.btnPrimary}`}>
-            View Projects
-          </Link>
           <Link to="/about" className={`${styles.btn} ${styles.btnPrimary}`}>
             About Me
           </Link>
-          <a
-            href="/Bitanya_Darge_Resume.pdf"
-            className={`${styles.btn} ${styles.btnPrimary}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            Download Resume
-          </a>
+          <Link to="/projects" className={`${styles.btn} ${styles.btnPrimary}`}>
+            View Projects
+          </Link>
+          <Link to="/Experience" className={`${styles.btn} ${styles.btnPrimary}`}>
+            View Experience
+          </Link>
         </div>
       </div>
 
