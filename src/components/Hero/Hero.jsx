@@ -76,7 +76,6 @@ export const Hero = () => {
       "Student",
       "Product Manager",
       "UI/UX Designer",
-      
     ],
     []
   );
