@@ -13,6 +13,20 @@
     ],
     "logo": "history/John_Deere_logo.png"
   },
+    {
+    "id": "augustna-research-2025",
+    "role": "Data Analytics Research Assistant",
+    "org": "Augustana College",
+    "location": "",
+    "start": "2025-09",
+    "end": "2025-12",
+ "summary": "Data cleaning and analysis for Alzheimer’s research datasets.",
+"bullets": [
+  "Standardized 10+ datasets.",
+  "Performed EDA and feature engineering."
+],
+    "logo": "history/osl.jpg"
+  },
   {
     "id": "edge-2024",
     "role": "UI/UX Designer",
@@ -40,19 +54,6 @@
       "Delivered MVP 30% faster release."
     ],
     "logo": "history/osl.jpg"
-  },
-  {
-    "id": "johndeere",
-    "role": "Data Analytics Research Assistant",
-    "org": "Augustana College",
-    "location": "",
-    "start": "2025-09",
-    "end": "2025-12",
- "summary": "Data cleaning and analysis for Alzheimer’s research datasets.",
-"bullets": [
-  "Standardized 10+ datasets.",
-  "Performed EDA and feature engineering."
-],
-    "logo": "history/osl.jpg"
   }
+
 ]
