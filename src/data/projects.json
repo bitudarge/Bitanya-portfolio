@@ -2,7 +2,7 @@
   {
   "title": "SaaS Churn Prediction",
   "imageSrc": "projects/saas.png",
-  "description": "Predicted SaaS customer churn using machine learning models",
+  "description": "SaaS customer churn prediction model",
   "skills": [
     "Python",
     "Logistic Regression"
@@ -11,17 +11,24 @@
 
 },
     {
+      "title": "Alzheimer's Screening model",
+      "imageSrc": "projects/alzheimers.png",
+      "description": "Early Alzheimer'sscreening model",
+      "skills": ["Python", "Machine Learning"],
+      "source": "https://github.com/bitudarge/Alzheimer-s-screening-model"
+    },
+    {
       "title": "Disease Insights",
       "imageSrc": "projects/diseaseinsight.png",
-      "description": "Analyzed disease data to uncover trends and forecast risks.",
-      "skills": ["Python","NumPy","Pandas","matplotlib"],
+      "description": "Dissease data analysis and insights",
+      "skills": ["Python","numpy","pandas","matplotlib"],
       "source": "https://github.com/bitudarge/Dissease-Insight"
     },
  
     {
       "title": "Market Trends Prediction",
       "imageSrc": "projects/retailanalytics.png",
-      "description": "Created visually apealing graphs for a retail company",
+      "description": "Sales data analysis and visualization",
       "skills": ["Tableau", "Data Analysis"],
       "source": "https://public.tableau.com/app/profile/bitanya.darge/viz/BitanyaDarge/SalesDetail"
      
