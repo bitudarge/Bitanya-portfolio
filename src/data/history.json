@@ -13,18 +13,18 @@
     ],
     "logo": "history/John_Deere_logo.png"
   },
-    {
+  {
     "id": "augustna-research-2025",
     "role": "Data Analytics Research Assistant",
     "org": "Augustana College",
     "location": "",
     "start": "2025-09",
     "end": "2025-12",
- "summary": "Data cleaning and analysis for Alzheimer’s research datasets.",
-"bullets": [
-  "Standardized 10+ datasets.",
-  "Performed EDA and feature engineering."
-],
+    "summary": "Data cleaning and analysis for Alzheimer’s research datasets.",
+    "bullets": [
+      "Standardized 10+ datasets.",
+      "Performed EDA and feature engineering."
+    ],
     "logo": "history/osl.jpg"
   },
   {
@@ -55,5 +55,4 @@
     ],
     "logo": "history/osl.jpg"
   }
-
 ]
