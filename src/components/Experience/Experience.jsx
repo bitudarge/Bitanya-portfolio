@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Experience.module.css";
 import history from "../../data/history.json"; // ← reads your data
 
@@ -31,8 +30,6 @@ function formatRange(start, end) {
 }
 
 export const Experience = () => {
-  // Sort newest first by start date
-  const items = [...history].sort((a, b) => (b.start || "").localeCompare(a.start || ""));
 
   return (
     <section className={styles.container} id="experience">
@@ -43,7 +40,7 @@ export const Experience = () => {
         <div className={styles.rail} aria-hidden="true" />
 
         <ul className={styles.list}>
-          {items.map((item, idx) => (
+          {history.map((item, idx) => (
             <li key={item.id ?? idx} className={styles.item}>
               <div className={styles.dotWrap}>
                 <span className={styles.dot} />
