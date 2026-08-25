@@ -56,9 +56,7 @@ export const Hero = () => {
 
   return (
     <section id="home" className={styles.container}>
-      <div className={styles.meshBg} aria-hidden="true" />
-
-      <h1 className={styles.name}>Bitanya</h1>
+      <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
 
       <p className={styles.subtitle} aria-live="polite">
         I&rsquo;m a{" "}

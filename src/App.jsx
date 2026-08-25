@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./App.module.css";
 import { Navbar } from "./components/Navbar/Navbar";
 import { Hero } from "./components/Hero/Hero";
+import { HeroBlobs } from "./components/Hero/HeroBlobs";
 import { About } from "./components/About/About";
 import { Experience } from "./components/Experience/Experience";
 import { Projects } from "./components/Projects/Projects";
@@ -25,6 +26,7 @@ function App() {
     <MotionConfig reducedMotion="user">
       <ReactLenis root options={{ autoRaf: true, lerp: 0.1, duration: 1.1, anchors: true }}>
         <LenisScrollTriggerBridge />
+        <HeroBlobs />
         <div className={styles.App}>
           <Navbar />
           <Hero />

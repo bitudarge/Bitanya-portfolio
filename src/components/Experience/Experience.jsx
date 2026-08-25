@@ -28,7 +28,6 @@ function StepContent({ item, index, stepCount }) {
   return (
     <>
       <div className={styles.stepHeader}>
-        <span className={styles.stepNum}>{String(index + 1).padStart(2, "0")}</span>
         <span className={styles.stepRule} />
       </div>
       <div className={styles.roleOrgLine}>

@@ -1,18 +1,21 @@
 :root {
-  /* Warm editorial base: cream page, ink-dark text for strong contrast */
-  --color-bg: #faf5ec;
-  --color-bg-rgb: 250, 245, 236;
-  --color-surface: #fffdf8;
-  --color-text: #221a12;
-  --color-text-muted: #6b5c4a;
-  --color-border: #e8dfd0;
+  /* Clean white base, dark text for strong contrast */
+  --color-bg: #ffffff;
+  --color-bg-rgb: 255, 255, 255;
+  --color-surface: #fafafa;
+  --color-surface-rgb: 250, 250, 250;
+  --color-text: #1a1a1a;
+  --color-text-muted: #5c5c5c;
+  --color-border: #e5e5e5;
 
-  /* One saturated pink accent, used sparingly and deliberately */
-  --color-accent: #ec4899;
+  /* One saturated pink accent, used sparingly and deliberately.
+     #db2777 rather than the brighter #ec4899: clears WCAG AA 4.5:1
+     text contrast on white; #ec4899 only hits ~3.5:1. */
+  --color-accent: #db2777;
   --color-accent-soft: #fce7f3;
 
   /* Shadow tokens derive from the ink color, not a separate hardcoded value */
-  --shadow-color: 34, 26, 18;
+  --shadow-color: 26, 26, 26;
 
   --font-display: "Fraunces", Georgia, serif;
   --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;

@@ -46,8 +46,8 @@ export const About = () => {
           Right now I&rsquo;m a part-time student <span className="text-accent">Data Analyst</span>{" "}
           at <span className="text-accent">John Deere</span>, where I centralize product
           data and build dashboards that speed up real business calls. I also work as a{" "}
-          <span className="text-accent">Data Science intern </span>, where I Built predictive models and data pipelines to improve student success and retention outcomes.
-
+          <span className="text-accent">Data Science Intern</span>, where I built predictive
+          models and data pipelines to improve student success and retention outcomes.
         </p>
 
         <p className={styles.lede}>

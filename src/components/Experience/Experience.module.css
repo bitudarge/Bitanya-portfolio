@@ -20,21 +20,6 @@
   margin-bottom: 20px;
 }
 
-.stepNum {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 2px solid var(--color-accent-soft);
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: var(--color-accent);
-  flex-shrink: 0;
-}
-
 .stepRule {
   flex: 1;
   height: 1px;
