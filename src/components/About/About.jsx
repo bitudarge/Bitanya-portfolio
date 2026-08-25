@@ -37,17 +37,20 @@ export const About = () => {
         <h2 className={styles.title}>About Me</h2>
 
         <p className={styles.lede}>
-          I&rsquo;m a Data Science and Neuroscience student at{" "}
-          <span className="text-accent">Augustana College</span>, and I love
-          building things that turn messy data into clear decisions.
+          I&rsquo;m a{" "}
+          <span className="text-accent">Data Science and Neuroscience</span> student at
+          Augustana College, and I love building things that turn messy data into clear
+          decisions.
         </p>
 
         <p className={styles.lede}>
           Right now I&rsquo;m a part-time student <span className="text-accent">Data Analyst</span>{" "}
           at <span className="text-accent">John Deere</span>, where I centralize product
-          data and build dashboards that speed up real business calls. I also work as a{" "}
-          <span className="text-accent">Data Science Intern</span>, where I built predictive
-          models and data pipelines to improve student success and retention outcomes.
+          data and build dashboards that cut resolution time by{" "}
+          <span className="text-accent">80%</span>. I also work as a{" "}
+          <span className="text-accent">Data Science Intern</span>, where I built a
+          predictive model with <span className="text-accent">85% accuracy</span> to flag
+          at-risk students early.
         </p>
 
         <p className={styles.lede}>

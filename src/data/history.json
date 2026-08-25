@@ -1,5 +1,18 @@
 [
   {
+    "id": "Data-intern",
+    "role": "Data Science Intern",
+    "org": "Institutional Research",
+    "location": "",
+    "start": "2026-05",
+    "end": "2026-08",
+    "summary": "Built predictive analytics and data solutions to improve student retention.",
+    "bullets": [
+      "Developed an 85% accurate model identifying 300+ at-risk students.",
+      "Centralized student data and delivered executive dashboards for decision-making."
+    ]
+  },
+  {
     "id": "john-deere-2025",
     "role": "Data Analyst",
     "org": "John Deere",
@@ -23,19 +36,6 @@
     "bullets": [
       "Standardized 10+ datasets into a consistent, analysis-ready format.",
       "Ran exploratory analysis and feature engineering to surface modeling-ready signal."
-    ]
-  },
-  {
-    "id": "Data-intern",
-    "role": "Data Science Intern",
-    "org": "Institutional Research",
-    "location": "",
-    "start": "2026-05",
-    "end": "2026-08",
-    "summary": "Built predictive analytics and data solutions to improve student retention.",
-    "bullets": [
-      "Developed an 85% accurate model identifying 300+ at-risk students.",
-      "Centralized student data and delivered executive dashboards for decision-making."
     ]
   },
   {

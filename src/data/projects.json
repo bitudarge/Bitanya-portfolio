@@ -1,17 +1,18 @@
 [
   {
+    "title": "Alzheimer's Screening Model",
+    "imageSrc": "projects/alzheimers.png",
+    "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",
+    "skills": ["Python", "Machine Learning"],
+    "source": "https://github.com/bitudarge/Alzheimer-s-screening-model",
+    "poster": "projects/alzheimers-poster.pdf"
+  },
+  {
     "title": "SaaS Churn Prediction",
     "imageSrc": "projects/saas.png",
     "description": "A logistic regression model that flags which SaaS customers are about to churn, before they do.",
     "skills": ["Python", "Logistic Regression"],
     "source": "https://github.com/bitudarge/SaaS-Retention-model?tab=readme-ov-file#saas-churn-prediction-project"
-  },
-  {
-    "title": "Alzheimer's Screening Model",
-    "imageSrc": "projects/alzheimers.png",
-    "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",
-    "skills": ["Python", "Machine Learning"],
-    "source": "https://github.com/bitudarge/Alzheimer-s-screening-model"
   },
   {
     "title": "Disease Insights",

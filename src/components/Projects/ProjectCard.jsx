@@ -4,7 +4,7 @@ import styles from "./ProjectCard.module.css";
 import { getImageUrl } from "../../utils";
 
 export const ProjectCard = ({
-  project: { title, imageSrc, description, skills, demo, source },
+  project: { title, imageSrc, description, skills, demo, source, poster },
   index = 0,
 }) => {
   const prefersReducedMotion = useReducedMotion();
@@ -45,6 +45,11 @@ export const ProjectCard = ({
         {demo && (
           <a href={demo} target="_blank" rel="noreferrer" className={styles.link}>
             Live
+          </a>
+        )}
+        {poster && (
+          <a href={getImageUrl(poster)} target="_blank" rel="noreferrer" className={styles.link}>
+            Poster
           </a>
         )}
       </div>

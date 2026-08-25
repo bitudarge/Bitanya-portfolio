@@ -1,14 +1,14 @@
 @import "../../vars.css";
 
 .footer {
-  padding: 48px 0 40px;
+  padding: 72px 0 64px;
   text-align: center;
 }
 
 .iconsRow {
   display: flex;
   justify-content: center;
-  gap: 28px;
+  gap: 36px;
 }
 
 .icon {
