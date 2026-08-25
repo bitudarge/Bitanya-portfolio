@@ -1,21 +1,31 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styles from "./About.module.css";
-import { useParallax } from "../../hooks/useParallax";
+
+const technologies = [
+  "Python",
+  "SQL",
+  "scikit-learn",
+  "pandas",
+  "Power BI",
+  "Tableau",
+  "Databricks",
+  "React",
+  "Git/GitHub",
+  "Jupyter",
+];
 
 const listVariants = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.08 } },
+  show: { transition: { staggerChildren: 0.05 } },
 };
 
 const itemVariants = {
-  hidden: { opacity: 0, y: 14 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  hidden: { opacity: 0, y: 10 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
 export const About = () => {
-  const eyebrowRef = useParallax(-24);
-
   return (
     <section className={styles.container} id="about">
       <motion.div
@@ -24,38 +34,65 @@ export const About = () => {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span ref={eyebrowRef} className={styles.eyebrow}>02 — About</span>
         <h2 className={styles.title}>About Me</h2>
 
         <p className={styles.lede}>
-          I turn ambiguity into decisions. Give me a stakeholder question with no
-          clean answer and I&rsquo;ll build the dashboard that settles it; give me a
-          flow that&rsquo;s losing users and I&rsquo;ll find the friction and design
-          it out. I move fluidly between analysis and design — quantifying what&rsquo;s
-          actually happening, then shaping what should happen next.
+          I&rsquo;m a Data Science and Neuroscience student at{" "}
+          <span className="text-accent">Augustana College</span>, and I love
+          building things that turn messy data into clear decisions.
+        </p>
+
+        <p className={styles.meta}>Expected graduation: December 2026</p>
+
+        <p className={styles.lede}>
+          Right now I&rsquo;m a part-time <span className="text-accent">Data Analyst</span>{" "}
+          at <span className="text-accent">John Deere</span>, where I centralize product
+          data and build dashboards that speed up real business calls. I also work as a{" "}
+          <span className="text-accent">Research Assistant</span>, building predictive
+          models to identify at-risk students early and to screen for early
+          Alzheimer&rsquo;s risk. On the side, I co-founded{" "}
+          <span className="text-accent">CampusEX</span>, a student marketplace serving{" "}
+          <span className="text-accent">500+</span> users, where I get to mix product
+          thinking with analytics.
+        </p>
+
+        <p className={styles.lede}>
+          Outside of work I founded and lead the{" "}
+          <span className="text-accent">Data Analytics Club</span> (
+          <span className="text-accent">100+</span> members), organize{" "}
+          <span className="text-accent">HackAugie</span>, and mentor{" "}
+          <span className="text-accent">90+</span> residents as an RA. I&rsquo;m drawn to
+          the space where data, product, and people meet, and I like projects where I get
+          to build something real and watch it get used.
         </p>
       </motion.div>
 
-      <motion.ul
-        className={styles.highlights}
-        variants={listVariants}
-        initial="hidden"
-        whileInView="show"
+      <motion.div
+        className={styles.techBlock}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
       >
-        <motion.li variants={itemVariants}>
-          <span>Data analyst</span> — surfaces the pattern in the noise and builds
-          the dashboard that ends the debate.
-        </motion.li>
-        <motion.li variants={itemVariants}>
-          <span>Research-minded collaborator</span> — turns a messy dataset into a
-          decision a team can act on.
-        </motion.li>
-        <motion.li variants={itemVariants}>
-          <span>Connector</span> — gets the right people in the room, and the room
-          actually working.
-        </motion.li>
-      </motion.ul>
+        <h3 className={styles.techHeading}>
+          Technologies I&rsquo;m <span className="text-accent">currently using</span>
+        </h3>
+
+        <motion.ul
+          className={styles.techGrid}
+          variants={listVariants}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+        >
+          {technologies.map((tech) => (
+            <motion.li key={tech} className={styles.techItem} variants={itemVariants}>
+              <span className={styles.techMarker} aria-hidden="true" />
+              {tech}
+            </motion.li>
+          ))}
+        </motion.ul>
+      </motion.div>
     </section>
   );
 };

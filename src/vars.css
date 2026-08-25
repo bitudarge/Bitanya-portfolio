@@ -1,5 +1,5 @@
 :root {
-  /* Warm editorial base — cream page, ink-dark text for strong contrast */
+  /* Warm editorial base: cream page, ink-dark text for strong contrast */
   --color-bg: #faf5ec;
   --color-bg-rgb: 250, 245, 236;
   --color-surface: #fffdf8;
@@ -8,8 +8,8 @@
   --color-border: #e8dfd0;
 
   /* One saturated pink accent, used sparingly and deliberately */
-  --color-accent: #c81e5b;
-  --color-accent-soft: #f5d9e3;
+  --color-accent: #ec4899;
+  --color-accent-soft: #fce7f3;
 
   /* Shadow tokens derive from the ink color, not a separate hardcoded value */
   --shadow-color: 34, 26, 18;

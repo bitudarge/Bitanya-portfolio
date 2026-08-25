@@ -2,7 +2,7 @@
   {
     "title": "SaaS Churn Prediction",
     "imageSrc": "projects/saas.png",
-    "description": "A logistic regression model that flags which SaaS customers are about to churn — before they do.",
+    "description": "A logistic regression model that flags which SaaS customers are about to churn, before they do.",
     "skills": ["Python", "Logistic Regression"],
     "source": "https://github.com/bitudarge/SaaS-Retention-model?tab=readme-ov-file#saas-churn-prediction-project"
   },
@@ -16,7 +16,7 @@
   {
     "title": "Disease Insights",
     "imageSrc": "projects/diseaseinsight.png",
-    "description": "Exploratory analysis of disease data — from raw numbers to the patterns worth acting on.",
+    "description": "Exploratory analysis of disease data, from raw numbers to the patterns worth acting on.",
     "skills": ["Python", "numpy", "pandas", "matplotlib"],
     "source": "https://github.com/bitudarge/Disease-Insight"
   },
@@ -33,13 +33,5 @@
     "description": "A Java tool that breaks complex shapes down into their component parts and visualizes the decomposition.",
     "skills": ["Java", "Data Structures"],
     "source": "https://github.com/bitudarge/Shape-Decomposer"
-  },
-  {
-    "title": "REM",
-    "imageSrc": null,
-    "description": "An interactive scrollytelling site on how sleep deprivation impairs attention, memory, and mood. Users enter their own sleep pattern and get a personalized simulation — animated charts, a 3D brain visualization, and pinned scroll-driven narrative chapters.",
-    "skills": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "D3.js", "Three.js", "Zustand"],
-    "source": "https://github.com/bitudarge/REM",
-    "demo": "https://rem-blush.vercel.app"
   }
 ]

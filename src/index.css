@@ -15,3 +15,8 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
 }
+
+.text-accent {
+  color: var(--color-accent);
+  font-weight: 600;
+}

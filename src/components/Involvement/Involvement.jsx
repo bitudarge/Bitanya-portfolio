@@ -3,7 +3,6 @@ import { motion, useReducedMotion } from "framer-motion";
 import styles from "./Involvement.module.css";
 import data from "../../data/involvement.json";
 import { getImageUrl } from "../../utils";
-import { useParallax } from "../../hooks/useParallax";
 
 const listVariants = {
   hidden: {},
@@ -17,7 +16,6 @@ const itemVariants = {
 
 export const Involvement = () => {
   const prefersReducedMotion = useReducedMotion();
-  const eyebrowRef = useParallax(-24);
 
   return (
     <section className={styles.container} id="involvement" aria-labelledby="inv-title">
@@ -27,7 +25,6 @@ export const Involvement = () => {
         viewport={{ once: true }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
       >
-        <span ref={eyebrowRef} className={styles.eyebrow}>05 — Involvement</span>
         <h2 id="inv-title" className={styles.title}>Involvement</h2>
       </motion.div>
 

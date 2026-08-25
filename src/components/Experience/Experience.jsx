@@ -3,7 +3,6 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import styles from "./Experience.module.css";
 import history from "../../data/history.json";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
-import { useParallax } from "../../hooks/useParallax";
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -131,7 +130,6 @@ function StackedCards({ items, animate }) {
 export const Experience = () => {
   const prefersReducedMotion = useReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 900px)");
-  const eyebrowRef = useParallax(-24);
 
   return (
     <section className={styles.container} id="experience">
@@ -141,7 +139,6 @@ export const Experience = () => {
         viewport={{ once: true }}
         transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
       >
-        <span ref={eyebrowRef} className={styles.eyebrow}>03 — Experience</span>
         <h2 className={styles.title}>Experience</h2>
       </motion.div>
 

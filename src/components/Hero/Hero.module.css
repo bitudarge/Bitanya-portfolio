@@ -5,27 +5,48 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  justify-content: center;
+  min-height: 90vh;
   margin: 0 10%;
-  padding: 160px 0 96px;
+  padding: 96px 0;
   color: var(--color-text);
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.eyebrow {
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 20px;
+/* Subtle animated mesh gradient, contained to the hero */
+.meshBg {
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.14;
+  filter: blur(90px);
+  background:
+    radial-gradient(24% 24% at 14% 20%, var(--color-accent) 0%, transparent 70%),
+    radial-gradient(20% 20% at 84% 14%, var(--color-accent) 0%, transparent 70%),
+    radial-gradient(26% 26% at 72% 82%, var(--color-accent) 0%, transparent 70%);
+  background-repeat: no-repeat;
+  animation: meshDrift 28s ease-in-out infinite alternate;
+  will-change: transform;
 }
 
-.title {
+@keyframes meshDrift {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-2%, 2%, 0) scale(1.06); }
+  100% { transform: translate3d(2%, -2%, 0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .meshBg { animation: none; }
+}
+
+.name {
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(2.75rem, 6vw, 5rem);
   line-height: 1.05;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: var(--color-text);
 }
 
@@ -34,7 +55,6 @@
   font-size: clamp(1.25rem, 2.4vw, 1.75rem);
   font-weight: 400;
   color: var(--color-text-muted);
-  margin-bottom: 40px;
 }
 
 .type {
@@ -57,48 +77,9 @@
   .cursor { animation: none; opacity: 1; }
 }
 
-.ctaRow {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-bottom: 64px;
-}
-
-.btn {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-body);
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  color: var(--color-text-muted);
-  padding-bottom: 4px;
-  border-bottom: 2px solid var(--color-border);
-  transition: color 160ms ease, border-color 160ms ease;
-}
-.btn:hover {
-  color: var(--color-text);
-  border-color: var(--color-text-muted);
-}
-
-.btnPrimary {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-}
-.btnPrimary:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
-  opacity: 0.8;
-}
-
-.rule {
-  width: 100%;
-  height: 1px;
-  background: var(--color-border);
-}
-
 @media screen and (max-width: 830px) {
   .container {
-    padding: 120px 0 72px;
+    min-height: 70vh;
+    padding: 72px 0;
   }
 }

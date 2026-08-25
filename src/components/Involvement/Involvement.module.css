@@ -5,17 +5,6 @@
   color: var(--color-text);
 }
 
-.eyebrow {
-  display: block;
-  font-family: var(--font-body);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-accent);
-  margin-bottom: 16px;
-}
-
 .title {
   font-family: var(--font-display);
   font-weight: 600;
