@@ -1,45 +1,42 @@
 [
   {
     "id": "john-deere-2025",
-    "role": " Data Analyst",
+    "role": "Data Analyst",
     "org": "John Deere",
     "location": "",
     "start": "2025-03",
     "end": "Present",
-    "summary": "Automated lookups and built dashboards for support operations.",
+    "summary": "Rebuilt the manual lookup process support reps relied on and shipped the dashboards that replaced it.",
     "bullets": [
-      "Automated lookups, cut time 80%.",
-      "Built dashboards for 10,000+ records."
-    ],
-    "logo": "history/John_Deere_logo.png"
+      "Automated a manual lookup workflow, cutting resolution time by 80%.",
+      "Built dashboards surfacing 10,000+ records for support operations."
+    ]
   },
   {
-    "id": "augustna-research-2025",
+    "id": "augustana-research-2025",
     "role": "Data Analytics Research Assistant",
     "org": "Augustana College",
     "location": "",
     "start": "2025-09",
     "end": "2025-12",
-    "summary": "Data cleaning and analysis for Alzheimer’s research datasets.",
+    "summary": "Cleaned and standardized Alzheimer's research data to make it usable for downstream modeling.",
     "bullets": [
-      "Standardized 10+ datasets.",
-      "Performed EDA and feature engineering."
-    ],
-    "logo": "history/osl.jpg"
+      "Standardized 10+ datasets into a consistent, analysis-ready format.",
+      "Ran exploratory analysis and feature engineering to surface modeling-ready signal."
+    ]
   },
   {
     "id": "edge-2024",
     "role": "UI/UX Designer",
     "org": "EDGE",
     "location": "",
-    "start": "2024-10",
-    "end": "2024-05",
-    "summary": "Prototyping and experimentation to improve navigation and retention.",
+    "start": "2024-05",
+    "end": "2024-10",
+    "summary": "Prototyped and tested navigation changes to make the product easier to stay in.",
     "bullets": [
-      "Designed prototypes improving navigation scores.",
-      "Ran A/B tests, boosted retention 15%."
-    ],
-    "logo": "history/edge.png"
+      "Designed prototypes that improved navigation scores.",
+      "Ran A/B tests that boosted retention 15%."
+    ]
   },
   {
     "id": "osl-2024",
@@ -47,12 +44,11 @@
     "org": "OSL",
     "location": "",
     "start": "2024-05",
-    "end": "present",
-    "summary": "Roadmap definition and MVP delivery for a growing user base.",
+    "end": "Present",
+    "summary": "Owned the roadmap and shipped the MVP for a fast-growing user base.",
     "bullets": [
-      "Defined roadmap for 500+ users.",
-      "Delivered MVP 30% faster release."
-    ],
-    "logo": "history/osl.jpg"
+      "Defined the product roadmap for 500+ users.",
+      "Delivered the MVP on a 30% faster release timeline."
+    ]
   }
 ]

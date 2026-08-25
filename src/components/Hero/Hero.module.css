@@ -1,183 +1,104 @@
 @import "../../vars.css";
 
-/* Cohesive hero (no card box) */
 .container {
   position: relative;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 49px;
-  margin-left: 10%;
-  margin-right: 10%;
-  z-index: 1;
-  isolation: isolate;
-  overflow: visible;
-  background: transparent;
-}
-
-/* Full-viewport background for home route */
-.bgLayer {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Sparkles across page */
-.sparklesFixed {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-.star {
-  position: absolute;
-  background: radial-gradient(circle, rgba(255,255,255,0.95), rgba(255,255,255,0) 70%);
-  border-radius: 50%;
-  opacity: 0.6;
-  animation: twinkle infinite ease-in-out;
-}
-@keyframes twinkle {
-  0%   { opacity: 0.15; transform: scale(1) }
-  50%  { opacity: 1;    transform: scale(1.6) }
-  100% { opacity: 0.15; transform: scale(1) }
-}
-
-
-
-/* Foreground content */
-.content {
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: 0 10%;
+  padding: 160px 0 96px;
   color: var(--color-text);
-  z-index: 2;
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 20px;
 }
 
 .title {
-  font-size: clamp(48px, 7.5vw, 96px);
-  font-weight: 700;
-  margin-bottom: 18px;
-  font-family: var(--font-roboto);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.75rem, 6vw, 5rem);
   line-height: 1.05;
-  background: linear-gradient(90deg, var(--preppy-purple) 0%, var(--preppy-rose) 60%, rgba(255,255,255,0) 120%);
-  -webkit-text-fill-color: transparent;
-  -webkit-background-clip: text;
+  margin-bottom: 20px;
+  color: var(--color-text);
 }
 
-/* Rotating line under the title */
-/* Bigger, lighter subtitle for contrast on purple */
 .subtitle {
-  font-size: clamp(24px, 3.2vw, 40px);
-  margin-bottom: 2rem;
-  font-weight: 800;
-  color: #fdf7ff; 
-  text-shadow: 0 1px 3px rgba(0,0,0,0.25);
+  font-family: var(--font-body);
+  font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-bottom: 40px;
 }
 
-/* Typewriter word + cursor */
 .type {
-  font-weight: 900;
-  color: var(--preppy-rose); /* lighter pink so it doesn't blend into purple */
+  font-weight: 600;
+  color: var(--color-text);
 }
 
-/* Blinking cursor */
 .cursor {
   display: inline-block;
-  margin-left: 3px;
+  margin-left: 2px;
   width: 1ch;
-  color: #fdf7ff;                 /* cursor color */
+  color: var(--color-accent);
   animation: blink 1s steps(2, start) infinite;
 }
 @keyframes blink {
   0%, 49% { opacity: 1; }
   50%, 100% { opacity: 0; }
 }
-
-/* Respect reduced motion: keep cursor visible, no blink */
 @media (prefers-reduced-motion: reduce) {
   .cursor { animation: none; opacity: 1; }
 }
 
-
-
-/* Optional supporting line (your original paragraph kept) */
-.description {
-  font-size: clamp(16px, 2.4vw, 22px);
-  margin-bottom: 28px;
-  opacity: 0.92;
-  max-width: 52ch;
+.ctaRow {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 64px;
 }
 
-/* Buttons */
-.ctaRow { display: flex; gap: 12px; flex-wrap: wrap; }
-
-/* Unified cute buttons */
 .btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  padding: 12px 18px;
-  border-radius: 999px;
-  font-weight: 800;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
   text-decoration: none;
-  transition: transform 120ms ease, box-shadow 140ms ease, filter 140ms ease;
-  will-change: transform, filter;
+  color: var(--color-text-muted);
+  padding-bottom: 4px;
+  border-bottom: 2px solid var(--color-border);
+  transition: color 160ms ease, border-color 160ms ease;
 }
-.btn:active { transform: translateY(1px) scale(0.99); }
+.btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text-muted);
+}
+
 .btnPrimary {
-  background: linear-gradient(135deg, var(--preppy-pink), var(--preppy-lilac));
-  color: #1b1030;
-  box-shadow: 0 8px 18px rgba(246, 133, 214, 0.35);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
 }
-.btnPrimary:hover { filter: saturate(1.05) brightness(1.05); transform: translateY(-2px); }
-
-/* Portrait image motion */
-.heroImg {
-  width: min(58%, 620px);
-  z-index: 2;
-  will-change: transform;
-  transition: transform 120ms ease-out;
-  animation: floating 3.4s ease-in-out infinite;
-}
-@keyframes floating {
-  0%   { transform: translate3d(0,0,0) }
-  50%  { transform: translate3d(0,8px,0) }
-  100% { transform: translate3d(0,0,0) }
+.btnPrimary:hover {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+  opacity: 0.8;
 }
 
-/* Soft glow blobs */
-.topBlur, .bottomBlur {
-  position: absolute;
-  border-radius: 764px;
-  filter: blur(100px);
-  z-index: 0;
-  opacity: 0.35;
-}
-.topBlur {
-  width: 46vw;
-  height: 46vw;
-  top: -128px;
-  left: -10vw;
-  background: rgba(250, 162, 204, 0.35);
-}
-.bottomBlur {
-  width: 60vw;
-  height: 46vw;
-  bottom: -10vh;
-  right: -20vw;
-  background: rgba(48, 9, 76, 0.35);
+.rule {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border);
 }
 
-/* Fade animation for rotating role */
-@keyframes roleFade {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive */
 @media screen and (max-width: 830px) {
-  .content { align-items: center; text-align: center; }
-  .heroImg { width: 86%; }
+  .container {
+    padding: 120px 0 72px;
+  }
 }

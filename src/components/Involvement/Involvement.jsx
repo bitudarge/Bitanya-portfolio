@@ -1,31 +1,54 @@
 import React from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import styles from "./Involvement.module.css";
 import data from "../../data/involvement.json";
 import { getImageUrl } from "../../utils";
+import { useParallax } from "../../hooks/useParallax";
 
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07 } },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
 
 export const Involvement = () => {
-  // If you want newest first by inferred dates, sort here.
-  const items = [...data];
+  const prefersReducedMotion = useReducedMotion();
+  const eyebrowRef = useParallax(-24);
 
   return (
     <section className={styles.container} id="involvement" aria-labelledby="inv-title">
-      <h2 id="inv-title" className={styles.title}>Involvement</h2>
+      <motion.div
+        initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
+      >
+        <span ref={eyebrowRef} className={styles.eyebrow}>05 — Involvement</span>
+        <h2 id="inv-title" className={styles.title}>Involvement</h2>
+      </motion.div>
 
-      <ul className={styles.list} role="list">
-        {items.map((item, idx) => {
+      <motion.ul
+        className={styles.list}
+        role="list"
+        variants={listVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, margin: "-60px" }}
+      >
+        {data.map((item, idx) => {
           const initials = (item.org || item.title || "")
             .split(" ")
             .filter(Boolean)
             .slice(0, 2)
-            .map(s => s[0]?.toUpperCase() || "")
+            .map((s) => s[0]?.toUpperCase() || "")
             .join("");
 
           return (
-            <li key={item.id ?? idx} className={styles.row}>
-              {/* Accent rail per card with slight color variation */}
-              <div className={`${styles.rail} ${styles[`v${(idx % 5) + 1}`]}`} aria-hidden="true" />
-
+            <motion.li key={item.id ?? idx} className={styles.row} variants={itemVariants}>
               <article className={styles.card}>
                 <header className={styles.header}>
                   <span className={styles.logoWrap} aria-hidden={item.logo ? "false" : "true"}>
@@ -40,7 +63,7 @@ export const Involvement = () => {
                     <h3 className={styles.cardTitle}>{item.title}</h3>
                     <div className={styles.metaLine}>
                       {item.role && <span className={styles.role}>{item.role}</span>}
-                      {item.role && item.org && <span className={styles.sep}>•</span>}
+                      {item.role && item.org && <span className={styles.sep}>·</span>}
                       {item.org && <span className={styles.org}>{item.org}</span>}
                     </div>
                   </div>
@@ -48,14 +71,12 @@ export const Involvement = () => {
                   {item.date && <time className={styles.when}>{item.date}</time>}
                 </header>
 
-                {item.description && (
-                  <p className={styles.blurb}>{item.description}</p>
-                )}
+                {item.description && <p className={styles.blurb}>{item.description}</p>}
               </article>
-            </li>
+            </motion.li>
           );
         })}
-      </ul>
+      </motion.ul>
     </section>
   );
 };

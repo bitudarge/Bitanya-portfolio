@@ -2,37 +2,44 @@
   {
     "title": "SaaS Churn Prediction",
     "imageSrc": "projects/saas.png",
-    "description": "SaaS customer churn prediction model",
+    "description": "A logistic regression model that flags which SaaS customers are about to churn — before they do.",
     "skills": ["Python", "Logistic Regression"],
     "source": "https://github.com/bitudarge/SaaS-Retention-model?tab=readme-ov-file#saas-churn-prediction-project"
   },
   {
-    "title": "Alzheimer's Screening model",
+    "title": "Alzheimer's Screening Model",
     "imageSrc": "projects/alzheimers.png",
-    "description": "Early Alzheimer's screening model",
+    "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",
     "skills": ["Python", "Machine Learning"],
     "source": "https://github.com/bitudarge/Alzheimer-s-screening-model"
   },
   {
     "title": "Disease Insights",
     "imageSrc": "projects/diseaseinsight.png",
-    "description": "Dissease data analysis and insights",
+    "description": "Exploratory analysis of disease data — from raw numbers to the patterns worth acting on.",
     "skills": ["Python", "numpy", "pandas", "matplotlib"],
-    "source": "https://github.com/bitudarge/Dissease-Insight"
+    "source": "https://github.com/bitudarge/Disease-Insight"
   },
-
   {
     "title": "Market Trends Prediction",
     "imageSrc": "projects/retailanalytics.png",
-    "description": "Sales data analysis and visualization",
+    "description": "A Tableau breakdown of sales data that turns raw transactions into the trends leadership actually needs.",
     "skills": ["Tableau", "Data Analysis"],
     "source": "https://public.tableau.com/app/profile/bitanya.darge/viz/BitanyaDarge/SalesDetail"
   },
   {
     "title": "Shape Decomposer",
     "imageSrc": "projects/shapedecomposer.png",
-    "description": "Visualizes and decomposes shapes into smaller components.",
-    "skills": ["Java", "DataStructres"],
+    "description": "A Java tool that breaks complex shapes down into their component parts and visualizes the decomposition.",
+    "skills": ["Java", "Data Structures"],
     "source": "https://github.com/bitudarge/Shape-Decomposer"
+  },
+  {
+    "title": "REM",
+    "imageSrc": null,
+    "description": "An interactive scrollytelling site on how sleep deprivation impairs attention, memory, and mood. Users enter their own sleep pattern and get a personalized simulation — animated charts, a 3D brain visualization, and pinned scroll-driven narrative chapters.",
+    "skills": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "D3.js", "Three.js", "Zustand"],
+    "source": "https://github.com/bitudarge/REM",
+    "demo": "https://rem-blush.vercel.app"
   }
 ]

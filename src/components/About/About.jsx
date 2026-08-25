@@ -1,90 +1,61 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { motion } from "framer-motion";
 import styles from "./About.module.css";
-import { getImageUrl } from "../../utils";
+import { useParallax } from "../../hooks/useParallax";
 
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.08 } },
+};
 
-const hobbies = [
-  { img: getImageUrl("about/painting.png"), title: "Painting", blurb: "Colors, creativity, and a calm mind at work." },
-  { img: getImageUrl("about/figma.png"),   title: "Design",  blurb: "Figma mockups, color palettes, typography." },
-  { img: getImageUrl("about/coffee.png"),  title: "Cafés",   blurb: "Matcha, playlists, and study ambience." },
-  { img: getImageUrl("about/nature.png"), title: "Nature",blurb: "Fresh air, long walks, and quiet thinking spots."},
-];
+const itemVariants = {
+  hidden: { opacity: 0, y: 14 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+};
 
 export const About = () => {
-  const sectionRef = useRef(null);
-
-  // Stagger-in reveal when section enters viewport
-  useEffect(() => {
-    const root = sectionRef.current;
-    if (!root) return;
-    const items = root.querySelectorAll(`.${styles.reveal}`);
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add(styles.in);
-        });
-      },
-      { threshold: 0.15 }
-    );
-    items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  // Subtle hover tilt for hobby cards
-  const onCardMove = (e) => {
-    const el = e.currentTarget;
-    const r = el.getBoundingClientRect();
-    const dx = (e.clientX - (r.left + r.width / 2)) / r.width;  // -0.5..0.5
-    const dy = (e.clientY - (r.top + r.height / 2)) / r.height; // -0.5..0.5
-    el.style.setProperty("--tiltX", `${dy * -6}deg`);
-    el.style.setProperty("--tiltY", `${dx * 6}deg`);
-  };
-  const onCardLeave = (e) => {
-    const el = e.currentTarget;
-    el.style.setProperty("--tiltX", `0deg`);
-    el.style.setProperty("--tiltY", `0deg`);
-  };
+  const eyebrowRef = useParallax(-24);
 
   return (
-    <section ref={sectionRef} className={styles.container} id="about">
-      {/* Decorative rotating blob in the back */}
-      <div className={`${styles.blob} ${styles.reveal}`} aria-hidden="true" />
+    <section className={styles.container} id="about">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <span ref={eyebrowRef} className={styles.eyebrow}>02 — About</span>
+        <h2 className={styles.title}>About Me</h2>
 
-      <div className={styles.columns}>
-        {/* Left: text column */}
-        <div className={`${styles.left} ${styles.reveal}`}>
-          <h2 className={styles.title}>About Me</h2>
-          <p className={styles.lede}>
-           I love building things that make life easier and more meaningful. Whether it’s designing a smoother user experience, turning data into clear insights, or creating spaces for people to connect, I’m at my best when I’m blending creativity with problem-solving.
-          </p>
+        <p className={styles.lede}>
+          I turn ambiguity into decisions. Give me a stakeholder question with no
+          clean answer and I&rsquo;ll build the dashboard that settles it; give me a
+          flow that&rsquo;s losing users and I&rsquo;ll find the friction and design
+          it out. I move fluidly between analysis and design — quantifying what&rsquo;s
+          actually happening, then shaping what should happen next.
+        </p>
+      </motion.div>
 
-          <ul className={styles.highlights}>
-            <li><span>Data analyst</span> uncovering patterns, building dashboards, and driving insight.</li>
-            <li><span>Research-minded collaborator</span> turning findings into practical, user-centered solutions.</li>
-            <li><span>Connector</span> fostering teamwork, growth, and meaningful impact.</li>
-          </ul>
-        </div>
-
-        {/* Right: animated “hobby” grid */}
-        <div className={`${styles.right} ${styles.reveal}`}>
-          <div className={styles.hobbyGrid}>
-            {hobbies.map((h, i) => (
-              <article
-                key={i}
-                className={`${styles.card} ${styles[`card${(i % 4) + 1}`]}`}
-                onMouseMove={onCardMove}
-                onMouseLeave={onCardLeave}
-              >
-                <div className={styles.cardImgWrap}>
-                  <img src={h.img} alt={h.title} className={styles.cardImg} />
-                </div>
-                <h3 className={styles.cardTitle}>{h.title}</h3>
-                <p className={styles.cardBlurb}>{h.blurb}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </div>
+      <motion.ul
+        className={styles.highlights}
+        variants={listVariants}
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true }}
+      >
+        <motion.li variants={itemVariants}>
+          <span>Data analyst</span> — surfaces the pattern in the noise and builds
+          the dashboard that ends the debate.
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <span>Research-minded collaborator</span> — turns a messy dataset into a
+          decision a team can act on.
+        </motion.li>
+        <motion.li variants={itemVariants}>
+          <span>Connector</span> — gets the right people in the room, and the room
+          actually working.
+        </motion.li>
+      </motion.ul>
     </section>
   );
 };
