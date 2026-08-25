@@ -42,25 +42,18 @@ export const About = () => {
           building things that turn messy data into clear decisions.
         </p>
 
-        <p className={styles.meta}>Expected graduation: December 2026</p>
-
         <p className={styles.lede}>
-          Right now I&rsquo;m a part-time <span className="text-accent">Data Analyst</span>{" "}
+          Right now I&rsquo;m a part-time student <span className="text-accent">Data Analyst</span>{" "}
           at <span className="text-accent">John Deere</span>, where I centralize product
           data and build dashboards that speed up real business calls. I also work as a{" "}
-          <span className="text-accent">Research Assistant</span>, building predictive
-          models to identify at-risk students early and to screen for early
-          Alzheimer&rsquo;s risk. On the side, I co-founded{" "}
-          <span className="text-accent">CampusEX</span>, a student marketplace serving{" "}
-          <span className="text-accent">500+</span> users, where I get to mix product
-          thinking with analytics.
+          <span className="text-accent">Data Science intern </span>, where I Built predictive models and data pipelines to improve student success and retention outcomes.
+
         </p>
 
         <p className={styles.lede}>
           Outside of work I founded and lead the{" "}
           <span className="text-accent">Data Analytics Club</span> (
-          <span className="text-accent">100+</span> members), organize{" "}
-          <span className="text-accent">HackAugie</span>, and mentor{" "}
+          <span className="text-accent">100+</span> members), and mentored{" "}
           <span className="text-accent">90+</span> residents as an RA. I&rsquo;m drawn to
           the space where data, product, and people meet, and I like projects where I get
           to build something real and watch it get used.
