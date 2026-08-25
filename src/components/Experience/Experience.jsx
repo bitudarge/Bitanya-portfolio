@@ -27,14 +27,9 @@ function StepDots({ count, activeIndex }) {
 function StepContent({ item, index, stepCount }) {
   return (
     <>
-      <div className={styles.stepHeader}>
-        <span className={styles.stepRule} />
-      </div>
-      <div className={styles.roleOrgLine}>
-        <h3 className={styles.role}>{item.role}</h3>
-        <span className={styles.org}>{item.org}</span>
-      </div>
       <span className={styles.range}>{formatRange(item.start, item.end)}</span>
+      <h3 className={styles.role}>{item.role}</h3>
+      <span className={styles.org}>{item.org}</span>
       <p className={styles.summary}>{item.summary}</p>
       {Array.isArray(item.bullets) && item.bullets.length > 0 && (
         <ul className={styles.bullets}>

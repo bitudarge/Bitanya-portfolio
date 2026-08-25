@@ -13,48 +13,33 @@
 }
 
 /* Shared step content */
-.stepHeader {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-.stepRule {
-  flex: 1;
-  height: 1px;
-  background: var(--color-border);
-}
-
-.roleOrgLine {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 6px;
-}
-
 .role {
+  display: block;
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   color: var(--color-text);
+  padding-right: 96px;
 }
 
 .org {
+  display: block;
   font-family: var(--font-body);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 0.95rem;
   color: var(--color-accent);
+  margin: 4px 0 20px;
 }
 
 .range {
-  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
   font-family: var(--font-body);
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--color-text-muted);
-  margin-bottom: 20px;
+  white-space: nowrap;
 }
 
 .summary {
@@ -139,10 +124,30 @@
 }
 
 .stackedCard {
+  position: relative;
   background: rgba(var(--color-surface-rgb), 0.55);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 32px;
+}
+
+.stackedCard .range {
+  top: 32px;
+  right: 32px;
+}
+
+@media (max-width: 560px) {
+  .role {
+    padding-right: 0;
+  }
+  .stackedCard .range {
+    position: static;
+    display: block;
+    margin: 4px 0 20px;
+  }
+  .stackedCard .org {
+    margin-bottom: 4px;
+  }
 }

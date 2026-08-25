@@ -45,6 +45,19 @@
   50% { border-radius: 60% 40% 35% 65% / 55% 60% 40% 45%; }
 }
 
+/* Glow that directly follows the raw cursor position */
+.cursorBlob {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  margin-left: -160px;
+  margin-top: -160px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.16;
+  filter: blur(60px);
+}
+
 .blobShapeA {
   background: var(--color-accent);
   opacity: 0.18;
