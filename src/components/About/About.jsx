@@ -83,7 +83,6 @@ export const About = () => {
         >
           {technologies.map((tech) => (
             <motion.li key={tech} className={styles.techItem} variants={itemVariants}>
-              <span className={styles.techMarker} aria-hidden="true" />
               {tech}
             </motion.li>
           ))}
