@@ -46,16 +46,16 @@
 }
 
 .blobShapeA {
-  background: var(--color-accent-soft);
-  opacity: 0.45;
+  background: var(--color-accent);
+  opacity: 0.18;
 }
 .blobShapeB {
   background: var(--color-accent-soft);
   opacity: 0.4;
 }
 .blobShapeC {
-  background: var(--color-accent-soft);
-  opacity: 0.3;
+  background: var(--color-accent);
+  opacity: 0.14;
 }
 
 .blobDriftA {
