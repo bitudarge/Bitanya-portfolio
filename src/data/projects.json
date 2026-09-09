@@ -1,5 +1,13 @@
 [
   {
+    "title": "Nibbles",
+    "imageSrc": "projects/nibbles.png",
+    "description": "A social reading tracker with an explainable, circle-aware book recommender — every pick ships a plain-language reason, never a black box. Google sign-in, shared reading circles with live progress and group chat, and an onboarding quiz that seeds recommendations from day one.",
+    "skills": ["React", "TypeScript", "Supabase", "Tailwind CSS", "Vite"],
+    "source": "https://github.com/bitudarge/nibble",
+    "demo": "https://readnibbles.vercel.app"
+  },
+  {
     "title": "Alzheimer's Screening Model",
     "imageSrc": "projects/alzheimers.png",
     "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",
