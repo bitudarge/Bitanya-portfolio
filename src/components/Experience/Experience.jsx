@@ -1,8 +1,6 @@
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import styles from "./Experience.module.css";
 import history from "../../data/history.json";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -43,59 +41,6 @@ function StepContent({ item, index, stepCount }) {
   );
 }
 
-function StepPanel({ item, index, stepCount, scrollYProgress }) {
-  const start = index / stepCount;
-  const end = (index + 1) / stepCount;
-
-  const opacity = useTransform(
-    scrollYProgress,
-    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
-    [0, 1, 1, 0]
-  );
-  const translateY = useTransform(
-    scrollYProgress,
-    [start - 0.05, start + 0.1, end - 0.1, end + 0.05],
-    [40, 0, 0, -40]
-  );
-
-  return (
-    <motion.div className={styles.stepPanel} style={{ opacity, y: translateY }}>
-      <StepContent item={item} index={index} stepCount={stepCount} />
-    </motion.div>
-  );
-}
-
-function DesktopStickyScroll({ items }) {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-  const stepCount = items.length;
-
-  return (
-    <div
-      ref={containerRef}
-      className={styles.stickyOuter}
-      style={{ height: `${stepCount * 100 + 50}vh` }}
-    >
-      <div className={styles.stickyInner}>
-        <div className={styles.panelWrap}>
-          {items.map((item, i) => (
-            <StepPanel
-              key={item.id}
-              item={item}
-              index={i}
-              stepCount={stepCount}
-              scrollYProgress={scrollYProgress}
-            />
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function StackedCards({ items, animate }) {
   return (
     <div className={styles.stackedList}>
@@ -123,7 +68,6 @@ function StackedCards({ items, animate }) {
 
 export const Experience = () => {
   const prefersReducedMotion = useReducedMotion();
-  const isDesktop = useMediaQuery("(min-width: 900px)");
 
   return (
     <section className={styles.container} id="experience">
@@ -136,13 +80,7 @@ export const Experience = () => {
         <h2 className={styles.title}>Experience</h2>
       </motion.div>
 
-      {prefersReducedMotion ? (
-        <StackedCards items={history} animate={false} />
-      ) : isDesktop ? (
-        <DesktopStickyScroll items={history} />
-      ) : (
-        <StackedCards items={history} animate={true} />
-      )}
+      <StackedCards items={history} animate={!prefersReducedMotion} />
     </section>
   );
 };
