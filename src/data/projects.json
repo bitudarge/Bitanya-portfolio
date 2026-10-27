@@ -43,5 +43,12 @@
     "description": "Exploratory analysis of disease data, from raw numbers to the patterns worth acting on.",
     "skills": ["Python", "numpy", "pandas", "matplotlib"],
     "source": "https://github.com/bitudarge/Disease-Insight"
+  },
+  {
+    "title": "Market Trends Prediction",
+    "imageSrc": "projects/retailanalytics.png",
+    "description": "A Tableau breakdown of sales data that turns raw transactions into the trends leadership actually needs.",
+    "skills": ["Tableau", "Data Analysis"],
+    "source": "https://public.tableau.com/app/profile/bitanya.darge/viz/BitanyaDarge/SalesDetail"
   }
 ]

@@ -7,11 +7,16 @@
   color: var(--color-text);
 }
 
-/* Plain, unpinned breathing room around Involvement's pinned horizontal
-   section - before it, so Projects visibly finishes before the pin can
-   grab scroll; after it, so fast/momentum scrolling has normal page to
-   land on instead of hitting the document's hard bottom right as the pin
-   releases (that's what read as the section "jumping back up"). */
-.sectionGap {
+/* Plain, unpinned breathing room before Involvement's pinned horizontal
+   section - generous, so the last row of Projects cards stays on screen
+   and readable for a while before the pin can grab scroll. */
+.sectionGapBeforeInvolvement {
+  height: clamp(160px, 24vh, 320px);
+}
+
+/* Smaller gap after Involvement - fast/momentum scrolling has normal page
+   to land on instead of hitting the document's hard bottom right as the
+   pin releases (that's what read as the section "jumping back up"). */
+.sectionGapAfterInvolvement {
   height: clamp(80px, 10vh, 140px);
 }

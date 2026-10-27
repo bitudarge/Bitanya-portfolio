@@ -24,16 +24,6 @@
   pointer-events: none;
 }
 
-/* Permanent, cheap (pure CSS) - grounds the footage into the page so the
-   bottom edge never reads as a hard video-vs-page seam, even before any
-   scroll-driven animation has run. */
-.heroScrim {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 55%, var(--color-bg) 100%);
-  pointer-events: none;
-}
-
 /* Scroll-driven dissolve (Hero.jsx) - fades the whole scene out to the
    page background as the pin releases, so the hand-off into About reads
    as one continuous scene rather than a hard cut. */

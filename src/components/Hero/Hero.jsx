@@ -5,7 +5,7 @@ import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VIDEO_SRC = "/assets/hero/bloom-v2.mp4";
+const VIDEO_SRC = "/assets/hero/bloom-corners.mp4";
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
@@ -60,97 +60,54 @@ export const Hero = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex, roles]);
 
-  /* -------- Scroll-scrubbed bloom video -------------------------------
-     The bloom itself is a real video (not CSS/SVG) - its currentTime is
-     driven directly by scroll position, so scrolling back up genuinely
-     reverses the footage rather than faking a reverse animation. Roughly
-     the first ~72% of the pin scrubs through the clip; the last ~28%
-     holds the final frame while a soft wash dissolves the scene into the
-     real About section below, so the hand-off reads as one continuous
-     scene rather than a hard cut. -------------------------------- */
+  /* -------- Ambient corner-flower video + scroll hand-off --------------
+     The flowers just loop on their own (autoPlay/loop) - they're no
+     longer scroll-scrubbed. A short pin only covers the hand-off: the
+     intro text fades out, then a soft wash dissolves the scene into the
+     real About section below, so it still reads as one continuous scene
+     rather than a hard cut. -------------------------------- */
   const sectionRef = useRef(null);
-  const videoRef = useRef(null);
   const introRef = useRef(null);
   const cueRef = useRef(null);
   const fadeRef = useRef(null);
-  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    const onReady = () => setVideoReady(true);
-    if (video.readyState >= 1) {
-      onReady();
-    } else {
-      video.addEventListener("loadedmetadata", onReady);
-    }
-    return () => video.removeEventListener("loadedmetadata", onReady);
-  }, []);
-
-  useEffect(() => {
-    if (!videoReady) return;
-    const video = videoRef.current;
-    const duration = video.duration || 4;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-    if (reducedMotion) {
-      // No scroll-driven playback - just hold on a fully-bloomed frame.
-      video.currentTime = duration * 0.92;
-      return;
-    }
+    if (reducedMotion) return;
 
     const ctx = gsap.context(() => {
-      const scrub = { t: 0 };
-
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + Math.round(window.innerHeight * 1.1),
+          end: () => "+=" + Math.round(window.innerHeight * 0.6),
           scrub: 0.6,
           pin: true,
           pinType: "fixed",
           pinSpacing: true,
-          anticipatePin: 1,
         },
       });
 
-      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.08 }, 0);
-      tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.28, ease: "power1.out" }, 0.1);
-
-      // Scrub the clip itself across most of the pin.
-      tl.to(
-        scrub,
-        {
-          t: duration,
-          duration: 0.72,
-          ease: "none",
-          onUpdate: () => {
-            video.currentTime = scrub.t;
-          },
-        },
-        0
-      );
-
-      // Hold the final bloomed frame and dissolve into About.
-      tl.to(fadeRef.current, { opacity: 1, duration: 0.3, ease: "power1.in" }, 0.72);
+      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.15 }, 0);
+      tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.5, ease: "power1.out" }, 0.05);
+      tl.to(fadeRef.current, { opacity: 1, duration: 0.5, ease: "power1.in" }, 0.5);
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [videoReady]);
+  }, []);
 
   return (
     <section id="home" ref={sectionRef} className={styles.container}>
       <video
-        ref={videoRef}
         className={styles.heroVideo}
         src={VIDEO_SRC}
+        autoPlay
+        loop
         muted
         playsInline
         preload="auto"
         aria-hidden="true"
       />
-      <div className={styles.heroScrim} aria-hidden="true" />
       <div ref={fadeRef} className={styles.heroFade} aria-hidden="true" />
 
       <div className={styles.stage}>
@@ -170,7 +127,7 @@ export const Hero = () => {
       </div>
 
       <div ref={cueRef} className={styles.scrollCue} aria-hidden="true">
-        <span>Scroll to bloom</span>
+        <span>Scroll</span>
         <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
           <rect x="1" y="1" width="12" height="18" rx="6" stroke="currentColor" strokeWidth="1.4" />
           <circle className={styles.scrollDot} cx="7" cy="6" r="2" fill="currentColor" />

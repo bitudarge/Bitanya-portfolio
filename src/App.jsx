@@ -59,9 +59,9 @@ function App() {
           <About />
           <Experience />
           <Projects />
-          <div className={styles.sectionGap} aria-hidden="true" />
+          <div className={styles.sectionGapBeforeInvolvement} aria-hidden="true" />
           <Involvement />
-          <div className={styles.sectionGap} aria-hidden="true" />
+          <div className={styles.sectionGapAfterInvolvement} aria-hidden="true" />
           <Footer />
         </div>
       </ReactLenis>
