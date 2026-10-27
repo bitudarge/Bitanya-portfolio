@@ -94,9 +94,7 @@ export const Involvement = () => {
       // which fights Lenis's own eased scroll position and was exactly
       // what made this section's pin appear to grab a beat before
       // Projects had actually finished scrolling past.
-      gsap.to(track, {
-        x: -distance,
-        ease: "none",
+      const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
@@ -110,6 +108,17 @@ export const Involvement = () => {
           onRefresh: updateDepth,
         },
       });
+
+      tl.to(track, { x: -distance, ease: "none", duration: 1 }, 0);
+
+      // This gallery UI only makes sense while it's actively being
+      // scrubbed - once the pin releases, the section goes back to
+      // normal document flow and you'd otherwise be left looking at
+      // whatever card the scrub happened to stop on, frozen and cropped,
+      // for the rest of the scroll past it. Fading it out over the last
+      // stretch means by the time it unpins there's just clean blank
+      // space before the footer, not a stuck leftover gallery slice.
+      tl.to(viewport, { opacity: 0, ease: "power1.in", duration: 0.15 }, 0.85);
     }, sectionRef);
 
     return () => ctx.revert();
