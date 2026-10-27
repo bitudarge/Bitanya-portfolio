@@ -102,6 +102,7 @@ export const Involvement = () => {
           start: "top top",
           end: () => "+=" + distance,
           scrub: true,
+          fastScrollEnd: true,
           pin: true,
           pinType: "fixed",
           invalidateOnRefresh: true,

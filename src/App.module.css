@@ -6,3 +6,12 @@
   min-height: 100vh;
   color: var(--color-text);
 }
+
+/* Plain, unpinned breathing room around Involvement's pinned horizontal
+   section - before it, so Projects visibly finishes before the pin can
+   grab scroll; after it, so fast/momentum scrolling has normal page to
+   land on instead of hitting the document's hard bottom right as the pin
+   releases (that's what read as the section "jumping back up"). */
+.sectionGap {
+  height: clamp(80px, 10vh, 140px);
+}
