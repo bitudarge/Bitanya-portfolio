@@ -5,8 +5,7 @@
     "description": "A social reading tracker with an explainable, circle-aware book recommender.",
     "skills": ["React", "TypeScript", "Supabase", "Tailwind CSS", "Vite"],
     "source": "https://github.com/bitudarge/nibble",
-    "demo": "https://readnibbles.vercel.app",
-    "featured": true
+    "demo": "https://readnibbles.vercel.app"
   },
   {
     "title": "Campus Ex",
@@ -14,8 +13,7 @@
     "imageFit": "contain",
     "description": "A free, verified Vikings-only marketplace where Augustana students buy and sell furniture, textbooks, electronics, and more with each other.",
     "skills": ["Next.js", "React", "Supabase"],
-    "demo": "https://www.campus-ex.com/",
-    "featured": true
+    "demo": "https://www.campus-ex.com/"
   },
   {
     "title": "Alzheimer's Screening Model",
@@ -23,8 +21,7 @@
     "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",
     "skills": ["Python", "Machine Learning"],
     "source": "https://github.com/bitudarge/Alzheimer-s-screening-model",
-    "poster": "projects/alzheimers-poster.pdf",
-    "featured": true
+    "poster": "projects/alzheimers-poster.pdf"
   },
   {
     "title": "Digi Pet Bunny",

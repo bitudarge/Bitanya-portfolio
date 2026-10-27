@@ -14,28 +14,38 @@
   isolation: isolate;
 }
 
-/* ---------- Peach-pink sunset backdrop, scoped to the hero only ---------- */
-.sunsetBg {
+/* ---------- Bloom video background, scoped to the hero only ---------- */
+.heroVideo {
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(60% 46% at 50% 32%, rgba(255, 183, 148, 0.45), transparent 72%),
-    linear-gradient(180deg, #fff3e9 0%, #ffe6ef 45%, var(--color-bg) 100%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .sunsetBg {
-    background: linear-gradient(180deg, #fff3e9 0%, #ffe6ef 45%, var(--color-bg) 100%);
-  }
+/* Permanent, cheap (pure CSS) - grounds the footage into the page so the
+   bottom edge never reads as a hard video-vs-page seam, even before any
+   scroll-driven animation has run. */
+.heroScrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0) 55%, var(--color-bg) 100%);
+  pointer-events: none;
 }
 
-/* ---------- Scroll hand-off stage ----------
-   The flower sits behind the intro text in the same spot (DOM order
-   controls stacking here, both share grid-area 1/1). As you scroll, see
-   Hero.jsx's four-phase timeline: closed bud -> name fades as petals
-   unfurl -> full bloom drifts gently -> bloom shifts aside as the pin
-   releases straight into the real About section below. */
+/* Scroll-driven dissolve (Hero.jsx) - fades the whole scene out to the
+   page background as the pin releases, so the hand-off into About reads
+   as one continuous scene rather than a hard cut. */
+.heroFade {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ---------- Text stage ---------- */
 .stage {
   position: relative;
   display: grid;
@@ -43,46 +53,15 @@
   place-items: center;
 }
 
-.flowerWrap,
 .intro {
-  grid-area: 1 / 1;
   width: 100%;
 }
 
-.flowerWrap {
-  opacity: 0.95;
-  transform: scale(0.6);
-  pointer-events: none;
-}
-
-.flower {
-  width: clamp(320px, 38vw, 520px);
-  margin: 0 auto;
-}
-
-.flowerSvg {
-  display: block;
-  width: 100%;
-  height: auto;
-  overflow: visible;
-}
-
-.stamens {
-  transition: none;
-}
-
-.flowerSway {
-  animation: flowerSway 11s ease-in-out infinite;
-}
-
-@keyframes flowerSway {
-  0%, 100% { transform: rotate(-2.5deg); }
-  50% { transform: rotate(2.5deg); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .flowerSway { animation: none; }
-  .flowerWrap { opacity: 0.6; transform: scale(0.8); }
+.textScrim {
+  display: inline-block;
+  padding: 28px 48px;
+  border-radius: 24px;
+  background: radial-gradient(60% 70% at 50% 50%, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0) 100%);
 }
 
 .scrollCue {

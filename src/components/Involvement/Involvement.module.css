@@ -79,6 +79,24 @@
   width: clamp(220px, 18vw, 300px);
 }
 
+/* The MPA poster needs real presence, not a thumbnail - sized by height
+   (not width) so a tall portrait photo scales to fill the pinned
+   section's vertical space instead of overflowing it. */
+.size-xlarge .beatImageWrap {
+  height: clamp(380px, 58vh, 560px);
+  width: auto;
+}
+.size-xlarge .beatImageWrap img {
+  width: auto;
+}
+.size-xlarge .beatTitle {
+  font-size: 1.6rem;
+}
+.size-xlarge .beatCaption {
+  font-size: 1.05rem;
+  max-width: 36ch;
+}
+
 .orientation-portrait .beatImageWrap {
   aspect-ratio: 3 / 4;
 }
@@ -190,7 +208,18 @@
 .mobileStory .size-large,
 .mobileStory .size-medium,
 .mobileStory .size-small,
+.mobileStory .size-xlarge,
 .mobileStory .textBeat {
+  width: 100%;
+}
+
+.mobileStory .size-xlarge .beatImageWrap {
+  height: auto;
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+.mobileStory .size-xlarge .beatImageWrap img {
   width: 100%;
 }
 

@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 // Hand-tuned vertical offsets per beat index, desktop only - this is what
 // gives the horizontal track its staggered, editorial-scrapbook feel
 // instead of everything sitting on one straight row.
-const STAGGER = [0, 72, -28, 96, 0, 48];
+const STAGGER = [0, 72, -28, 96, 0, 48, -44, 60, 16, -16];
 
 function PhotoBeat({ beat }) {
   return (
@@ -91,11 +91,20 @@ export const Involvement = () => {
         x: -distance,
         ease: "none",
         scrollTrigger: {
-          trigger: sectionRef.current,
+          // Pinning just the gallery viewport (not the whole section,
+          // heading included) matters here: the gallery's own content can
+          // be taller than the viewport (the MPA poster especially), and a
+          // pinned element taller than the viewport clips its own overflow
+          // for the full pin duration, then has to "catch up" vertically
+          // once it unpins - reads as the whole section jumping around.
+          // Pinning only the viewport keeps the pinned box's height sane
+          // regardless of how tall any one photo is.
+          trigger: viewport,
           start: "top top",
           end: () => "+=" + distance,
           scrub: true,
           pin: true,
+          pinType: "fixed",
           invalidateOnRefresh: true,
           anticipatePin: 1,
           onUpdate: updateDepth,

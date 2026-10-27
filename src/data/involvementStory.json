@@ -10,9 +10,9 @@
   },
   {
     "type": "text",
-    "heading": "Student Leadership",
+    "heading": "Building a Community",
     "accent": "cursive",
-    "body": "As a Resident Advisor, I was responsible for 96 students across apartments and houses, planning events and building a community they actually wanted to be part of. As Multi Cultural Programing Board Co-Chair, I helped organize campus events with real cultural significance. As Marketing Chair for Student Government, I ran the social media accounts that gave campus life its voice."
+    "body": "Before the club existed, there wasn't really a space on campus for students who wanted to go deeper into data together. Building that space - workshops, a speaker series, mentorship, projects people actually cared about - became the thing I'm proudest of starting from zero."
   },
   {
     "type": "photo",
@@ -26,9 +26,30 @@
   },
   {
     "type": "text",
-    "heading": "Building a Club from Zero",
+    "heading": "Chicago",
     "accent": "cursive",
-    "body": "I founded and run the Data Analytics Club from scratch: workshops, speaker events, and member projects in data science and analytics, with a speaker series, student mentorship, and hackathons I led myself."
+    "body": "Taking a team to Chicago for DataFest meant late nights with real data, real deadlines, and a group of people who trusted each other enough to compete together. Winning Best Insight was proof the club could hold its own."
+  },
+  {
+    "type": "photo",
+    "size": "medium",
+    "orientation": "landscape",
+    "src": "involvement/ibm-techxchange.jpg",
+    "kicker": "IBM TechXchange",
+    "title": "IBM TechXchange Conference",
+    "caption": "2025"
+  },
+  {
+    "type": "text",
+    "heading": "Learning From Others",
+    "accent": "cursive",
+    "body": "IBM TechXchange was a chance to step outside Augustana and see how the technology I was learning in class gets used at scale - and to come back with new ideas for what the club, and the students in it, could try next."
+  },
+  {
+    "type": "text",
+    "heading": "Student Leadership",
+    "accent": "cursive",
+    "body": "As a Resident Advisor, I was responsible for 96 students across apartments and houses, planning events and building a community they actually wanted to be part of. As Multi Cultural Programing Board Co-Chair, I helped organize campus events with real cultural significance. As Marketing Chair for Student Government, I ran the social media accounts that gave campus life its voice."
   },
   {
     "type": "photo",
@@ -41,9 +62,16 @@
     "caption": "Organized the first datathon event at Augustana College."
   },
   {
+    "type": "text",
+    "heading": "Where Research Meets Data",
+    "accent": "cursive",
+    "body": "My research with Dr. Corts sits right at the intersection I care about most: using data and analysis to understand how memory and attention actually work, not just what the textbook says they should."
+  },
+  {
     "type": "photo",
-    "size": "small",
+    "size": "xlarge",
     "orientation": "portrait",
+    "featured": true,
     "src": "involvement/research-poster.jpg",
     "kicker": "Research Assistant",
     "title": "MPA Poster Presentation",

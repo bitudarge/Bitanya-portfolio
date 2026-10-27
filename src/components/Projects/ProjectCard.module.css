@@ -45,11 +45,11 @@
 }
 
 .container:hover .image {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 .container:hover .imageContain {
-  transform: scale(1.03);
+  transform: scale(1.02);
 }
 
 @media (prefers-reduced-motion: reduce) {

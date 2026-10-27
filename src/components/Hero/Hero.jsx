@@ -2,18 +2,10 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Hero.module.css";
-import { HeroFlower } from "./HeroFlower";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Petals have no static SVG rotation of their own - GSAP owns the whole
-// angle (a CSS transform on an SVG element replaces its transform
-// attribute rather than adding to it, so splitting the rotation between
-// JSX and GSAP doesn't compose). PETAL_ANGLES is each petal's fully-bloomed
-// spread angle; CLOSED_ANGLE is the small, alternating, near-vertical angle
-// each one sits at as a closed bud.
-const PETAL_ANGLES = [0, 60, 120, 180, 240, 300];
-const CLOSED_ANGLE = [10, -10, 14, -14, 6, -6];
+const VIDEO_SRC = "/assets/hero/bloom.mp4";
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
@@ -68,119 +60,112 @@ export const Hero = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex, roles]);
 
-  /* -------- Scroll-tied bloom, four phases over one pinned scene:
-     0-20%   closed bud, name reads clearly, nothing moving yet
-     20-50%  petals unfurl (staggered, not a single block rotation),
-             name fades up and out as the bloom takes over
-     50-80%  full bloom holds with a slow, gentle drift (scale + rotate)
-     80-100% bloom shifts aside and softens as the pin releases straight
-             into the real About section below - no invented filler
-     Scrubbed to scroll position throughout, so scrolling back up runs
-     every phase in reverse automatically. -------- */
+  /* -------- Scroll-scrubbed bloom video -------------------------------
+     The bloom itself is a real video (not CSS/SVG) - its currentTime is
+     driven directly by scroll position, so scrolling back up genuinely
+     reverses the footage rather than faking a reverse animation. Roughly
+     the first ~72% of the pin scrubs through the clip; the last ~28%
+     holds the final frame while a soft wash dissolves the scene into the
+     real About section below, so the hand-off reads as one continuous
+     scene rather than a hard cut. -------------------------------- */
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const introRef = useRef(null);
   const cueRef = useRef(null);
-  const flowerWrapRef = useRef(null);
-  const flowerGroupRef = useRef(null);
-  const petalRefs = useRef([]);
+  const fadeRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const video = videoRef.current;
+    if (!video) return;
+    const onReady = () => setVideoReady(true);
+    if (video.readyState >= 1) {
+      onReady();
+    } else {
+      video.addEventListener("loadedmetadata", onReady);
+    }
+    return () => video.removeEventListener("loadedmetadata", onReady);
+  }, []);
+
+  useEffect(() => {
+    if (!videoReady) return;
+    const video = videoRef.current;
+    const duration = video.duration || 4;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (reducedMotion) {
+      // No scroll-driven playback - just hold on a fully-bloomed frame.
+      video.currentTime = duration * 0.92;
+      return;
+    }
 
     const ctx = gsap.context(() => {
-      const petals = petalRefs.current.filter(Boolean);
-      const stamens = flowerGroupRef.current?.querySelector(`.${styles.stamens}`);
-
-      // svgOrigin (not transformOrigin) is GSAP's purpose-built way to pivot
-      // an SVG element around an arbitrary point in the SVG's own user-space
-      // coordinates - transformOrigin here gets resolved against each
-      // petal's own getBBox() (its narrow sliver, not the flower center),
-      // which swings every petal off to the wrong place on any real rotation.
-      gsap.set(petals, {
-        svgOrigin: "160 160",
-        rotate: (i) => CLOSED_ANGLE[i],
-        scaleX: 0.32,
-        scaleY: 0.82,
-      });
-      gsap.set(stamens, { opacity: 0 });
+      const scrub = { t: 0 };
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + Math.round(window.innerHeight * 0.85),
+          end: () => "+=" + Math.round(window.innerHeight * 1.1),
           scrub: 0.6,
           pin: true,
+          pinType: "fixed",
           pinSpacing: true,
           anticipatePin: 1,
         },
       });
 
-      // Phase 0-0.2: scroll cue fades almost immediately, everything else holds
-      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.1 }, 0);
+      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.08 }, 0);
+      tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.28, ease: "power1.out" }, 0.1);
 
-      // Phase 0.15-0.48: name fades/lifts away
+      // Scrub the clip itself across most of the pin.
       tl.to(
-        introRef.current,
-        { opacity: 0, y: -34, scale: 0.95, duration: 0.33, ease: "power1.out" },
-        0.15
-      );
-
-      // Phase 0.2-0.5: petals unfurl to their fully-spread angle with a soft
-      // per-petal stagger; bud scales up
-      tl.to(
-        petals,
+        scrub,
         {
-          svgOrigin: "160 160",
-          rotate: (i) => PETAL_ANGLES[i],
-          scaleX: 1,
-          scaleY: 1,
-          duration: 0.3,
-          stagger: 0.025,
-          ease: "power2.out",
+          t: duration,
+          duration: 0.72,
+          ease: "none",
+          onUpdate: () => {
+            video.currentTime = scrub.t;
+          },
         },
-        0.2
+        0
       );
-      tl.to(flowerWrapRef.current, { scale: 1, duration: 0.3, ease: "power2.out" }, 0.2);
-      tl.to(stamens, { opacity: 1, duration: 0.18 }, 0.34);
 
-      // Phase 0.5-0.8: full bloom, gentle continuous-feeling drift. This
-      // animates flowerWrapRef (the outer HTML wrapper), not the SVG <g>
-      // that carries the CSS idle-sway keyframe animation - mixing a CSS
-      // animation and a GSAP tween on the same element's transform would
-      // fight each other every frame.
-      tl.to(flowerWrapRef.current, { scale: 1.05, rotate: 3, duration: 0.3, ease: "sine.inOut" }, 0.5);
-
-      // Phase 0.8-1.0: bloom shifts aside and softens, pin releases into About
-      tl.to(
-        flowerWrapRef.current,
-        { x: 120, y: -10, scale: 0.86, opacity: 0.22, duration: 0.2, ease: "power1.in" },
-        0.8
-      );
+      // Hold the final bloomed frame and dissolve into About.
+      tl.to(fadeRef.current, { opacity: 1, duration: 0.3, ease: "power1.in" }, 0.72);
     }, sectionRef);
 
     return () => ctx.revert();
-  }, []);
+  }, [videoReady]);
 
   return (
     <section id="home" ref={sectionRef} className={styles.container}>
-      <div className={styles.sunsetBg} aria-hidden="true" />
+      <video
+        ref={videoRef}
+        className={styles.heroVideo}
+        src={VIDEO_SRC}
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      />
+      <div className={styles.heroScrim} aria-hidden="true" />
+      <div ref={fadeRef} className={styles.heroFade} aria-hidden="true" />
 
       <div className={styles.stage}>
-        <div ref={flowerWrapRef} className={styles.flowerWrap}>
-          <HeroFlower ref={flowerGroupRef} petalRefs={petalRefs} />
-        </div>
-
         <div ref={introRef} className={styles.intro}>
-          <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
+          <div className={styles.textScrim}>
+            <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
 
-          <p className={styles.subtitle} aria-live="polite">
-            I&rsquo;m a{" "}
-            <span className={styles.type}>
-              {displayText}
-              <span className={styles.cursor} aria-hidden="true">|</span>
-            </span>
-          </p>
+            <p className={styles.subtitle} aria-live="polite">
+              I&rsquo;m a{" "}
+              <span className={styles.type}>
+                {displayText}
+                <span className={styles.cursor} aria-hidden="true">|</span>
+              </span>
+            </p>
+          </div>
         </div>
       </div>
 
