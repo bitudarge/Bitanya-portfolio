@@ -96,7 +96,15 @@ export const Involvement = () => {
       // Projects had actually finished scrolling past.
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: sectionRef.current,
+          // Pinning just the gallery viewport (not the whole section,
+          // heading included) matters: the heading+padding make the
+          // section itself taller than the viewport, and a pinned element
+          // taller than the viewport clips its own overflow for the full
+          // pin duration, then has to visually "catch up" once it unpins -
+          // that's what reads as the whole section jumping around right
+          // after the horizontal scroll ends. Pinning only the viewport
+          // keeps the pinned box's height sane on its own.
+          trigger: viewport,
           start: "top top",
           end: () => "+=" + distance,
           scrub: true,

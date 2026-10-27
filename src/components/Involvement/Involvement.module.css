@@ -3,29 +3,11 @@
 .container {
   padding: 72px 0;
   color: var(--color-text);
-  /* This section spends most of its scroll range pinned full-viewport
-     (position: fixed). With no background it was fully transparent, so
-     whatever sat behind it at that screen position - Projects, the
-     ambient blob glow - showed straight through during the pin, which is
-     what read as the two sections overlapping. */
+  /* The gallery viewport (not this whole section) is what actually gets
+     pinned - see Involvement.jsx. With no background here, whatever sat
+     behind it at that screen position during the pin - Projects, the
+     ambient blob glow - showed straight through. */
   background: var(--color-bg);
-  /* The real cause of the "weird" hand-off into the footer: once the pin
-     releases, this section returns to normal document flow at its own
-     natural CSS height - which, with a staggered row of cards plus
-     captions plus padding, genuinely is ~900px tall. The gallery track
-     itself stays frozen at wherever the scroll scrub left it (clipped to
-     just the last card or two), so scrolling past that natural height
-     meant dragging through a tall, static, half-cropped leftover slice of
-     the gallery before reaching the footer. Pinning the section's own
-     height to the viewport makes its unpinned size match what was shown
-     while pinned, so there's nothing extra to scroll through. */
-  height: 100vh;
-  min-height: 560px;
-  max-height: 980px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
 }
 
 .heading {
@@ -56,6 +38,10 @@
   overflow: hidden;
   width: 100%;
   touch-action: pan-y;
+  /* This is the element that actually gets pinned (position: fixed) -
+     needs its own opaque background so nothing behind it bleeds through
+     during the pin. */
+  background: var(--color-bg);
 }
 
 .track {
