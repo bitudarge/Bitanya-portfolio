@@ -8,6 +8,13 @@ import history from "../../data/history.json";
 gsap.registerPlugin(ScrollTrigger);
 
 const STICKY_TOP = 96;
+// How much scroll (in px) the dim/shrink hand-off takes, right before the
+// next card reaches its stacked position. Each card's own spacer is a
+// full viewport tall, so keying the dim off "next card enters from the
+// bottom of the screen" (the old approach) fired it almost the instant a
+// card became current - this fixed window keeps it a short hand-off at
+// the very end of the card's dwell instead.
+const COVER_TRANSITION = 200;
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -38,11 +45,11 @@ function StepContent({ item }) {
 }
 
 /* Cards stack via plain CSS position: sticky (same top offset for every
-   card, so each new one naturally slides over and covers the last). The
-   scroll distance this needs is just each card's own rendered height -
-   nothing artificial added - so a short history never reads as a long
-   blank scroll. GSAP only adds the scale/dim polish on top, scoped to
-   each card's own height via its ScrollTrigger. */
+   card, so each new one naturally slides over and covers the last). Each
+   card sits inside a tall .stepWrap spacer so it actually holds still on
+   screen - fully visible, its own moment - before the next card's own
+   sticky window begins and slides over it. GSAP only adds the scale/dim
+   polish on top, scoped to that hand-off window via its ScrollTrigger. */
 function StackedCards({ items, animate }) {
   const cardRefs = useRef([]);
   cardRefs.current = [];
@@ -55,17 +62,18 @@ function StackedCards({ items, animate }) {
         if (!card || i === items.length - 1) return;
         const nextCard = cardRefs.current[i + 1];
         if (!nextCard) return;
-        // Dim card i only as card i+1 physically slides over it (next
-        // card's own entrance), not across its own whole sticky window -
-        // otherwise it starts fading the instant it becomes current,
-        // before anyone's actually covering it.
+        // Dim card i only in the short window right before card i+1
+        // actually reaches its stacked position - a fixed scroll
+        // distance, not tied to viewport height, so it stays a quick
+        // hand-off at the end of the dwell on every screen size.
         gsap.to(card, {
           scale: 0.94,
+          y: -24,
           opacity: 0.55,
           ease: "none",
           scrollTrigger: {
             trigger: nextCard,
-            start: "top bottom",
+            start: `top top+=${STICKY_TOP + COVER_TRANSITION}`,
             end: `top top+=${STICKY_TOP}`,
             scrub: true,
           },
@@ -79,16 +87,17 @@ function StackedCards({ items, animate }) {
   return (
     <div className={styles.stackedList}>
       {items.map((item, i) => (
-        <div
-          key={item.id}
-          className={styles.stickyWrap}
-          style={{ top: `${STICKY_TOP + i * 6}px`, zIndex: i + 1 }}
-        >
+        <div key={item.id} className={styles.stepWrap}>
           <div
-            ref={(el) => (cardRefs.current[i] = el)}
-            className={styles.stackedCard}
+            className={styles.stickyWrap}
+            style={{ top: `${STICKY_TOP + i * 6}px`, zIndex: i + 1 }}
           >
-            <StepContent item={item} />
+            <div
+              ref={(el) => (cardRefs.current[i] = el)}
+              className={styles.stackedCard}
+            >
+              <StepContent item={item} />
+            </div>
           </div>
         </div>
       ))}

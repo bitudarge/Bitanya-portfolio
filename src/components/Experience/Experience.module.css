@@ -64,8 +64,19 @@
 
 .stackedList {
   display: grid;
-  gap: 40px;
   padding-bottom: 20vh;
+}
+
+/* One spacer per card - its height is the scroll distance the card gets
+   to sit fully in view, uncovered, before the next card's sticky window
+   starts sliding over it. Capped on tall desktop monitors so the section
+   never reads as an empty scroll void. */
+.stepWrap {
+  min-height: clamp(560px, 92vh, 880px);
+}
+
+.stepWrap:last-child {
+  min-height: 0;
 }
 
 .stickyWrap {
@@ -84,6 +95,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .stepWrap {
+    min-height: 0;
+  }
   .stickyWrap {
     position: relative;
     top: 0 !important;

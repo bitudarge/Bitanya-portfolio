@@ -5,14 +5,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Involvement.module.css";
 import story from "../../data/involvementStory.json";
 import { getImageUrl } from "../../utils";
-import { useMediaQuery } from "../../hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Hand-tuned vertical offsets per beat index, desktop only - this is what
-// gives the horizontal track its staggered, editorial-scrapbook feel
-// instead of everything sitting on one straight row.
-const STAGGER = [0, 72, -28, 96, 0, 48, -44, 60, 16, -16];
+// Vertical offsets per beat index - gives the horizontal track a gentle
+// editorial stagger instead of everything sitting on one straight row.
+// A smaller, steadier range than before (was jumping as much as 96px
+// between neighbors, which read as erratic rather than intentional).
+const STAGGER = [0, 36, -18, 40, 10, 32, -22, 28, 6, -12];
 
 function PhotoBeat({ beat }) {
   return (
@@ -52,7 +52,6 @@ function beatClassName(beat) {
 
 export const Involvement = () => {
   const prefersReducedMotion = useReducedMotion();
-  const isDesktop = useMediaQuery("(min-width: 900px)");
 
   const sectionRef = useRef(null);
   const viewportRef = useRef(null);
@@ -61,7 +60,7 @@ export const Involvement = () => {
   beatRefs.current = [];
 
   useEffect(() => {
-    if (prefersReducedMotion || !isDesktop) return;
+    if (prefersReducedMotion) return;
     const track = trackRef.current;
     const viewport = viewportRef.current;
     if (!track || !viewport) return;
@@ -70,20 +69,31 @@ export const Involvement = () => {
       const distance = track.scrollWidth - viewport.clientWidth;
       if (distance <= 0) return;
 
+      // A light edge vignette only - cards fade a touch as they near the
+      // left/right edge of the viewport, nothing more. The old version
+      // also scaled every card down as it crossed center, which meant the
+      // same zoom-in-zoom-out pulse repeated for all ten cards in a row -
+      // that's what read as a "loop." Opacity-only, and only right at the
+      // edges, keeps the depth cue without the repeating motion.
       function updateDepth() {
         const viewportRect = viewport.getBoundingClientRect();
-        const center = viewportRect.left + viewportRect.width / 2;
-        const half = viewportRect.width / 2;
+        const left = viewportRect.left;
+        const right = viewportRect.right;
+        const edgeZone = viewportRect.width * 0.18;
 
         beatRefs.current.forEach((el) => {
           if (!el) return;
           const r = el.getBoundingClientRect();
-          const elCenter = r.left + r.width / 2;
-          const norm = Math.min(Math.abs(elCenter - center) / half, 1);
-          gsap.set(el, { scale: 1 - norm * 0.07, opacity: 1 - norm * 0.3 });
+          const distFromEdge = Math.min(r.left - left, right - r.right);
+          const norm = 1 - Math.max(0, Math.min(distFromEdge, edgeZone)) / edgeZone;
+          gsap.set(el, { opacity: 1 - norm * 0.35 });
         });
       }
 
+      // No anticipatePin here: it pre-pins based on raw scroll velocity,
+      // which fights Lenis's own eased scroll position and was exactly
+      // what made this section's pin appear to grab a beat before
+      // Projects had actually finished scrolling past.
       gsap.to(track, {
         x: -distance,
         ease: "none",
@@ -95,7 +105,6 @@ export const Involvement = () => {
           pin: true,
           pinType: "fixed",
           invalidateOnRefresh: true,
-          anticipatePin: 1,
           onUpdate: updateDepth,
           onRefresh: updateDepth,
         },
@@ -103,7 +112,7 @@ export const Involvement = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [prefersReducedMotion, isDesktop]);
+  }, [prefersReducedMotion]);
 
   return (
     <section ref={sectionRef} className={styles.container} id="involvement" aria-labelledby="inv-title">
@@ -118,7 +127,7 @@ export const Involvement = () => {
         <p className={styles.subtitle}>Leadership, research, and the moments that built them.</p>
       </motion.div>
 
-      {isDesktop ? (
+      {!prefersReducedMotion ? (
         <div ref={viewportRef} className={styles.galleryViewport}>
           <div ref={trackRef} className={styles.track}>
             {story.map((beat, i) => (

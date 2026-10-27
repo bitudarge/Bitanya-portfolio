@@ -15,6 +15,11 @@ import { Footer } from "./components/Footer/Footer";
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.ticker.lagSmoothing(0);
+// The Involvement section now pins on phones too; without this, a mobile
+// browser's address bar hiding/showing mid-scroll changes the viewport
+// height, which would otherwise force a pin recalculation and a visible
+// jump right in the middle of the horizontal scroll.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 function LenisScrollTriggerBridge() {
   useLenis(() => ScrollTrigger.update());

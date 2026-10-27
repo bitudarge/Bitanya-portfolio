@@ -23,13 +23,16 @@
   color: var(--color-text-muted);
 }
 
-/* ---------- Desktop: pinned horizontal editorial track ----------
+/* ---------- Pinned horizontal editorial track (every viewport) ----------
    Pin distance is the track's real overflow width minus the viewport's
    clipping width - never an artificial multiplier - so it's always
-   proportionate to how much content there actually is. */
+   proportionate to how much content there actually is. Runs on touch
+   devices too, driven by the same scroll (Lenis handles touch natively;
+   GSAP just reads the resulting scroll position). */
 .galleryViewport {
   overflow: hidden;
   width: 100%;
+  touch-action: pan-y;
 }
 
 .track {
@@ -40,6 +43,13 @@
   width: max-content;
 }
 
+@media (max-width: 560px) {
+  .track {
+    gap: 32px;
+    padding: 16px 8vw 64px;
+  }
+}
+
 .beatSlot {
   flex-shrink: 0;
   transform-origin: center center;
@@ -48,7 +58,7 @@
 
 /* ---------- Photo beats: every photo gets the same treatment ---------- */
 .photoBeat {
-  width: clamp(340px, 30vw, 440px);
+  width: clamp(270px, 30vw, 440px);
 }
 
 .beatImageWrap {
@@ -98,7 +108,7 @@
 
 /* ---------- Text beats: the editorial "typography moments" ---------- */
 .textBeat {
-  width: clamp(300px, 24vw, 400px);
+  width: clamp(240px, 24vw, 400px);
   display: flex;
   align-items: center;
 }
@@ -134,7 +144,7 @@
   }
 }
 
-/* ---------- Mobile / tablet: vertical editorial story, no pin ---------- */
+/* ---------- Reduced-motion fallback: vertical editorial story, no pin ---------- */
 .mobileStory {
   list-style: none;
   margin: 0;
