@@ -3,6 +3,12 @@
 .container {
   padding: 96px 0;
   color: var(--color-text);
+  /* This section spends most of its scroll range pinned full-viewport
+     (position: fixed). With no background it was fully transparent, so
+     whatever sat behind it at that screen position - Projects, the
+     ambient blob glow - showed straight through during the pin, which is
+     what read as the two sections overlapping. */
+  background: var(--color-bg);
 }
 
 .heading {

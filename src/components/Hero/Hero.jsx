@@ -5,7 +5,7 @@ import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VIDEO_SRC = "/assets/hero/bloom.mp4";
+const VIDEO_SRC = "/assets/hero/bloom-v2.mp4";
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
