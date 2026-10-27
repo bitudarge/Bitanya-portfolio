@@ -5,59 +5,7 @@ import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// PLACEHOLDER asset - has a visible "DZ" stock-preview watermark baked in.
-// Swap for a licensed/clean single-flower clip before the real launch;
-// everything else here (the corner layout, the scroll-scrub) carries over
-// to a replacement file with just a src change.
-const FLOWER_SRC = "/assets/hero/flower-bud.mp4";
-
-// Same clip, repeated and varied (size/rotation/mirroring) to read as a
-// loose cluster rather than identical copies. Slight per-instance delay
-// offsets keep the bloom from looking perfectly mechanical.
-const BOTTOM_LEFT = [
-  { size: 190, left: "-3%", bottom: "-5%", rotate: -12, flip: false, z: 3, delay: 0 },
-  { size: 235, left: "7%", bottom: "7%", rotate: 9, flip: true, z: 2, delay: 0.08 },
-  { size: 150, left: "19%", bottom: "-3%", rotate: -22, flip: false, z: 1, delay: 0.16 },
-];
-
-const TOP_RIGHT = [
-  { size: 175, right: "1%", top: "-5%", rotate: 11, flip: true, z: 4, delay: 0.04 },
-  { size: 215, right: "11%", top: "5%", rotate: -15, flip: false, z: 3, delay: 0.1 },
-  { size: 140, right: "-2%", top: "16%", rotate: 20, flip: true, z: 2, delay: 0.18 },
-  { size: 190, right: "17%", top: "-3%", rotate: -7, flip: false, z: 1, delay: 0.24 },
-];
-
-function FlowerCluster({ instances, className, registerRef }) {
-  return (
-    <div className={className} aria-hidden="true">
-      {instances.map((f, i) => (
-        <div
-          key={i}
-          className={styles.flowerSlot}
-          style={{
-            width: f.size,
-            height: f.size,
-            left: f.left,
-            right: f.right,
-            top: f.top,
-            bottom: f.bottom,
-            zIndex: f.z,
-            transform: `rotate(${f.rotate}deg) ${f.flip ? "scaleX(-1)" : ""}`,
-          }}
-        >
-          <video
-            ref={(el) => registerRef(el, f.delay)}
-            className={styles.flowerVideo}
-            src={FLOWER_SRC}
-            muted
-            playsInline
-            preload="auto"
-          />
-        </div>
-      ))}
-    </div>
-  );
-}
+const VIDEO_SRC = "/assets/hero/bloom-final.mp4";
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
@@ -112,51 +60,42 @@ export const Hero = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex, roles]);
 
-  /* -------- Scroll-scrubbed corner bloom --------------------------------
-     Seven copies of the same flower clip (three bottom-left, four
-     top-right) all scrub together off one scroll-driven clock, each with
-     a small time offset so the cluster blooms as a loose group rather
-     than in lockstep. The last part of the pin dissolves the whole scene
-     into the real About section below. -------------------------------- */
+  /* -------- Scroll-scrubbed bloom video -------------------------------
+     The bloom itself is a real video (not CSS/SVG) - its currentTime is
+     driven directly by scroll position, so scrolling back up genuinely
+     reverses the footage rather than faking a reverse animation. Roughly
+     the first ~72% of the pin scrubs through the clip; the last ~28%
+     holds the final frame while a soft wash dissolves the scene into the
+     real About section below, so the hand-off reads as one continuous
+     scene rather than a hard cut. -------------------------------- */
   const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const introRef = useRef(null);
   const cueRef = useRef(null);
   const fadeRef = useRef(null);
-  const videoEntries = useRef([]);
   const [videoReady, setVideoReady] = useState(false);
 
-  const registerRef = (el, delay) => {
-    if (!el) return;
-    if (!videoEntries.current.some((entry) => entry.el === el)) {
-      videoEntries.current.push({ el, delay });
-    }
-  };
-
   useEffect(() => {
-    const first = videoEntries.current[0]?.el;
-    if (!first) return;
+    const video = videoRef.current;
+    if (!video) return;
     const onReady = () => setVideoReady(true);
-    if (first.readyState >= 1) {
+    if (video.readyState >= 1) {
       onReady();
     } else {
-      first.addEventListener("loadedmetadata", onReady);
-      return () => first.removeEventListener("loadedmetadata", onReady);
+      video.addEventListener("loadedmetadata", onReady);
     }
+    return () => video.removeEventListener("loadedmetadata", onReady);
   }, []);
 
   useEffect(() => {
     if (!videoReady) return;
-    const duration = videoEntries.current[0]?.el?.duration || 4.1;
+    const video = videoRef.current;
+    const duration = video.duration || 4.5;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const setAll = (t) => {
-      videoEntries.current.forEach(({ el, delay }) => {
-        el.currentTime = Math.min(Math.max(t + delay, 0), duration);
-      });
-    };
-
     if (reducedMotion) {
-      setAll(duration * 0.95);
+      // No scroll-driven playback - just hold on a fully-bloomed frame.
+      video.currentTime = duration * 0.95;
       return;
     }
 
@@ -178,17 +117,21 @@ export const Hero = () => {
       tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.08 }, 0);
       tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.28, ease: "power1.out" }, 0.1);
 
+      // Scrub the clip itself across most of the pin.
       tl.to(
         scrub,
         {
           t: duration,
           duration: 0.72,
           ease: "none",
-          onUpdate: () => setAll(scrub.t),
+          onUpdate: () => {
+            video.currentTime = scrub.t;
+          },
         },
         0
       );
 
+      // Hold the final bloomed frame and dissolve into About.
       tl.to(fadeRef.current, { opacity: 1, duration: 0.3, ease: "power1.in" }, 0.72);
     }, sectionRef);
 
@@ -197,8 +140,15 @@ export const Hero = () => {
 
   return (
     <section id="home" ref={sectionRef} className={styles.container}>
-      <FlowerCluster instances={BOTTOM_LEFT} className={styles.clusterBottomLeft} registerRef={registerRef} />
-      <FlowerCluster instances={TOP_RIGHT} className={styles.clusterTopRight} registerRef={registerRef} />
+      <video
+        ref={videoRef}
+        className={styles.heroVideo}
+        src={VIDEO_SRC}
+        muted
+        playsInline
+        preload="auto"
+        aria-hidden="true"
+      />
       <div ref={fadeRef} className={styles.heroFade} aria-hidden="true" />
 
       <div className={styles.stage}>

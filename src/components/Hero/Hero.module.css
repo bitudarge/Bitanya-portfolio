@@ -14,44 +14,14 @@
   isolation: isolate;
 }
 
-/* ---------- Corner flower clusters ----------
-   Each cluster is just an anchor box pinned to a corner; the individual
-   flower slots inside it are positioned with small, hand-tuned offsets
-   so they overlap into a loose bouquet instead of a grid. */
-.clusterBottomLeft,
-.clusterTopRight {
+/* ---------- Bloom video background, scoped to the hero only ---------- */
+.heroVideo {
   position: absolute;
-  width: min(48vw, 520px);
-  height: min(48vw, 520px);
-  pointer-events: none;
-}
-
-.clusterBottomLeft {
-  left: 0;
-  bottom: 0;
-}
-
-.clusterTopRight {
-  right: 0;
-  top: 0;
-}
-
-.flowerSlot {
-  position: absolute;
-}
-
-.flowerVideo {
+  inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-}
-
-@media screen and (max-width: 830px) {
-  .clusterBottomLeft,
-  .clusterTopRight {
-    width: min(70vw, 420px);
-    height: min(70vw, 420px);
-  }
+  object-fit: cover;
+  pointer-events: none;
 }
 
 /* Scroll-driven dissolve (Hero.jsx) - fades the whole scene out to the
