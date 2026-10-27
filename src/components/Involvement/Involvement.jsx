@@ -46,9 +46,6 @@ function beatClassName(beat) {
     parts.push(styles.textBeat);
   } else {
     parts.push(styles.photoBeat);
-    parts.push(styles[`size-${beat.size}`]);
-    parts.push(styles[`orientation-${beat.orientation}`]);
-    if (beat.featured) parts.push(styles.featuredBeat);
   }
   return parts.join(" ");
 }
@@ -91,15 +88,7 @@ export const Involvement = () => {
         x: -distance,
         ease: "none",
         scrollTrigger: {
-          // Pinning just the gallery viewport (not the whole section,
-          // heading included) matters here: the gallery's own content can
-          // be taller than the viewport (the MPA poster especially), and a
-          // pinned element taller than the viewport clips its own overflow
-          // for the full pin duration, then has to "catch up" vertically
-          // once it unpins - reads as the whole section jumping around.
-          // Pinning only the viewport keeps the pinned box's height sane
-          // regardless of how tall any one photo is.
-          trigger: viewport,
+          trigger: sectionRef.current,
           start: "top top",
           end: () => "+=" + distance,
           scrub: true,

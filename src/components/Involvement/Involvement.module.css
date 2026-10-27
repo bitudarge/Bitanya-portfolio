@@ -35,7 +35,7 @@
 .track {
   display: flex;
   align-items: flex-start;
-  gap: 64px;
+  gap: 56px;
   padding: 24px 10vw 80px;
   width: max-content;
 }
@@ -46,12 +46,16 @@
   will-change: transform, opacity;
 }
 
-/* ---------- Photo beats ---------- */
-.photoBeat .beatImageWrap,
+/* ---------- Photo beats: every photo gets the same treatment ---------- */
+.photoBeat {
+  width: clamp(340px, 30vw, 440px);
+}
+
 .beatImageWrap {
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0 36px 64px -30px rgba(var(--shadow-color), 0.32);
+  aspect-ratio: 4 / 3;
 }
 
 .beatImageWrap img {
@@ -59,54 +63,6 @@
   height: 100%;
   object-fit: cover;
   display: block;
-}
-
-.size-large {
-  width: clamp(420px, 38vw, 640px);
-}
-.size-large .beatImageWrap {
-  aspect-ratio: 4 / 3;
-}
-
-.size-medium {
-  width: clamp(320px, 28vw, 460px);
-}
-.size-medium .beatImageWrap {
-  aspect-ratio: 4 / 3;
-}
-
-.size-small {
-  width: clamp(220px, 18vw, 300px);
-}
-
-/* The MPA poster needs real presence, not a thumbnail - sized by height
-   (not width) so a tall portrait photo scales to fill the pinned
-   section's vertical space instead of overflowing it. */
-.size-xlarge .beatImageWrap {
-  height: clamp(380px, 58vh, 560px);
-  width: auto;
-}
-.size-xlarge .beatImageWrap img {
-  width: auto;
-}
-.size-xlarge .beatTitle {
-  font-size: 1.6rem;
-}
-.size-xlarge .beatCaption {
-  font-size: 1.05rem;
-  max-width: 36ch;
-}
-
-.orientation-portrait .beatImageWrap {
-  aspect-ratio: 3 / 4;
-}
-.orientation-landscape .beatImageWrap {
-  aspect-ratio: 4 / 3;
-}
-
-.featuredBeat .beatImageWrap {
-  box-shadow: 0 44px 80px -28px rgba(var(--color-accent-rgb, 219, 39, 119), 0.28),
-    0 36px 64px -30px rgba(var(--shadow-color), 0.3);
 }
 
 .beatCaptionBlock {
@@ -130,10 +86,6 @@
   font-weight: 600;
   font-size: 1.3rem;
   color: var(--color-text);
-}
-
-.size-small .beatTitle {
-  font-size: 1.1rem;
 }
 
 .beatCaption {
@@ -197,29 +149,8 @@
   display: block;
 }
 
-.mobileStory .orientation-landscape .beatImageWrap {
-  aspect-ratio: 4 / 3;
-}
-.mobileStory .orientation-portrait .beatImageWrap {
-  aspect-ratio: 3 / 4;
-  max-width: 320px;
-}
-
-.mobileStory .size-large,
-.mobileStory .size-medium,
-.mobileStory .size-small,
-.mobileStory .size-xlarge,
+.mobileStory .photoBeat,
 .mobileStory .textBeat {
-  width: 100%;
-}
-
-.mobileStory .size-xlarge .beatImageWrap {
-  height: auto;
-  width: 100%;
-  max-width: 340px;
-  margin: 0 auto;
-}
-.mobileStory .size-xlarge .beatImageWrap img {
   width: 100%;
 }
 

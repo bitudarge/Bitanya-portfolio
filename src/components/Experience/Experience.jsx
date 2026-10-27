@@ -53,14 +53,20 @@ function StackedCards({ items, animate }) {
     const ctx = gsap.context(() => {
       cardRefs.current.forEach((card, i) => {
         if (!card || i === items.length - 1) return;
+        const nextCard = cardRefs.current[i + 1];
+        if (!nextCard) return;
+        // Dim card i only as card i+1 physically slides over it (next
+        // card's own entrance), not across its own whole sticky window -
+        // otherwise it starts fading the instant it becomes current,
+        // before anyone's actually covering it.
         gsap.to(card, {
           scale: 0.94,
           opacity: 0.55,
           ease: "none",
           scrollTrigger: {
-            trigger: card,
-            start: `top top+=${STICKY_TOP}`,
-            end: `bottom top+=${STICKY_TOP}`,
+            trigger: nextCard,
+            start: "top bottom",
+            end: `top top+=${STICKY_TOP}`,
             scrub: true,
           },
         });
