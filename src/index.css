@@ -9,11 +9,19 @@
 
 html {
   overflow-x: hidden;
+  /* Kills the browser's native rubber-band bounce at the top/bottom of
+     the page. Without this, a fast/momentum scroll past the very end of
+     the document (right after Involvement's pin releases, with only a
+     short footer left below it) overshoots and snaps back - which reads
+     exactly like the page "jumping back up" into the footer instead of
+     landing on it cleanly. */
+  overscroll-behavior-y: none;
 }
 
 body {
   background: var(--color-bg);
   color: var(--color-text);
+  overscroll-behavior-y: none;
 }
 
 .text-accent {
