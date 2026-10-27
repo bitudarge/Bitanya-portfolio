@@ -16,8 +16,11 @@
 }
 
 /* ---------- Scroll hand-off stage ----------
-   .intro and .tagline occupy the same spot so the scroll-driven
-   crossfade (see Hero.jsx) swaps one for the other in place. */
+   The flower sits behind the intro text in the same spot (DOM order
+   controls stacking here, both share grid-area 1/1). As you scroll, see
+   Hero.jsx's timeline: the intro fades/lifts away while the flower
+   blooms open - then the pin releases straight into the real About
+   section below, no invented filler text in between. */
 .stage {
   position: relative;
   display: grid;
@@ -25,28 +28,41 @@
   place-items: center;
 }
 
-.intro,
-.tagline {
+.flowerWrap,
+.intro {
   grid-area: 1 / 1;
   width: 100%;
 }
 
-.tagline {
-  opacity: 0;
-  max-width: 34ch;
+.flowerWrap {
+  opacity: 0.55;
+  transform: scale(0.9);
+  pointer-events: none;
+}
+
+.flower {
+  width: clamp(280px, 34vw, 460px);
   margin: 0 auto;
 }
 
-.tagline p {
-  font-family: var(--font-display);
-  font-weight: 500;
-  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
-  line-height: 1.3;
-  color: var(--color-text);
+.flowerSvg {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.taglineAccent {
-  color: var(--color-accent);
+.flowerSway {
+  animation: flowerSway 10s ease-in-out infinite;
+}
+
+@keyframes flowerSway {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flowerSway { animation: none; }
+  .flowerWrap { opacity: 0.8; transform: none; }
 }
 
 .scrollCue {
@@ -79,7 +95,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tagline { display: none; }
   .scrollDot { animation: none; }
 }
 

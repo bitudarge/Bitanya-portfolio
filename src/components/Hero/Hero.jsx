@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Hero.module.css";
+import { HeroFlower } from "./HeroFlower";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -58,11 +59,14 @@ export const Hero = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex, roles]);
 
-  /* -------- Scroll-driven hand-off: intro crossfades into a tagline -------- */
+  /* -------- Scroll hand-off: intro fades + the flower blooms open,
+     then the pin releases straight into the real About section below
+     (no invented filler text in between). -------- */
   const sectionRef = useRef(null);
   const introRef = useRef(null);
-  const taglineRef = useRef(null);
   const cueRef = useRef(null);
+  const flowerWrapRef = useRef(null);
+  const petalsRef = useRef(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -72,7 +76,7 @@ export const Hero = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + Math.round(window.innerHeight * 0.6),
+          end: () => "+=" + Math.round(window.innerHeight * 0.45),
           scrub: 0.6,
           pin: true,
           pinSpacing: true,
@@ -83,15 +87,15 @@ export const Hero = () => {
       tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.15 }, 0)
         .to(
           introRef.current,
-          { opacity: 0, y: -36, scale: 0.94, duration: 0.45, ease: "power1.out" },
-          0.05
+          { opacity: 0, y: -36, scale: 0.94, duration: 0.6, ease: "power1.out" },
+          0
         )
-        .fromTo(
-          taglineRef.current,
-          { opacity: 0, y: 28 },
-          { opacity: 1, y: 0, duration: 0.5, ease: "power1.out" },
-          0.4
-        );
+        .to(
+          flowerWrapRef.current,
+          { opacity: 1, scale: 1.08, duration: 0.6, ease: "power1.out" },
+          0
+        )
+        .to(petalsRef.current, { rotate: 35, duration: 0.6, ease: "power1.out" }, 0);
     }, sectionRef);
 
     return () => ctx.revert();
@@ -100,6 +104,10 @@ export const Hero = () => {
   return (
     <section id="home" ref={sectionRef} className={styles.container}>
       <div className={styles.stage}>
+        <div ref={flowerWrapRef} className={styles.flowerWrap}>
+          <HeroFlower ref={petalsRef} />
+        </div>
+
         <div ref={introRef} className={styles.intro}>
           <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
 
@@ -109,13 +117,6 @@ export const Hero = () => {
               {displayText}
               <span className={styles.cursor} aria-hidden="true">|</span>
             </span>
-          </p>
-        </div>
-
-        <div ref={taglineRef} className={styles.tagline}>
-          <p>
-            I build <span className={styles.taglineAccent}>data-driven products</span>,
-            lead teams, and like making both actually work.
           </p>
         </div>
       </div>

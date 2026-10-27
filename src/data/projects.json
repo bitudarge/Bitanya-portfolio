@@ -12,14 +12,14 @@
     "imageSrc": "projects/digi-pet-bunny.jpg",
     "description": "A webcam-based virtual pet bunny: a rigged 3D character that tracks your hand with MediaPipe and reacts with a different pose for every gesture.",
     "skills": ["JavaScript", "Three.js", "MediaPipe", "Vite"],
-    "demo": "https://digital-pet-lemon.vercel.app"
+    "demo": "https://digi-pet-bunny.vercel.app/"
   },
   {
     "title": "Campus Ex",
     "imageSrc": "projects/campusex.png",
-    "description": "A cross-platform campus life app for Augustana College: student org discovery, announcements, and an events calendar with RSVP.",
-    "skills": ["React Native", "Expo", "React Navigation"],
-    "source": "https://github.com/bitudarge/Vike-Hub"
+    "description": "A free, verified Vikings-only marketplace where Augustana students buy and sell furniture, textbooks, electronics, and more with each other.",
+    "skills": ["Next.js", "React", "Supabase"],
+    "demo": "https://www.campus-ex.com/"
   },
   {
     "title": "Alzheimer's Screening Model",
@@ -49,12 +49,5 @@
     "description": "A Tableau breakdown of sales data that turns raw transactions into the trends leadership actually needs.",
     "skills": ["Tableau", "Data Analysis"],
     "source": "https://public.tableau.com/app/profile/bitanya.darge/viz/BitanyaDarge/SalesDetail"
-  },
-  {
-    "title": "Shape Decomposer",
-    "imageSrc": "projects/shapedecomposer.png",
-    "description": "A Java tool that breaks complex shapes down into their component parts and visualizes the decomposition.",
-    "skills": ["Java", "Data Structures"],
-    "source": "https://github.com/bitudarge/Shape-Decomposer"
   }
 ]
