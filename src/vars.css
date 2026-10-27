@@ -12,6 +12,7 @@
      #db2777 rather than the brighter #ec4899: clears WCAG AA 4.5:1
      text contrast on white; #ec4899 only hits ~3.5:1. */
   --color-accent: #db2777;
+  --color-accent-rgb: 219, 39, 119;
   --color-accent-soft: #fce7f3;
 
   /* Shadow tokens derive from the ink color, not a separate hardcoded value */

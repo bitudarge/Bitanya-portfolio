@@ -1,0 +1,52 @@
+[
+  {
+    "type": "photo",
+    "size": "large",
+    "orientation": "landscape",
+    "src": "involvement/dac-first-meeting.jpg",
+    "kicker": "Data Analytics Club",
+    "title": "First General Meeting",
+    "caption": "An opportunity to bring students together around data analytics, technical learning, and community."
+  },
+  {
+    "type": "text",
+    "heading": "Student Leadership",
+    "accent": "cursive",
+    "body": "As a Resident Advisor, I was responsible for 96 students across apartments and houses, planning events and building a community they actually wanted to be part of. As Multi Cultural Programing Board Co-Chair, I helped organize campus events with real cultural significance. As Marketing Chair for Student Government, I ran the social media accounts that gave campus life its voice."
+  },
+  {
+    "type": "photo",
+    "size": "large",
+    "orientation": "landscape",
+    "featured": true,
+    "src": "involvement/dac-datafest-award.jpg",
+    "kicker": "Data Analytics Club",
+    "title": "ASA Best Data Insight Winners",
+    "caption": "Led students to Chicago to compete in ASA DataFest, where our team won the Best Insight award."
+  },
+  {
+    "type": "text",
+    "heading": "Building a Club from Zero",
+    "accent": "cursive",
+    "body": "I founded and run the Data Analytics Club from scratch: workshops, speaker events, and member projects in data science and analytics, with a speaker series, student mentorship, and hackathons I led myself."
+  },
+  {
+    "type": "photo",
+    "size": "large",
+    "orientation": "landscape",
+    "featured": true,
+    "src": "involvement/datathon-group.jpg",
+    "kicker": "Augustana Datathon",
+    "title": "Augustana's First Datathon",
+    "caption": "Organized the first datathon event at Augustana College."
+  },
+  {
+    "type": "photo",
+    "size": "small",
+    "orientation": "portrait",
+    "src": "involvement/research-poster.jpg",
+    "kicker": "Research Assistant",
+    "title": "MPA Poster Presentation",
+    "caption": "Presented a directed forgetting research project."
+  }
+]

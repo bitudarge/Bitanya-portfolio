@@ -19,17 +19,7 @@ function formatRange(start, end) {
   return `${fmt(start)} – ${end && end.toLowerCase() !== "present" ? fmt(end) : "Present"}`;
 }
 
-function StepDots({ count, activeIndex }) {
-  return (
-    <div className={styles.dots} aria-hidden="true">
-      {Array.from({ length: count }).map((_, j) => (
-        <span key={j} className={`${styles.dot} ${j === activeIndex ? styles.dotActive : ""}`} />
-      ))}
-    </div>
-  );
-}
-
-function StepContent({ item, index, stepCount }) {
+function StepContent({ item }) {
   return (
     <>
       <span className={styles.range}>{formatRange(item.start, item.end)}</span>
@@ -43,7 +33,6 @@ function StepContent({ item, index, stepCount }) {
           ))}
         </ul>
       )}
-      <StepDots count={stepCount} activeIndex={index} />
     </>
   );
 }
@@ -93,7 +82,7 @@ function StackedCards({ items, animate }) {
             ref={(el) => (cardRefs.current[i] = el)}
             className={styles.stackedCard}
           >
-            <StepContent item={item} index={i} stepCount={items.length} />
+            <StepContent item={item} />
           </div>
         </div>
       ))}

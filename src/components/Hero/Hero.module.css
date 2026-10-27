@@ -8,19 +8,34 @@
   justify-content: center;
   text-align: center;
   min-height: 100vh;
-  margin: 0 10%;
-  padding: 96px 0;
+  padding: 96px 10%;
   color: var(--color-text);
   overflow: hidden;
   isolation: isolate;
 }
 
+/* ---------- Peach-pink sunset backdrop, scoped to the hero only ---------- */
+.sunsetBg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 46% at 50% 32%, rgba(255, 183, 148, 0.45), transparent 72%),
+    linear-gradient(180deg, #fff3e9 0%, #ffe6ef 45%, var(--color-bg) 100%);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sunsetBg {
+    background: linear-gradient(180deg, #fff3e9 0%, #ffe6ef 45%, var(--color-bg) 100%);
+  }
+}
+
 /* ---------- Scroll hand-off stage ----------
    The flower sits behind the intro text in the same spot (DOM order
    controls stacking here, both share grid-area 1/1). As you scroll, see
-   Hero.jsx's timeline: the intro fades/lifts away while the flower
-   blooms open - then the pin releases straight into the real About
-   section below, no invented filler text in between. */
+   Hero.jsx's four-phase timeline: closed bud -> name fades as petals
+   unfurl -> full bloom drifts gently -> bloom shifts aside as the pin
+   releases straight into the real About section below. */
 .stage {
   position: relative;
   display: grid;
@@ -35,13 +50,13 @@
 }
 
 .flowerWrap {
-  opacity: 0.55;
-  transform: scale(0.9);
+  opacity: 0.95;
+  transform: scale(0.6);
   pointer-events: none;
 }
 
 .flower {
-  width: clamp(280px, 34vw, 460px);
+  width: clamp(320px, 38vw, 520px);
   margin: 0 auto;
 }
 
@@ -49,20 +64,25 @@
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
+}
+
+.stamens {
+  transition: none;
 }
 
 .flowerSway {
-  animation: flowerSway 10s ease-in-out infinite;
+  animation: flowerSway 11s ease-in-out infinite;
 }
 
 @keyframes flowerSway {
-  0%, 100% { transform: rotate(-4deg); }
-  50% { transform: rotate(4deg); }
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .flowerSway { animation: none; }
-  .flowerWrap { opacity: 0.8; transform: none; }
+  .flowerWrap { opacity: 0.6; transform: scale(0.8); }
 }
 
 .scrollCue {

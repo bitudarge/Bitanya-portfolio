@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useRef } from "react";
 import { ReactLenis, useLenis } from "lenis/react";
 import { MotionConfig } from "framer-motion";
 import gsap from "gsap";
@@ -22,9 +22,30 @@ function LenisScrollTriggerBridge() {
 }
 
 function App() {
+  const lenisRef = useRef(null);
+
+  useEffect(() => {
+    // Lenis's own autoRaf runs on a separate, independently-timed rAF loop
+    // from GSAP's ticker. That's fine with no pins, but once ScrollTrigger
+    // is pinning sections (Hero, Involvement) the two loops drift out of
+    // sync - GSAP's pin math and Lenis's eased scroll position each think
+    // they're authoritative, and the result is scroll position jumping far
+    // past what the user actually scrolled. Driving Lenis from GSAP's own
+    // ticker (autoRaf: false below) keeps both on one clock.
+    function update(time) {
+      lenisRef.current?.lenis?.raf(time * 1000);
+    }
+    gsap.ticker.add(update);
+    return () => gsap.ticker.remove(update);
+  }, []);
+
   return (
     <MotionConfig reducedMotion="user">
-      <ReactLenis root options={{ autoRaf: true, lerp: 0.1, duration: 1.1, anchors: true }}>
+      <ReactLenis
+        root
+        ref={lenisRef}
+        options={{ autoRaf: false, lerp: 0.1, duration: 1.1, anchors: true }}
+      >
         <LenisScrollTriggerBridge />
         <HeroBlobs />
         <div className={styles.App}>
