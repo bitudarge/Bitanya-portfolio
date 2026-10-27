@@ -7,12 +7,84 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 90vh;
+  min-height: 100vh;
   margin: 0 10%;
   padding: 96px 0;
   color: var(--color-text);
   overflow: hidden;
   isolation: isolate;
+}
+
+/* ---------- Scroll hand-off stage ----------
+   .intro and .tagline occupy the same spot so the scroll-driven
+   crossfade (see Hero.jsx) swaps one for the other in place. */
+.stage {
+  position: relative;
+  display: grid;
+  width: 100%;
+  place-items: center;
+}
+
+.intro,
+.tagline {
+  grid-area: 1 / 1;
+  width: 100%;
+}
+
+.tagline {
+  opacity: 0;
+  max-width: 34ch;
+  margin: 0 auto;
+}
+
+.tagline p {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 3.4vw, 2.5rem);
+  line-height: 1.3;
+  color: var(--color-text);
+}
+
+.taglineAccent {
+  color: var(--color-accent);
+}
+
+.scrollCue {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-muted);
+}
+
+.scrollCue span {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.scrollDot {
+  animation: scrollDotMove 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDotMove {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(5px); opacity: 0.4; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagline { display: none; }
+  .scrollDot { animation: none; }
+}
+
+@media screen and (max-width: 830px) {
+  .scrollCue { display: none; }
 }
 
 /* ---------- Interactive blob field ----------

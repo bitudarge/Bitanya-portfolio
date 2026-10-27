@@ -1,5 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Hero.module.css";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
@@ -54,17 +58,75 @@ export const Hero = () => {
     return () => clearTimeout(timeout);
   }, [charIndex, isDeleting, roleIndex, roles]);
 
-  return (
-    <section id="home" className={styles.container}>
-      <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
+  /* -------- Scroll-driven hand-off: intro crossfades into a tagline -------- */
+  const sectionRef = useRef(null);
+  const introRef = useRef(null);
+  const taglineRef = useRef(null);
+  const cueRef = useRef(null);
 
-      <p className={styles.subtitle} aria-live="polite">
-        I&rsquo;m a{" "}
-        <span className={styles.type}>
-          {displayText}
-          <span className={styles.cursor} aria-hidden="true">|</span>
-        </span>
-      </p>
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top top",
+          end: () => "+=" + Math.round(window.innerHeight * 0.6),
+          scrub: 0.6,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
+        },
+      });
+
+      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.15 }, 0)
+        .to(
+          introRef.current,
+          { opacity: 0, y: -36, scale: 0.94, duration: 0.45, ease: "power1.out" },
+          0.05
+        )
+        .fromTo(
+          taglineRef.current,
+          { opacity: 0, y: 28 },
+          { opacity: 1, y: 0, duration: 0.5, ease: "power1.out" },
+          0.4
+        );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section id="home" ref={sectionRef} className={styles.container}>
+      <div className={styles.stage}>
+        <div ref={introRef} className={styles.intro}>
+          <h1 className={styles.name}>Hi, I&rsquo;m Bitanya</h1>
+
+          <p className={styles.subtitle} aria-live="polite">
+            I&rsquo;m a{" "}
+            <span className={styles.type}>
+              {displayText}
+              <span className={styles.cursor} aria-hidden="true">|</span>
+            </span>
+          </p>
+        </div>
+
+        <div ref={taglineRef} className={styles.tagline}>
+          <p>
+            I build <span className={styles.taglineAccent}>data-driven products</span>,
+            lead teams, and like making both actually work.
+          </p>
+        </div>
+      </div>
+
+      <div ref={cueRef} className={styles.scrollCue} aria-hidden="true">
+        <span>Scroll</span>
+        <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+          <rect x="1" y="1" width="12" height="18" rx="6" stroke="currentColor" strokeWidth="1.4" />
+          <circle className={styles.scrollDot} cx="7" cy="6" r="2" fill="currentColor" />
+        </svg>
+      </div>
     </section>
   );
 };

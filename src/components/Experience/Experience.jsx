@@ -1,6 +1,13 @@
+import { useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import styles from "./Experience.module.css";
 import history from "../../data/history.json";
+
+gsap.registerPlugin(ScrollTrigger);
+
+const STICKY_TOP = 96;
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -41,27 +48,55 @@ function StepContent({ item, index, stepCount }) {
   );
 }
 
+/* Cards stack via plain CSS position: sticky (same top offset for every
+   card, so each new one naturally slides over and covers the last). The
+   scroll distance this needs is just each card's own rendered height -
+   nothing artificial added - so a short history never reads as a long
+   blank scroll. GSAP only adds the scale/dim polish on top, scoped to
+   each card's own height via its ScrollTrigger. */
 function StackedCards({ items, animate }) {
+  const cardRefs = useRef([]);
+  cardRefs.current = [];
+
+  useEffect(() => {
+    if (!animate) return;
+
+    const ctx = gsap.context(() => {
+      cardRefs.current.forEach((card, i) => {
+        if (!card || i === items.length - 1) return;
+        gsap.to(card, {
+          scale: 0.94,
+          opacity: 0.55,
+          ease: "none",
+          scrollTrigger: {
+            trigger: card,
+            start: `top top+=${STICKY_TOP}`,
+            end: `bottom top+=${STICKY_TOP}`,
+            scrub: true,
+          },
+        });
+      });
+    });
+
+    return () => ctx.revert();
+  }, [animate, items.length]);
+
   return (
     <div className={styles.stackedList}>
-      {items.map((item, i) =>
-        animate ? (
-          <motion.div
-            key={item.id}
+      {items.map((item, i) => (
+        <div
+          key={item.id}
+          className={styles.stickyWrap}
+          style={{ top: `${STICKY_TOP + i * 6}px`, zIndex: i + 1 }}
+        >
+          <div
+            ref={(el) => (cardRefs.current[i] = el)}
             className={styles.stackedCard}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.4, delay: i * 0.04 }}
           >
             <StepContent item={item} index={i} stepCount={items.length} />
-          </motion.div>
-        ) : (
-          <div key={item.id} className={styles.stackedCard}>
-            <StepContent item={item} index={i} stepCount={items.length} />
           </div>
-        )
-      )}
+        </div>
+      ))}
     </div>
   );
 }

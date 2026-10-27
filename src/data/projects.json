@@ -8,6 +8,20 @@
     "demo": "https://readnibbles.vercel.app"
   },
   {
+    "title": "Digi Pet Bunny",
+    "imageSrc": "projects/digi-pet-bunny.jpg",
+    "description": "A webcam-based virtual pet bunny: a rigged 3D character that tracks your hand with MediaPipe and reacts with a different pose for every gesture.",
+    "skills": ["JavaScript", "Three.js", "MediaPipe", "Vite"],
+    "demo": "https://digital-pet-lemon.vercel.app"
+  },
+  {
+    "title": "Campus Ex",
+    "imageSrc": "projects/campusex.png",
+    "description": "A cross-platform campus life app for Augustana College: student org discovery, announcements, and an events calendar with RSVP.",
+    "skills": ["React Native", "Expo", "React Navigation"],
+    "source": "https://github.com/bitudarge/Vike-Hub"
+  },
+  {
     "title": "Alzheimer's Screening Model",
     "imageSrc": "projects/alzheimers.png",
     "description": "A machine learning model built to catch early signs of Alzheimer's before symptoms are obvious.",

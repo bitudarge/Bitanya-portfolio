@@ -12,12 +12,168 @@
   margin-bottom: 40px;
 }
 
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 1fr 340px;
+    gap: 56px;
+  }
+}
+
 .list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
   gap: 4px;
+}
+
+/* ---------- Sticky photo panel (desktop only) ----------
+   Mirrors each card's photos as you scroll past it - see
+   Involvement.jsx's IntersectionObserver for how activeItem updates. */
+.photoPanel {
+  position: sticky;
+  top: 120px;
+}
+
+.photoPanelInner {
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: rgba(var(--color-surface-rgb), 0.9);
+  padding: 20px;
+}
+
+.photoPanelLabel {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 14px;
+}
+
+.photoStack {
+  display: grid;
+  gap: 16px;
+}
+
+.photoCard {
+  margin: 0;
+}
+
+.photoCard img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.photoCard figcaption {
+  margin-top: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Mobile inline photos (no sticky panel below 900px) ---------- */
+.mobilePhotos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin: 16px 0 0 54px;
+}
+
+.mobilePhoto {
+  margin: 0;
+}
+
+.mobilePhoto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 6px;
+  display: block;
+}
+
+.mobilePhoto figcaption {
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 720px) {
+  .mobilePhotos {
+    margin-left: 0;
+  }
+}
+
+/* ---------- Extras: small, separate from the main involvement cards ---------- */
+.extras {
+  margin-top: 56px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.extrasTitle {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.extrasList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.extraItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 16px 6px 6px;
+}
+
+.extraPhoto {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.extraName {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-text);
+}
+
+.extraDate {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
 }
 
 .row {

@@ -39,9 +39,11 @@ export const ProjectCard = ({
         ))}
       </ul>
       <div className={styles.links}>
-        <a href={source} target="_blank" rel="noreferrer" className={styles.link}>
-          Source
-        </a>
+        {source && (
+          <a href={source} target="_blank" rel="noreferrer" className={styles.link}>
+            Source
+          </a>
+        )}
         {demo && (
           <a href={demo} target="_blank" rel="noreferrer" className={styles.link}>
             Live

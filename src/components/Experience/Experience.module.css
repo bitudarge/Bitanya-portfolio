@@ -9,7 +9,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(2rem, 4vw, 3rem);
-  margin-bottom: 0;
+  margin-bottom: 48px;
 }
 
 /* Shared step content */
@@ -80,18 +80,32 @@
 
 .stackedList {
   display: grid;
-  gap: 24px;
-  padding-bottom: 96px;
+  gap: 40px;
+  padding-bottom: 20vh;
+}
+
+.stickyWrap {
+  position: sticky;
 }
 
 .stackedCard {
   position: relative;
-  background: rgba(var(--color-surface-rgb), 0.55);
+  background: rgba(var(--color-surface-rgb), 0.9);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 32px;
+  box-shadow: 0 24px 48px -24px rgba(var(--shadow-color), 0.25);
+  transform-origin: top center;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stickyWrap {
+    position: relative;
+    top: 0 !important;
+  }
 }
 
 .stackedCard .range {

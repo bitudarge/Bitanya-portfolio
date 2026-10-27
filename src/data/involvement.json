@@ -20,7 +20,17 @@
       "Hackathon lead"
     ],
     "logo": "involvement/dac.png",
-    "link": "https://www.augustana.edu/student-life/groups/data-analytics-club"
+    "link": "https://www.augustana.edu/student-life/groups/data-analytics-club",
+    "photos": [
+      {
+        "src": "involvement/dac-first-meeting.jpg",
+        "caption": "First info session - the club's very first meeting"
+      },
+      {
+        "src": "involvement/dac-datafest-award.jpg",
+        "caption": "Best Data Insight, ASA DataFest"
+      }
+    ]
   },
   {
     "title": "Multi Cultural Programing Board Co-Chair",
@@ -58,6 +68,12 @@
     "date": "Oct 2024–Present",
     "description": "Research with Dr. Corts on how implicit memory shapes everyday behavior.",
     "logo": "involvement/aug.png",
-    "link": ""
+    "link": "",
+    "photos": [
+      {
+        "src": "involvement/research-poster.jpg",
+        "caption": "Presenting our directed-forgetting research"
+      }
+    ]
   }
 ]
