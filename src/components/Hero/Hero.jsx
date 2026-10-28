@@ -73,32 +73,36 @@ export const Hero = () => {
   const introRef = useRef(null);
   const cueRef = useRef(null);
   const fadeRef = useRef(null);
-  const [videoReady, setVideoReady] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
-    const onReady = () => setVideoReady(true);
-    if (video.readyState >= 1) {
-      onReady();
-    } else {
-      video.addEventListener("loadedmetadata", onReady);
-    }
-    return () => video.removeEventListener("loadedmetadata", onReady);
-  }, []);
-
-  useEffect(() => {
-    if (!videoReady) return;
-    const video = videoRef.current;
-    const duration = video.duration || 4.5;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reducedMotion) {
-      // No scroll-driven playback - just hold on a fully-bloomed frame.
-      video.currentTime = duration * 0.95;
-      return;
+      // Hold on a fully-bloomed frame once the video is seekable.
+      const holdFrame = () => {
+        video.currentTime = (video.duration || 4.5) * 0.95;
+      };
+      if (video.readyState >= 1) holdFrame();
+      else video.addEventListener("loadedmetadata", holdFrame, { once: true });
+      return () => video.removeEventListener("loadedmetadata", holdFrame);
     }
 
+    // Created synchronously on mount - in the same tick as every other
+    // section's ScrollTrigger, not gated behind the video's async
+    // metadata load. A pin created later than everything else throws off
+    // every OTHER ScrollTrigger below it on the page: each one measured
+    // its own position against a layout that didn't yet include this
+    // pin's spacer, so it fired hundreds of pixels too early (confirmed
+    // via ScrollTrigger.getAll() - Involvement's pin start was off by
+    // ~990px, exactly this pin's reserved scroll distance). A later
+    // ScrollTrigger.refresh() doesn't fix it either; GSAP's position math
+    // here depends on creation order, not just final DOM state. The
+    // actual video seek below stays guarded on readiness, since you can't
+    // seek a video before its metadata has loaded - scrubbing just no-ops
+    // for the rare case someone scrolls in during the first instant
+    // before that arrives.
+    const FALLBACK_DURATION = 4.5;
     const ctx = gsap.context(() => {
       const scrub = { t: 0 };
 
@@ -121,11 +125,13 @@ export const Hero = () => {
       tl.to(
         scrub,
         {
-          t: duration,
+          t: FALLBACK_DURATION,
           duration: 0.72,
           ease: "none",
           onUpdate: () => {
-            video.currentTime = scrub.t;
+            if (video.readyState >= 1) {
+              video.currentTime = Math.min(scrub.t, video.duration || FALLBACK_DURATION);
+            }
           },
         },
         0
@@ -136,7 +142,7 @@ export const Hero = () => {
     }, sectionRef);
 
     return () => ctx.revert();
-  }, [videoReady]);
+  }, []);
 
   return (
     <section id="home" ref={sectionRef} className={styles.container}>
