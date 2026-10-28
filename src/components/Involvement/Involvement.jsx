@@ -119,6 +119,11 @@ export const Involvement = () => {
 
       tl.to(track, { x: -distance, ease: "none", duration: 1 }, 0);
 
+      // Fade in over the first stretch of the pin too, so locking into
+      // the horizontal gallery reads as a transition rather than an
+      // abrupt snap to full-screen right as it grabs scroll.
+      tl.fromTo(viewport, { opacity: 0 }, { opacity: 1, ease: "power1.out", duration: 0.12 }, 0);
+
       // This gallery UI only makes sense while it's actively being
       // scrubbed - once the pin releases, the section goes back to
       // normal document flow and you'd otherwise be left looking at

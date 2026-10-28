@@ -14,7 +14,7 @@ const STICKY_TOP = 96;
 // bottom of the screen" (the old approach) fired it almost the instant a
 // card became current - this fixed window keeps it a short hand-off at
 // the very end of the card's dwell instead.
-const COVER_TRANSITION = 200;
+const COVER_TRANSITION = 120;
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -66,18 +66,30 @@ function StackedCards({ items, animate }) {
         // actually reaches its stacked position - a fixed scroll
         // distance, not tied to viewport height, so it stays a quick
         // hand-off at the end of the dwell on every screen size.
+        const scrollTrigger = {
+          trigger: nextCard,
+          start: `top top+=${STICKY_TOP + COVER_TRANSITION}`,
+          end: `top top+=${STICKY_TOP}`,
+          scrub: true,
+        };
+
         gsap.to(card, {
           scale: 0.94,
           y: -24,
           opacity: 0.55,
           ease: "none",
-          scrollTrigger: {
-            trigger: nextCard,
-            start: `top top+=${STICKY_TOP + COVER_TRANSITION}`,
-            end: `top top+=${STICKY_TOP}`,
-            scrub: true,
-          },
+          scrollTrigger,
         });
+
+        // The incoming card itself arrives soft and faded, then comes
+        // into full focus right as it settles into place - so at any
+        // moment the current (sticky) card reads bold and sharp while
+        // whatever's arriving underneath it is still a little blurry.
+        gsap.fromTo(
+          nextCard,
+          { filter: "blur(6px)", opacity: 0.7 },
+          { filter: "blur(0px)", opacity: 1, ease: "none", scrollTrigger }
+        );
       });
     });
 

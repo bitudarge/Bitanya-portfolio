@@ -69,10 +69,10 @@
 
 /* One spacer per card - its height is the scroll distance the card gets
    to sit fully in view, uncovered, before the next card's sticky window
-   starts sliding over it. Capped on tall desktop monitors so the section
-   never reads as an empty scroll void. */
+   starts sliding over it. Kept short so cards come in quickly with no
+   big dead gap between them, but still long enough for a real hand-off. */
 .stepWrap {
-  min-height: clamp(560px, 92vh, 880px);
+  min-height: clamp(380px, 55vh, 560px);
 }
 
 .stepWrap:last-child {
@@ -91,7 +91,7 @@
   padding: 32px;
   box-shadow: 0 24px 48px -24px rgba(var(--shadow-color), 0.25);
   transform-origin: top center;
-  will-change: transform, opacity;
+  will-change: transform, opacity, filter;
 }
 
 @media (prefers-reduced-motion: reduce) {

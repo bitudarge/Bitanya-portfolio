@@ -71,7 +71,6 @@ export const Hero = () => {
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const introRef = useRef(null);
-  const cueRef = useRef(null);
   const fadeRef = useRef(null);
 
   useEffect(() => {
@@ -110,7 +109,12 @@ export const Hero = () => {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + Math.round(window.innerHeight * 1.1),
+          // Scrolling 900px (Hero's own height) just to get past it is
+          // unavoidable, pin or no pin - that part isn't the "blank page."
+          // It's this extra hold time added on top of that, purely for
+          // the scrub+dissolve, that was the real dead stretch. Trimmed
+          // down from 1.1x viewport height to 0.6x.
+          end: () => "+=" + Math.round(window.innerHeight * 0.6),
           scrub: 0.6,
           pin: true,
           pinType: "fixed",
@@ -118,7 +122,6 @@ export const Hero = () => {
         },
       });
 
-      tl.to(cueRef.current, { opacity: 0, y: -8, duration: 0.08 }, 0);
       tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.28, ease: "power1.out" }, 0.1);
 
       // Scrub the clip itself across most of the pin.
@@ -171,14 +174,6 @@ export const Hero = () => {
             </p>
           </div>
         </div>
-      </div>
-
-      <div ref={cueRef} className={styles.scrollCue} aria-hidden="true">
-        <span>Scroll to bloom</span>
-        <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
-          <rect x="1" y="1" width="12" height="18" rx="6" stroke="currentColor" strokeWidth="1.4" />
-          <circle className={styles.scrollDot} cx="7" cy="6" r="2" fill="currentColor" />
-        </svg>
       </div>
     </section>
   );
