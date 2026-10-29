@@ -191,8 +191,10 @@
 }
 
 @media screen and (max-width: 830px) {
+  /* Full screen on phones now that there's a portrait video to fill it. */
   .container {
-    min-height: 70vh;
+    min-height: 100vh;
+    min-height: 100svh;
     padding: 72px 0;
   }
 }

@@ -1,0 +1,9 @@
+{
+  "rewrites": [{ "source": "/connect", "destination": "/connect/index.html" }],
+  "headers": [
+    {
+      "source": "/bitanya-darge.vcf",
+      "headers": [{ "key": "Content-Type", "value": "text/vcard; charset=utf-8" }]
+    }
+  ]
+}

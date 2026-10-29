@@ -70,20 +70,28 @@
   --card-h: 300px;
   max-width: 820px;
   margin: 0 auto;
-  padding-bottom: 30vh;
+  padding-bottom: 12vh;
+}
+
+/* Scroll each card gets on its own before the next slides over it; the
+   one after the last card is how long the finished pile holds. */
+.pileGap {
+  height: 45vh;
 }
 
 /* Each card sticks centered on screen, a little lower than the last
-   (--peek), and the margin below it is how much scroll it gets on its own
-   before the next card slides up over it. */
+   (--peek), so earlier cards' top edges stay visible. */
 .stickyWrap {
   position: sticky;
   top: calc(50vh - var(--card-h) / 2 + var(--i) * var(--peek));
-  margin-bottom: 45vh;
+  /* Evens out every wrapper's bottom edge so the whole pile lets go at the
+     same moment, instead of the lowest (last) card being pushed up first. */
+  padding-bottom: calc((var(--n) - 1 - var(--i)) * var(--peek));
+  pointer-events: none;
 }
 
-.stickyWrap:last-child {
-  margin-bottom: 0;
+.stackedCard {
+  pointer-events: auto;
 }
 
 .stackedCard {
@@ -109,7 +117,10 @@
   .stickyWrap {
     position: relative;
     top: 0;
-    margin-bottom: 24px;
+    padding-bottom: 0;
+  }
+  .pileGap {
+    height: 24px;
   }
 }
 

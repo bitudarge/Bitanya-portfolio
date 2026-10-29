@@ -5,7 +5,14 @@ import styles from "./Hero.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const VIDEO_SRC = "/assets/hero/bloom-final.mp4";
+// Phones get their own portrait cut (the right-hand flower column of the
+// wide video, which a tall screen otherwise crops away entirely), at
+// <1MB with a keyframe every 6 frames so it scrubs smoothly. The poster
+// shows instantly while the video loads.
+const DESKTOP = { video: "/assets/hero/bloom-final.mp4", poster: "/assets/hero/bloom-poster.jpg" };
+const MOBILE = { video: "/assets/hero/bloom-mobile.mp4", poster: "/assets/hero/bloom-poster-mobile.jpg" };
+const pickMedia = () =>
+  typeof window !== "undefined" && window.matchMedia("(max-width: 830px)").matches ? MOBILE : DESKTOP;
 
 export const Hero = () => {
   /* -------- Typewriter roles (with backspace + blinking cursor) -------- */
@@ -66,6 +73,7 @@ export const Hero = () => {
      reverses the footage rather than faking a reverse animation. A CSS
      mask softens the video's bottom edge into the page, and on
      the way out it drifts and fades while About rises in. ------------ */
+  const [media] = useState(pickMedia);
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const introRef = useRef(null);
@@ -73,6 +81,16 @@ export const Hero = () => {
   useEffect(() => {
     const video = videoRef.current;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // iPhones (Safari) won't paint any frame of a video that has never
+    // played, so setting currentTime from scroll showed nothing. A muted
+    // play-then-pause "unlocks" it; it's allowed without a user tap.
+    const prime = () => {
+      const p = video.play();
+      if (p && p.then) p.then(() => video.pause()).catch(() => {});
+    };
+    if (video.readyState >= 1) prime();
+    else video.addEventListener("loadedmetadata", prime, { once: true });
 
     if (reducedMotion) {
       // Hold on a fully-bloomed frame once the video is seekable.
@@ -168,7 +186,8 @@ export const Hero = () => {
       <video
         ref={videoRef}
         className={styles.heroVideo}
-        src={VIDEO_SRC}
+        src={media.video}
+        poster={media.poster}
         muted
         playsInline
         preload="auto"

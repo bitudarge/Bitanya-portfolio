@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -76,16 +76,22 @@ function StackedCards({ items, animate }) {
 
   return (
     <div className={styles.stackedList}>
+      {/* Spacing lives in separate spacer divs, never on the cards
+          themselves: a sticky card's margin counts against the container,
+          so margins made earlier cards let go before the last one did, and
+          padding is ignored by sticky entirely. */}
       {items.map((item, i) => (
-        <div
-          key={item.id}
-          className={styles.stickyWrap}
-          style={{ "--i": i, zIndex: i + 1, "--peek": `${PEEK}px` }}
-        >
-          <div ref={(el) => (cardRefs.current[i] = el)} className={styles.stackedCard}>
-            <StepContent item={item} />
+        <Fragment key={item.id}>
+          <div
+            className={styles.stickyWrap}
+            style={{ "--i": i, "--n": items.length, zIndex: i + 1, "--peek": `${PEEK}px` }}
+          >
+            <div ref={(el) => (cardRefs.current[i] = el)} className={styles.stackedCard}>
+              <StepContent item={item} />
+            </div>
           </div>
-        </div>
+          <div className={styles.pileGap} aria-hidden="true" />
+        </Fragment>
       ))}
     </div>
   );
