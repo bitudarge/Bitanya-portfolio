@@ -35,6 +35,9 @@
         color: var(--text);
         display: flex;
         justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        min-height: 100svh;
         padding: max(40px, env(safe-area-inset-top)) 20px max(40px, env(safe-area-inset-bottom));
         overflow-x: hidden;
         -webkit-font-smoothing: antialiased;
@@ -61,15 +64,13 @@
 
       .photo {
         width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block;
-        margin: 0 auto 22px;
+        margin: 0 auto 36px;
         border: 4px solid #fff;
         box-shadow: 0 0 0 2px var(--accent), 0 18px 40px -16px rgba(219, 39, 119, 0.55);
       }
 
-      h1 { font-family: var(--display); font-weight: 600; font-size: 2.1rem; line-height: 1.1; margin-bottom: 8px; }
-      .role { font-weight: 600; color: var(--accent); margin-bottom: 4px; }
-      .school { font-size: 0.92rem; color: var(--muted); margin-bottom: 18px; }
-      .bio { font-size: 0.98rem; line-height: 1.6; color: var(--muted); margin-bottom: 30px; }
+      /* Name stays available to screen readers without showing on screen */
+      .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
       .actions { display: grid; gap: 12px; margin-bottom: 30px; }
       .btn {
@@ -111,6 +112,7 @@
     <div class="glow" aria-hidden="true"><span class="a"></span><span class="b"></span></div>
 
     <main>
+      <h1 class="sr-only">Bitanya Darge</h1>
       <div class="badge rise" style="--d: 0">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Tapped in
@@ -118,14 +120,6 @@
 
       <img class="photo rise" style="--d: 1" src="/assets/connect/bitanya.jpg" alt="Bitanya Darge" width="132" height="132" />
 
-      <h1 class="rise" style="--d: 2">Bitanya Darge</h1>
-      <p class="role rise" style="--d: 3">Data Analyst at John Deere</p>
-      <p class="school rise" style="--d: 3">Data Science &amp; Neuroscience &middot; Augustana College</p>
-      <p class="bio rise" style="--d: 4">
-        I turn messy data into clear decisions. I built an AI catalog tool at John Deere that lifted
-        sales 42%, a model that flags at-risk students with 85% accuracy, and founded a 100+ member
-        Data Analytics Club.
-      </p>
 
       <nav class="actions" aria-label="Connect">
         <a class="btn primary rise" style="--d: 5" href="/bitanya-darge.vcf" download="Bitanya-Darge.vcf">
