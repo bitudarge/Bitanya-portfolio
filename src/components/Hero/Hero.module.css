@@ -22,17 +22,11 @@
   height: 100%;
   object-fit: cover;
   pointer-events: none;
-}
-
-/* Scroll-driven dissolve (Hero.jsx) - fades the whole scene out to the
-   page background as the pin releases, so the hand-off into About reads
-   as one continuous scene rather than a hard cut. */
-.heroFade {
-  position: absolute;
-  inset: 0;
-  background: var(--color-bg);
-  opacity: 0;
-  pointer-events: none;
+  /* Soft bottom edge: the video itself fades to transparent, so it melts
+     into the page's ambient glow instead of ending on a hard line. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  will-change: transform, opacity;
 }
 
 /* ---------- Text stage ---------- */

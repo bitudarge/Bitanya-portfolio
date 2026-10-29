@@ -12,18 +12,22 @@
   margin-bottom: 40px;
 }
 
+/* Flex-wrap (not grid) so a short last row is centered instead of leaving
+   one card stranded on the left. */
 .grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(280px, 1fr));
-  gap: 24px;
+  --gap: 24px;
+  --cols: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--gap);
   max-width: 1280px;
   margin: 0 auto;
-  align-items: stretch;
 }
 
 .item {
   display: flex;
-  height: 100%;
+  flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
 }
 
 .item > * {
@@ -33,7 +37,7 @@
 
 @media (max-width: 1200px) {
   .grid {
-    grid-template-columns: repeat(2, minmax(280px, 1fr));
+    --cols: 2;
   }
 }
 
@@ -42,6 +46,6 @@
     padding: 72px 6%;
   }
   .grid {
-    grid-template-columns: 1fr;
+    --cols: 1;
   }
 }

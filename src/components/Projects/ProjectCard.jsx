@@ -11,11 +11,20 @@ export const ProjectCard = ({
   return (
     <motion.div
       className={styles.container}
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.5, delay: prefersReducedMotion ? 0 : index * 0.08 }}
-      whileHover={prefersReducedMotion ? undefined : { y: -6 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 36 }}
+      // Entrance delay lives on the entrance only - before, it also delayed
+      // every hover lift, which is what made the grid feel laggy/choppy.
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: prefersReducedMotion ? 0 : 0.8,
+          delay: prefersReducedMotion ? 0 : index * 0.1,
+          ease: [0.22, 1, 0.36, 1],
+        },
+      }}
+      viewport={{ once: true, amount: 0.15 }}
+      whileHover={prefersReducedMotion ? undefined : { y: -6, transition: { duration: 0.25, ease: "easeOut" } }}
     >
       {imageSrc ? (
         <div className={styles.imageWrap}>

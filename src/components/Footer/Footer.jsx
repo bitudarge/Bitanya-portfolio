@@ -56,12 +56,22 @@ export function Footer() {
 
   return (
     <motion.footer
+      id="contact"
       className={styles.footer}
-      initial={prefersReducedMotion ? false : { opacity: 0, y: 24 }}
+      initial={prefersReducedMotion ? false : { opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{ duration: prefersReducedMotion ? 0 : 0.6 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: prefersReducedMotion ? 0 : 0.9, ease: [0.22, 1, 0.36, 1] }}
     >
+      <h2 className={styles.heading}>
+        Let&rsquo;s <span className="text-accent">connect</span>
+      </h2>
+      <p className={styles.lede}>
+        Open to internships, data roles, and interesting projects. My inbox is always open.
+      </p>
+      <a className={styles.cta} href="mailto:bitanyagetahunn@gmail.com">
+        Say hello
+      </a>
       <div className={styles.iconsRow}>
         {LINKS.map((link) => (
           <a
@@ -76,6 +86,7 @@ export function Footer() {
           </a>
         ))}
       </div>
+      <p className={styles.copyright}>&copy; {new Date().getFullYear()} Bitanya</p>
     </motion.footer>
   );
 }

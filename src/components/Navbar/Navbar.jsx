@@ -11,15 +11,32 @@ const SECTIONS = [
 export const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeId, setActiveId] = useState("");
+  // Transparent over the hero video, then a frosted solid bar once About
+  // starts sliding under it (so text never collides with the nav links).
+  const [solid, setSolid] = useState(false);
 
   useEffect(() => {
-    const elements = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean);
+    const about = document.getElementById("about");
+    if (!about) return;
+    const onScroll = () => setSolid(about.getBoundingClientRect().top <= 120);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    const ids = ["home", ...SECTIONS.map((s) => s.id)];
+    const elements = ids.map((id) => document.getElementById(id)).filter(Boolean);
     if (elements.length === 0) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActiveId(entry.target.id);
+          if (entry.isIntersecting) setActiveId(entry.target.id === "home" ? "" : entry.target.id);
         });
       },
       { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
@@ -30,7 +47,7 @@ export const Navbar = () => {
   }, []);
 
   return (
-    <nav className={styles.navbar}>
+    <nav className={`${styles.navbar} ${solid || menuOpen ? styles.solid : ""}`}>
       <a className={styles.title} href="#home">
         Bitanya
       </a>

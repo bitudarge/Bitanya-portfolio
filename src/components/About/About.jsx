@@ -29,10 +29,10 @@ export const About = () => {
   return (
     <section className={styles.container} id="about">
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 48 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
         <h2 className={styles.title}>About Me</h2>
 
@@ -64,10 +64,10 @@ export const About = () => {
 
       <motion.div
         className={styles.techBlock}
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 48 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
       >
         <h3 className={styles.techHeading}>
           Technologies I&rsquo;m <span className="text-accent">currently using</span>

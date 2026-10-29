@@ -1,18 +1,24 @@
 @import "../../vars.css";
 
+/* The whole section is the pinned element (Involvement.jsx), sized to
+   exactly one screen so heading + gallery stay vertically centered and
+   nothing gets clipped. Top padding clears the fixed navbar. No background,
+   so the page's ambient glow flows straight through from Projects into
+   the footer instead of a hard white block. */
 .container {
-  padding: 72px 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 72px 0 24px;
   color: var(--color-text);
-  /* The gallery viewport (not this whole section) is what actually gets
-     pinned - see Involvement.jsx. With no background here, whatever sat
-     behind it at that screen position during the pin - Projects, the
-     ambient blob glow - showed straight through. */
-  background: var(--color-bg);
+  overflow: hidden;
 }
 
 .heading {
   padding: 0 10%;
-  margin-bottom: 56px;
+  margin-bottom: clamp(16px, 4vh, 40px);
 }
 
 .title {
@@ -38,25 +44,36 @@
   overflow: hidden;
   width: 100%;
   touch-action: pan-y;
-  /* This is the element that actually gets pinned (position: fixed) -
-     needs its own opaque background so nothing behind it bleeds through
-     during the pin. */
-  background: var(--color-bg);
 }
 
 .track {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 56px;
-  padding: 24px 10vw 80px;
+  padding: 28px 10vw 40px;
   width: max-content;
 }
 
 @media (max-width: 560px) {
   .track {
     gap: 32px;
-    padding: 16px 8vw 64px;
+    padding: 20px 8vw 32px;
   }
+}
+
+.progressTrack {
+  margin: 0 10%;
+  height: 2px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
 }
 
 .beatSlot {
@@ -66,8 +83,16 @@
 }
 
 /* ---------- Photo beats: every photo gets the same treatment ---------- */
+/* Capped by viewport height too, so the pinned one-screen frame never
+   overflows on short laptop screens. */
 .photoBeat {
-  width: clamp(270px, 30vw, 440px);
+  width: min(clamp(260px, 30vw, 440px), 56vh);
+}
+
+@media (max-width: 560px) {
+  .photoBeat {
+    width: min(76vw, 52vh);
+  }
 }
 
 .beatImageWrap {
@@ -181,7 +206,16 @@
   .heading {
     padding: 0 8%;
   }
+  .textBeat {
+    width: 72vw;
+  }
+}
+
+/* No pin in reduced motion - the vertical story list needs natural height. */
+@media (prefers-reduced-motion: reduce) {
   .container {
-    padding: 72px 0;
+    height: auto;
+    overflow: visible;
+    padding: 96px 0;
   }
 }

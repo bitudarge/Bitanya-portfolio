@@ -12,7 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 // editorial stagger instead of everything sitting on one straight row.
 // A smaller, steadier range than before (was jumping as much as 96px
 // between neighbors, which read as erratic rather than intentional).
-const STAGGER = [0, 36, -18, 40, 10, 32, -22, 28, 6, -12];
+const STAGGER = [0, 22, -12, 24, 6, 18, -14, 16, 4, -8];
 
 function PhotoBeat({ beat }) {
   return (
@@ -56,6 +56,7 @@ export const Involvement = () => {
   const sectionRef = useRef(null);
   const viewportRef = useRef(null);
   const trackRef = useRef(null);
+  const progressRef = useRef(null);
   const beatRefs = useRef([]);
   beatRefs.current = [];
 
@@ -66,8 +67,8 @@ export const Involvement = () => {
     if (!track || !viewport) return;
 
     const ctx = gsap.context(() => {
-      const distance = track.scrollWidth - viewport.clientWidth;
-      if (distance <= 0) return;
+      const getDistance = () => Math.max(0, track.scrollWidth - viewport.clientWidth);
+      if (getDistance() <= 0) return;
 
       // A light edge vignette only - cards fade a touch as they near the
       // left/right edge of the viewport, nothing more. The old version
@@ -94,21 +95,17 @@ export const Involvement = () => {
       // which fights Lenis's own eased scroll position and was exactly
       // what made this section's pin appear to grab a beat before
       // Projects had actually finished scrolling past.
+      // The whole section (heading + gallery) is pinned as one
+      // exactly-viewport-tall frame (see .container in the CSS), so the
+      // gallery sits vertically centered and is fully visible the moment
+      // the pin grabs - no blank fade-in. It's sized to fit the viewport,
+      // which avoids the old "taller than the screen" catch-up jump.
       const tl = gsap.timeline({
         scrollTrigger: {
-          // Pinning just the gallery viewport (not the whole section,
-          // heading included) matters: the heading+padding make the
-          // section itself taller than the viewport, and a pinned element
-          // taller than the viewport clips its own overflow for the full
-          // pin duration, then has to visually "catch up" once it unpins -
-          // that's what reads as the whole section jumping around right
-          // after the horizontal scroll ends. Pinning only the viewport
-          // keeps the pinned box's height sane on its own.
-          trigger: viewport,
+          trigger: sectionRef.current,
           start: "top top",
-          end: () => "+=" + distance,
-          scrub: true,
-          fastScrollEnd: true,
+          end: () => "+=" + getDistance(),
+          scrub: 0.5,
           pin: true,
           pinType: "fixed",
           invalidateOnRefresh: true,
@@ -117,21 +114,10 @@ export const Involvement = () => {
         },
       });
 
-      tl.to(track, { x: -distance, ease: "none", duration: 1 }, 0);
-
-      // Fade in over the first stretch of the pin too, so locking into
-      // the horizontal gallery reads as a transition rather than an
-      // abrupt snap to full-screen right as it grabs scroll.
-      tl.fromTo(viewport, { opacity: 0 }, { opacity: 1, ease: "power1.out", duration: 0.12 }, 0);
-
-      // This gallery UI only makes sense while it's actively being
-      // scrubbed - once the pin releases, the section goes back to
-      // normal document flow and you'd otherwise be left looking at
-      // whatever card the scrub happened to stop on, frozen and cropped,
-      // for the rest of the scroll past it. Fading it out over the last
-      // stretch means by the time it unpins there's just clean blank
-      // space before the footer, not a stuck leftover gallery slice.
-      tl.to(viewport, { opacity: 0, ease: "power1.in", duration: 0.15 }, 0.85);
+      tl.to(track, { x: () => -getDistance(), ease: "none", duration: 1 }, 0);
+      if (progressRef.current) {
+        tl.fromTo(progressRef.current, { scaleX: 0 }, { scaleX: 1, ease: "none", duration: 1 }, 0);
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -158,11 +144,14 @@ export const Involvement = () => {
                 key={i}
                 ref={(el) => (beatRefs.current[i] = el)}
                 className={beatClassName(beat)}
-                style={prefersReducedMotion ? undefined : { marginTop: STAGGER[i % STAGGER.length] }}
+                style={{ transform: `translateY(${STAGGER[i % STAGGER.length]}px)` }}
               >
                 {beat.type === "photo" ? <PhotoBeat beat={beat} /> : <TextBeat beat={beat} />}
               </div>
             ))}
+          </div>
+          <div className={styles.progressTrack} aria-hidden="true">
+            <div ref={progressRef} className={styles.progressBar} />
           </div>
         </div>
       ) : (

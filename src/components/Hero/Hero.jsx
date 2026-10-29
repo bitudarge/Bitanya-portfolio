@@ -63,15 +63,12 @@ export const Hero = () => {
   /* -------- Scroll-scrubbed bloom video -------------------------------
      The bloom itself is a real video (not CSS/SVG) - its currentTime is
      driven directly by scroll position, so scrolling back up genuinely
-     reverses the footage rather than faking a reverse animation. Roughly
-     the first ~72% of the pin scrubs through the clip; the last ~28%
-     holds the final frame while a soft wash dissolves the scene into the
-     real About section below, so the hand-off reads as one continuous
-     scene rather than a hard cut. -------------------------------- */
+     reverses the footage rather than faking a reverse animation. A CSS
+     mask softens the video's bottom edge into the page, and on
+     the way out it drifts and fades while About rises in. ------------ */
   const sectionRef = useRef(null);
   const videoRef = useRef(null);
   const introRef = useRef(null);
-  const fadeRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -122,14 +119,14 @@ export const Hero = () => {
         },
       });
 
-      tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.28, ease: "power1.out" }, 0.1);
+      tl.to(introRef.current, { opacity: 0, y: -30, scale: 0.96, duration: 0.3, ease: "power1.out" }, 0.1);
 
-      // Scrub the clip itself across most of the pin.
+      // Scrub the clip across the whole pin - no held frame, no white wash.
       tl.to(
         scrub,
         {
           t: FALLBACK_DURATION,
-          duration: 0.72,
+          duration: 1,
           ease: "none",
           onUpdate: () => {
             if (video.readyState >= 1) {
@@ -140,8 +137,27 @@ export const Hero = () => {
         0
       );
 
-      // Hold the final bloomed frame and dissolve into About.
-      tl.to(fadeRef.current, { opacity: 1, duration: 0.3, ease: "power1.in" }, 0.72);
+      // Once the pin releases, the bloom drifts up and softly fades while
+      // About rises in right behind it - there's always something on screen.
+      // Keyed off About's position (not Hero's) because Hero is the pinned
+      // element; created after the pin so its offsets include the spacer.
+      const about = document.getElementById("about");
+      if (about) {
+        gsap.to(videoRef.current, {
+          scale: 1.08,
+          // Grow upward from the bottom edge so the masked fade-out edge
+          // never gets pushed past the section's clip line.
+          transformOrigin: "50% 100%",
+          opacity: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: about,
+            start: "top bottom",
+            end: "top 25%",
+            scrub: true,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -158,7 +174,6 @@ export const Hero = () => {
         preload="auto"
         aria-hidden="true"
       />
-      <div ref={fadeRef} className={styles.heroFade} aria-hidden="true" />
 
       <div className={styles.stage}>
         <div ref={introRef} className={styles.intro}>
