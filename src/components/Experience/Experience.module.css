@@ -10,6 +10,7 @@
   font-weight: 600;
   font-size: clamp(2rem, 4vw, 3rem);
   margin-bottom: 48px;
+  text-align: center;
 }
 
 /* Shared step content */
@@ -62,45 +63,53 @@
   margin: 6px 0;
 }
 
+/* One shared container for every sticky card, so cards stay stuck and
+   pile up instead of each scrolling away on its own. The bottom padding
+   is how long the finished pile holds before scrolling off. */
 .stackedList {
-  display: grid;
-  padding-bottom: 20vh;
+  --card-h: 300px;
+  max-width: 820px;
+  margin: 0 auto;
+  padding-bottom: 30vh;
 }
 
-/* One spacer per card - its height is the scroll distance the card gets
-   to sit fully in view, uncovered, before the next card's sticky window
-   starts sliding over it. Kept short so cards come in quickly with no
-   big dead gap between them, but still long enough for a real hand-off. */
-.stepWrap {
-  min-height: clamp(380px, 55vh, 560px);
-}
-
-.stepWrap:last-child {
-  min-height: 0;
-}
-
+/* Each card sticks centered on screen, a little lower than the last
+   (--peek), and the margin below it is how much scroll it gets on its own
+   before the next card slides up over it. */
 .stickyWrap {
   position: sticky;
+  top: calc(50vh - var(--card-h) / 2 + var(--i) * var(--peek));
+  margin-bottom: 45vh;
+}
+
+.stickyWrap:last-child {
+  margin-bottom: 0;
 }
 
 .stackedCard {
   position: relative;
-  background: var(--color-surface);
+  min-height: var(--card-h);
+  background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: 4px;
+  border-radius: 16px;
   padding: 32px;
-  box-shadow: 0 24px 48px -24px rgba(var(--shadow-color), 0.25);
+  box-shadow: 0 -8px 24px -12px rgba(var(--shadow-color), 0.12),
+    0 24px 48px -24px rgba(var(--shadow-color), 0.22);
   transform-origin: top center;
-  will-change: transform, opacity, filter;
+  will-change: transform;
+}
+
+@media (max-width: 560px) {
+  .stackedList {
+    --card-h: 420px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stepWrap {
-    min-height: 0;
-  }
   .stickyWrap {
     position: relative;
-    top: 0 !important;
+    top: 0;
+    margin-bottom: 24px;
   }
 }
 

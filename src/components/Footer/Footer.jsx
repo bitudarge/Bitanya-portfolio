@@ -66,9 +66,7 @@ export function Footer() {
       <h2 className={styles.heading}>
         Let&rsquo;s <span className="text-accent">connect</span>
       </h2>
-      <p className={styles.lede}>
-        Open to internships, data roles, and interesting projects. My inbox is always open.
-      </p>
+      <p className={styles.lede}>My inbox is always open.</p>
       <a className={styles.cta} href="mailto:bitanyagetahunn@gmail.com">
         Say hello
       </a>
@@ -86,7 +84,6 @@ export function Footer() {
           </a>
         ))}
       </div>
-      <p className={styles.copyright}>&copy; {new Date().getFullYear()} Bitanya</p>
     </motion.footer>
   );
 }

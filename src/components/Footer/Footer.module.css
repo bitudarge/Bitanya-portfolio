@@ -60,9 +60,3 @@
   color: var(--color-accent);
   transform: translateY(-2px);
 }
-
-.copyright {
-  margin-top: 40px;
-  font-size: 0.8rem;
-  color: var(--color-text-muted);
-}

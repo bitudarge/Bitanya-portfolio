@@ -7,14 +7,9 @@ import history from "../../data/history.json";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const STICKY_TOP = 96;
-// How much scroll (in px) the dim/shrink hand-off takes, right before the
-// next card reaches its stacked position. Each card's own spacer is a
-// full viewport tall, so keying the dim off "next card enters from the
-// bottom of the screen" (the old approach) fired it almost the instant a
-// card became current - this fixed window keeps it a short hand-off at
-// the very end of the card's dwell instead.
-const COVER_TRANSITION = 120;
+// How far each card in the pile sits below the one before it, so the top
+// edges of earlier cards stay visible as a neat stacked "pile".
+const PEEK = 18;
 
 function formatRange(start, end) {
   const fmt = (s) => {
@@ -44,12 +39,12 @@ function StepContent({ item }) {
   );
 }
 
-/* Cards stack via plain CSS position: sticky (same top offset for every
-   card, so each new one naturally slides over and covers the last). Each
-   card sits inside a tall .stepWrap spacer so it actually holds still on
-   screen - fully visible, its own moment - before the next card's own
-   sticky window begins and slides over it. GSAP only adds the scale/dim
-   polish on top, scoped to that hand-off window via its ScrollTrigger. */
+/* A pile of cards centered on screen. Every card is position: sticky
+   inside ONE shared container, so each card that arrives stays stuck
+   while the next slides up over it, and the whole pile scrolls away
+   together at the end. Each card sticks a little lower than the one
+   before (PEEK), so the earlier cards' top edges stay visible. GSAP only
+   adds a slight shrink to the cards underneath. No blur, no fading. */
 function StackedCards({ items, animate }) {
   const cardRefs = useRef([]);
   cardRefs.current = [];
@@ -59,37 +54,20 @@ function StackedCards({ items, animate }) {
 
     const ctx = gsap.context(() => {
       cardRefs.current.forEach((card, i) => {
-        if (!card || i === items.length - 1) return;
         const nextCard = cardRefs.current[i + 1];
-        if (!nextCard) return;
-        // Dim card i only in the short window right before card i+1
-        // actually reaches its stacked position - a fixed scroll
-        // distance, not tied to viewport height, so it stays a quick
-        // hand-off at the end of the dwell on every screen size.
-        const scrollTrigger = {
-          trigger: nextCard,
-          start: `top top+=${STICKY_TOP + COVER_TRANSITION}`,
-          end: `top top+=${STICKY_TOP}`,
-          scrub: true,
-        };
-
+        if (!card || !nextCard) return;
+        // As the next card rises from the bottom of the screen into its
+        // stuck spot, this card shrinks a touch, so the pile reads as depth.
         gsap.to(card, {
-          scale: 0.94,
-          y: -24,
-          opacity: 0.55,
+          scale: 0.95,
           ease: "none",
-          scrollTrigger,
+          scrollTrigger: {
+            trigger: nextCard.parentElement,
+            start: "top bottom",
+            end: "top center",
+            scrub: true,
+          },
         });
-
-        // The incoming card itself arrives soft and faded, then comes
-        // into full focus right as it settles into place - so at any
-        // moment the current (sticky) card reads bold and sharp while
-        // whatever's arriving underneath it is still a little blurry.
-        gsap.fromTo(
-          nextCard,
-          { filter: "blur(6px)", opacity: 0.7 },
-          { filter: "blur(0px)", opacity: 1, ease: "none", scrollTrigger }
-        );
       });
     });
 
@@ -99,17 +77,13 @@ function StackedCards({ items, animate }) {
   return (
     <div className={styles.stackedList}>
       {items.map((item, i) => (
-        <div key={item.id} className={styles.stepWrap}>
-          <div
-            className={styles.stickyWrap}
-            style={{ top: `${STICKY_TOP + i * 6}px`, zIndex: i + 1 }}
-          >
-            <div
-              ref={(el) => (cardRefs.current[i] = el)}
-              className={styles.stackedCard}
-            >
-              <StepContent item={item} />
-            </div>
+        <div
+          key={item.id}
+          className={styles.stickyWrap}
+          style={{ "--i": i, zIndex: i + 1, "--peek": `${PEEK}px` }}
+        >
+          <div ref={(el) => (cardRefs.current[i] = el)} className={styles.stackedCard}>
+            <StepContent item={item} />
           </div>
         </div>
       ))}
